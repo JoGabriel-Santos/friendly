@@ -116,11 +116,11 @@ const Authentication = () => {
                     </TouchableOpacity>
 
                     <TouchableOpacity style={styles.loginButton}>
-                        <Ionicons name={"logo-apple"} size={22}/>
+                        <Ionicons name={"logo-facebook"} size={22}/>
                     </TouchableOpacity>
 
                     <TouchableOpacity style={styles.loginButton}>
-                        <Ionicons name={"logo-facebook"} size={22}/>
+                        <Ionicons name={"logo-apple"} size={22}/>
                     </TouchableOpacity>
                 </View>
             </View>
