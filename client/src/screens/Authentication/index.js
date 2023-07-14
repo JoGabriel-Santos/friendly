@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, TouchableOpacity, SafeAreaView, View } from "react-native";
+import { Text, TouchableOpacity, SafeAreaView, View, StatusBar } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -33,9 +33,9 @@ const Authentication = () => {
         } else {
             // const { data } = await API.signup(userInfo);
             // await AsyncStorage.setItem("userInfo", JSON.stringify(data.result));
-        }
 
-        // navigation.navigate("Home");
+            navigation.navigate("Profile");
+        }
     }
 
     const handleNameChange = (text) => {
@@ -60,6 +60,8 @@ const Authentication = () => {
 
     return (
         <SafeAreaView style={styles.container}>
+            <StatusBar backgroundColor="transparent" barStyle="dark-content" translucent={true}/>
+
             <View style={styles.authView}>
                 <View style={styles.header}>
                     {

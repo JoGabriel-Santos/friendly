@@ -1,5 +1,5 @@
 import React from "react";
-import { ImageBackground, SafeAreaView, Text, TouchableOpacity, View } from "react-native";
+import { ImageBackground, SafeAreaView, StatusBar, Text, TouchableOpacity, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
 import styles from "./styles";
@@ -9,6 +9,8 @@ const Welcome = () => {
 
     return (
         <SafeAreaView style={styles.container}>
+            <StatusBar backgroundColor="transparent" barStyle="light-content" translucent={true}/>
+
             <ImageBackground source={require("../../utils/images/background.png")} style={styles.backgroundImage}>
 
                 <View>
