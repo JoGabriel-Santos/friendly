@@ -70,8 +70,8 @@ const Authentication = () => {
                             </React.Fragment>
                             :
                             <React.Fragment>
-                                <Text style={styles.authText}>Create account</Text>
-                                <Text style={styles.sloganText}>Create an account so you can find friends</Text>
+                                <Text style={styles.authText}>Create an account</Text>
+                                <Text style={styles.sloganText}>Sign up for an account so you can find friends.</Text>
                             </React.Fragment>
                     }
                 </View>
@@ -87,20 +87,20 @@ const Authentication = () => {
                     isLoggingIn &&
                     <TouchableOpacity>
                         <Text style={styles.forgotPasswordText}>
-                            Esqueceu sua senha?
+                            Forgot your password?
                         </Text>
                     </TouchableOpacity>
                 }
 
                 <TouchableOpacity style={styles.signinButton} onPress={() => handleAuthentication()}>
                     <Text style={styles.signinText}>
-                        {isLoggingIn ? "Entrar" : "Criar conta"}
+                        {isLoggingIn ? "Login" : "Create account"}
                     </Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity style={styles.signupButton} onPress={() => handleToggleIsLoggingIn()}>
                     <Text style={styles.signupText}>
-                        {isLoggingIn ? "Criar nova conta" : "Entrar em uma conta existente"}
+                        {isLoggingIn ? "Create new account" : "Sign in to an existing account"}
                     </Text>
                 </TouchableOpacity>
             </View>

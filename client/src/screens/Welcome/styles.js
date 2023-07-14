@@ -2,25 +2,28 @@ import { Dimensions, StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: "#FFFFFF",
         flex: 1,
+    },
+    backgroundImage: {
+        flex: 1,
+        resizeMode: "cover",
         justifyContent: "center",
     },
     welcomeImage: {
         height: Dimensions.get("window").height / 2.5,
     },
     viewDescription: {
-        paddingHorizontal: 40,
-        paddingTop: 40,
+        paddingHorizontal: 35,
+        paddingTop: 80,
     },
     homeTitle: {
-        color: "#1F41BB",
+        color: "#FFFFFF",
         fontFamily: "nunito-bold",
         fontSize: 35,
         textAlign: "center"
     },
     homeParagraph: {
-        color: "#333",
+        color: "#FFFFFF",
         fontFamily: "nunito-regular",
         fontSize: 18,
         marginTop: 20,
@@ -28,22 +31,23 @@ const styles = StyleSheet.create({
     },
     viewButtons: {
         flexDirection: "row",
-        justifyContent: "space-around",
-        paddingHorizontal: 20,
+        gap: 20,
+        justifyContent: "space-between",
+        paddingHorizontal: 35,
         paddingTop: 60,
     },
     buttonLogin: {
-        backgroundColor: "#1F41BB",
+        backgroundColor: "#5151C6",
         borderRadius: 10,
+        flex: 1,
         paddingVertical: 15,
-        width: 190,
     },
     buttonRegister: {
-        borderColor: "#1F41BB",
+        borderColor: "#FFFFFF",
         borderRadius: 10,
         borderWidth: 1,
+        flex: 1,
         paddingVertical: 15,
-        width: 150,
     },
     buttonTextLogin: {
         color: "#FFFFFF",
@@ -52,7 +56,7 @@ const styles = StyleSheet.create({
         textAlign: "center",
     },
     buttonTextRegister: {
-        color: "#1F41BB",
+        color: "#FFFFFF",
         fontFamily: "nunito-bold",
         fontSize: 20,
         textAlign: "center",

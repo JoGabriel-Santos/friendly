@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     authText: {
-        color: "#1F41BB",
+        color: "#5151C6",
         fontFamily: "nunito-extraBold",
         fontSize: 35,
         marginVertical: 30,
@@ -31,13 +31,13 @@ const styles = StyleSheet.create({
     },
     forgotPasswordText: {
         alignSelf: "flex-end",
-        color: "#1F41BB",
+        color: "#5151C6",
         fontFamily: "nunito-semiBold",
         fontSize: 16,
     },
     signinButton: {
-        backgroundColor: "#1F41BB",
-        borderRadius: 10,
+        backgroundColor: "#5151C6",
+        borderRadius: 100,
         marginVertical: 30,
         padding: 18,
     },
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
         marginTop: 30,
     },
     continueWithText: {
-        color: "#1F41BB",
+        color: "#5151C6",
         fontFamily: "nunito-regular",
         fontSize: 18,
         paddingBottom: 10,

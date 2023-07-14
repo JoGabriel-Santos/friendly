@@ -9,41 +9,44 @@ const Welcome = () => {
 
     return (
         <SafeAreaView style={styles.container}>
-            <View>
-                <ImageBackground
-                    source={require("../../utils/images/welcome-img.png")}
-                    style={styles.welcomeImage}
-                    resizeMode="contain"
-                />
-            </View>
+            <ImageBackground source={require("../../utils/images/background.png")} style={styles.backgroundImage}>
 
-            <View style={styles.viewDescription}>
-                <Text style={styles.homeTitle}>
-                    Unlock the power of English conversations
-                </Text>
+                <View>
+                    <ImageBackground
+                        source={require("../../utils/images/welcome-image.png")}
+                        style={styles.welcomeImage}
+                        resizeMode="contain"
+                    />
+                </View>
 
-                <Text style={styles.homeParagraph}>
-                    Join our community of English learners and take your speaking skills to the next level
-                </Text>
-            </View>
+                <View style={styles.viewDescription}>
+                    <Text style={styles.homeTitle}>
+                        Unlock the power of English conversations
+                    </Text>
 
-            <View style={styles.viewButtons}>
-                <TouchableOpacity
-                    style={styles.buttonLogin}
-                    onPress={() => navigation.navigate("Authentication", { authType: "login" })}
-                >
+                    <Text style={styles.homeParagraph}>
+                        Join our community of English learners and take your speaking skills to the next level
+                    </Text>
+                </View>
 
-                    <Text style={styles.buttonTextLogin}>Login</Text>
-                </TouchableOpacity>
+                <View style={styles.viewButtons}>
+                    <TouchableOpacity
+                        style={styles.buttonLogin}
+                        onPress={() => navigation.navigate("Authentication", { authType: "login" })}
+                    >
 
-                <TouchableOpacity
-                    style={styles.buttonRegister}
-                    onPress={() => navigation.navigate("Authentication", { authType: "register" })}
-                >
+                        <Text style={styles.buttonTextLogin}>Login</Text>
+                    </TouchableOpacity>
 
-                    <Text style={styles.buttonTextRegister}>Register</Text>
-                </TouchableOpacity>
-            </View>
+                    <TouchableOpacity
+                        style={styles.buttonRegister}
+                        onPress={() => navigation.navigate("Authentication", { authType: "register" })}
+                    >
+
+                        <Text style={styles.buttonTextRegister}>Register</Text>
+                    </TouchableOpacity>
+                </View>
+            </ImageBackground>
         </SafeAreaView>
     )
 }
