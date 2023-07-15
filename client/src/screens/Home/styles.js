@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { Dimensions, StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
     container: {
@@ -48,6 +48,62 @@ const styles = StyleSheet.create({
         left: 20,
         position: "absolute",
         top: "30%",
+    },
+    homeImage: {
+        height: Dimensions.get("window").height / 2.5,
+    },
+    viewNavbar: {
+        flex: 1,
+    },
+    navbar: {
+        backgroundColor: "#5151C6",
+        borderTopLeftRadius: 10,
+        borderTopRightRadius: 10,
+        flexDirection: "row",
+        justifyContent: "space-around",
+        marginTop: "auto",
+        padding: 25,
+    },
+    meetPeopleView: {
+        alignItems: "center",
+        gap: 10,
+    },
+    meetPeopleTitle: {
+        color: "#5151C6",
+        fontFamily: "nunito-bold",
+        fontSize: 24,
+    },
+    meetPeopleDescr: {
+        color: "#333",
+        fontFamily: "nunito-regular",
+        fontSize: 18,
+    },
+    meetPeopleButtons: {
+        gap: 10,
+        marginTop: 40,
+    },
+    meetPeopleButton: {
+        borderRadius: 10,
+        marginHorizontal: 20,
+        padding: 16,
+    },
+    automatchButton: {
+        backgroundColor: "#5151C6",
+    },
+    manuallyButton: {
+        borderColor: "#333",
+        borderWidth: 1,
+    },
+    meetPeopleText: {
+        fontFamily: "nunito-regular",
+        fontSize: 20,
+        textAlign: "center",
+    },
+    automatchText: {
+        color: "white",
+    },
+    manuallyText: {
+        color: "#333",
     },
 });
 
