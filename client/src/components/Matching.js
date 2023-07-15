@@ -67,10 +67,11 @@ const styles = StyleSheet.create({
         width: 100,
     },
     countryFlag: {
-        borderBottomRightRadius: 8,
+        borderTopRightRadius: 8,
+        left: 0,
+        position: "absolute",
         top: 78,
-        right: 28,
-        width: 28,
+        width: 30,
     },
     userInfo: {
         justifyContent: "space-between",
