@@ -1,7 +1,6 @@
 import React from "react";
 import { ImageBackground, SafeAreaView, StatusBar, Text, TouchableOpacity, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-
 import styles from "./styles";
 
 const Welcome = () => {

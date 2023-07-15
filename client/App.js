@@ -6,6 +6,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 
 import Welcome from "./src/screens/Welcome";
 import Authentication from "./src/screens/Authentication";
+import Home from "./src/screens/Home";
 import Profile from "./src/screens/Profile";
 
 import configFonts from "./src/utils/configFonts";
@@ -20,6 +21,7 @@ function App() {
             <Stack.Navigator screenOptions={{ headerShown: false }}>
                 <Stack.Screen name="Welcome" component={Welcome}/>
                 <Stack.Screen name="Authentication" component={Authentication}/>
+                <Stack.Screen name="Home" component={Home}/>
                 <Stack.Screen name="Profile" component={Profile}/>
             </Stack.Navigator>
         </NavigationContainer>

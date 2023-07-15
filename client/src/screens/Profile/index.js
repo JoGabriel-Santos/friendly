@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { Image, ImageBackground, SafeAreaView, StatusBar, Text, TouchableOpacity, View } from "react-native";
-
-import styles from "./styles";
 import { Ionicons } from "@expo/vector-icons";
 import Input from "../../components/Input";
+import styles from "./styles";
 
 const Profile = () => {
     const [name, setName] = useState('');
