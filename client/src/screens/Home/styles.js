@@ -52,18 +52,6 @@ const styles = StyleSheet.create({
     homeImage: {
         height: Dimensions.get("window").height / 2.5,
     },
-    viewNavbar: {
-        flex: 1,
-    },
-    navbar: {
-        backgroundColor: "#5151C6",
-        borderTopLeftRadius: 10,
-        borderTopRightRadius: 10,
-        flexDirection: "row",
-        justifyContent: "space-around",
-        marginTop: "auto",
-        padding: 25,
-    },
     meetPeopleView: {
         alignItems: "center",
         gap: 10,

@@ -1,9 +1,11 @@
 import React from "react";
-import { Image, ImageBackground, SafeAreaView, StatusBar, Text, TextInput, TouchableOpacity, View } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import { Image, ImageBackground, SafeAreaView, StatusBar, Text, TouchableOpacity, View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import Navbar from "../../components/Navbar";
 import styles from "./styles";
 
 const Home = () => {
+    const navigation = useNavigation();
 
     return (
         <SafeAreaView style={styles.container}>
@@ -44,32 +46,17 @@ const Home = () => {
                     </Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={[styles.meetPeopleButton, styles.manuallyButton]}>
+                <TouchableOpacity
+                    style={[styles.meetPeopleButton, styles.manuallyButton]}
+                    onPress={() => navigation.navigate("Community")}>
+
                     <Text style={[styles.meetPeopleText, styles.manuallyText]}>
                         Explore manually
                     </Text>
                 </TouchableOpacity>
             </View>
 
-            <View style={styles.viewNavbar}>
-                <View style={styles.navbar}>
-                    <TouchableOpacity>
-                        <Ionicons name={"grid-outline"} color={"white"} size={25}/>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity>
-                        <Ionicons name={"people-outline"} color={"white"} size={25}/>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity>
-                        <Ionicons name={"search-outline"} color={"white"} size={25}/>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity>
-                        <Ionicons name={"person-outline"} color={"white"} size={25}/>
-                    </TouchableOpacity>
-                </View>
-            </View>
+            <Navbar/>
         </SafeAreaView>
     )
 };
