@@ -1,10 +1,13 @@
 import React from "react";
 import { SafeAreaView, StatusBar, Text, TouchableOpacity, View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import Matching from "../../components/Matching";
 import styles from "./styles";
 
 const Community = () => {
+    const navigation = useNavigation();
+
     const userData = [
         { id: 1, picture: require("../../utils/images/profile.png") },
         { id: 2, picture: require("../../utils/images/profile.png") },
@@ -18,7 +21,9 @@ const Community = () => {
 
             <View style={styles.communityHeader}>
                 <View style={styles.containerLeft}>
-                    <TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => navigation.navigate("Home")}>
+
                         <Ionicons name={"arrow-back-outline"} color={"#333"} size={30}/>
                     </TouchableOpacity>
 
