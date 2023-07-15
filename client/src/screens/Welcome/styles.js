@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
         color: "#FFFFFF",
         fontFamily: "nunito-bold",
         fontSize: 35,
-        textAlign: "center"
+        textAlign: "center",
     },
     homeParagraph: {
         color: "#FFFFFF",
