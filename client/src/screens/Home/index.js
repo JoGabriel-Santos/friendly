@@ -34,8 +34,8 @@ const Home = () => {
             />
 
             <View style={styles.meetPeopleView}>
-                <Text style={styles.meetPeopleTitle}>Ready to meed a new friend?</Text>
-                <Text style={styles.meetPeopleDescr}>Start connecting with the world on Friendly</Text>
+                <Text style={styles.meetPeopleTitle}>Ready to meet a new friend?</Text>
+                <Text style={styles.meetPeopleDescr}>Start connecting with the world on Friend.ly</Text>
             </View>
 
             <View style={styles.meetPeopleButtons}>
