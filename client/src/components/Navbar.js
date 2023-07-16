@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
@@ -6,41 +6,86 @@ import { Ionicons } from "@expo/vector-icons";
 const Navbar = () => {
     const navigation = useNavigation();
 
+    const [currentScreen, setCurrentScreen] = useState("");
+
+    useEffect(() => {
+        return navigation.addListener("state", () => {
+            const updatedScreen = navigation.getCurrentRoute()?.name;
+            setCurrentScreen(updatedScreen);
+        });
+    }, [navigation]);
+
     return (
-        <View style={styles.viewNavbar}>
-            <View style={styles.navbar}>
-                <TouchableOpacity>
-                    <Ionicons name={"grid-outline"} color={"white"} size={25}/>
-                </TouchableOpacity>
+        <View style={styles.navbar}>
+            <TouchableOpacity
+                style={styles.navbarItem}
+                onPress={() => navigation.navigate("Home")}
+            >
+                <Ionicons
+                    name={"grid-outline"}
+                    color={currentScreen === "Home" ? "#5151C6" : "#BDBDBD"}
+                    size={25}
+                />
+            </TouchableOpacity>
 
-                <TouchableOpacity>
-                    <Ionicons name={"people-outline"} color={"white"} size={25}/>
-                </TouchableOpacity>
+            <TouchableOpacity
+                style={styles.navbarItem}
+                onPress={() => console.log("Notifications")}
+            >
+                <Ionicons
+                    name={"people-outline"}
+                    color={currentScreen === "Friends" ? "#5151C6" : "#BDBDBD"}
+                    size={25}
+                />
+            </TouchableOpacity>
 
-                <TouchableOpacity onPress={() => navigation.navigate("Community")}>
-                    <Ionicons name={"search-outline"} color={"white"} size={25}/>
-                </TouchableOpacity>
+            <TouchableOpacity
+                style={styles.navbarItem}
+                onPress={() => navigation.navigate("Community")}
+            >
+                <Ionicons
+                    name={"search-outline"}
+                    color={currentScreen === "Community" ? "#5151C6" : "#BDBDBD"}
+                    size={25}
+                />
+            </TouchableOpacity>
 
-                <TouchableOpacity>
-                    <Ionicons name={"person-outline"} color={"white"} size={25}/>
-                </TouchableOpacity>
-            </View>
+            <TouchableOpacity
+                style={styles.navbarItem}
+                onPress={() => console.log("Notifications")}
+            >
+                <Ionicons
+                    name={"notifications-outline"}
+                    color={currentScreen === "Notifications" ? "#5151C6" : "#BDBDBD"}
+                    size={25}
+                />
+            </TouchableOpacity>
+
+            <TouchableOpacity
+                style={styles.navbarItem}
+                onPress={() => navigation.navigate("Profile")}
+            >
+                <Ionicons
+                    name={"person-outline"}
+                    color={currentScreen === "Profile" ? "#5151C6" : "#BDBDBD"}
+                    size={25}
+                />
+            </TouchableOpacity>
         </View>
-    )
+    );
 };
 
 const styles = StyleSheet.create({
-    viewNavbar: {
-        flex: 1,
-    },
     navbar: {
-        backgroundColor: "#5151C6",
-        borderTopLeftRadius: 10,
-        borderTopRightRadius: 10,
+        borderColor: "rgba(81,81,198,0.2)",
+        borderTopWidth: 1,
         flexDirection: "row",
         justifyContent: "space-around",
         marginTop: "auto",
-        padding: 25,
+        padding: 10,
+    },
+    navbarItem: {
+        padding: 10,
     },
 });
 

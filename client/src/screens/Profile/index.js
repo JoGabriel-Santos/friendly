@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import { Image, ImageBackground, SafeAreaView, StatusBar, Text, TouchableOpacity, View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import Input from "../../components/Input";
 import styles from "./styles";
 
 const Profile = () => {
+    const navigation = useNavigation();
+
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -45,7 +48,7 @@ const Profile = () => {
                     <Text style={styles.editText}>Edit profile</Text>
                 </View>
 
-                <TouchableOpacity style={styles.backButton}>
+                <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate("Home")}>
                     <Ionicons name={"arrow-back-outline"} color={"white"} size={30}/>
                 </TouchableOpacity>
             </ImageBackground>

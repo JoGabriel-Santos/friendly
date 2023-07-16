@@ -1,7 +1,6 @@
 import React from "react";
 import { Image, ImageBackground, SafeAreaView, StatusBar, Text, TouchableOpacity, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import Navbar from "../../components/Navbar";
 import styles from "./styles";
 
 const Home = () => {
@@ -55,8 +54,6 @@ const Home = () => {
                     </Text>
                 </TouchableOpacity>
             </View>
-
-            <Navbar/>
         </SafeAreaView>
     )
 };

@@ -1,15 +1,13 @@
 import React from "react";
-import { useFonts } from "expo-font";
-
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-
+import { useFonts } from "expo-font";
 import Welcome from "./src/screens/Welcome";
 import Authentication from "./src/screens/Authentication";
 import Home from "./src/screens/Home";
 import Community from "./src/screens/Community";
 import Profile from "./src/screens/Profile";
-
+import Navbar from "./src/components/Navbar";
 import configFonts from "./src/utils/configFonts";
 
 const Stack = createStackNavigator();
@@ -26,6 +24,8 @@ function App() {
                 <Stack.Screen name="Community" component={Community}/>
                 <Stack.Screen name="Profile" component={Profile}/>
             </Stack.Navigator>
+
+            <Navbar/>
         </NavigationContainer>
     )
 }
