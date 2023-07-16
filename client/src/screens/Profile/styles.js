@@ -44,6 +44,25 @@ const styles = StyleSheet.create({
         fontSize: 22,
         textAlign: "center",
     },
+    viewSaveButton: {
+        right: 20,
+        position: "absolute",
+        top: "30%",
+    },
+    saveButton: {
+        backgroundColor: "transparent",
+        borderColor: "#FFFFFF",
+        borderWidth: 1,
+        borderRadius: 10,
+        paddingHorizontal: 15,
+        paddingVertical: 5,
+    },
+    saveText: {
+        color: "#FFFFFF",
+        fontFamily: "nunito-bold",
+        fontSize: 22,
+        textAlign: "center",
+    },
     backButton: {
         left: 20,
         position: "absolute",
@@ -56,19 +75,34 @@ const styles = StyleSheet.create({
         gap: 20,
         marginTop: 80,
     },
-    viewSaveButton: {
-        flex: 1,
+    viewButtons: {
+        flexDirection: "row",
+        gap: 20,
+        justifyContent: "space-between",
         paddingHorizontal: 20,
+        paddingVertical: 30,
     },
-    saveButton: {
+    buttonInterests: {
         backgroundColor: "#7c46fa",
-        borderRadius: 100,
-        marginBottom: 30,
-        marginTop: "auto",
-        padding: 18,
+        borderRadius: 10,
+        flex: 1,
+        paddingVertical: 15,
     },
-    saveText: {
-        color: "white",
+    buttonDesc: {
+        borderColor: "#7c46fa",
+        borderRadius: 10,
+        borderWidth: 1,
+        flex: 1,
+        paddingVertical: 15,
+    },
+    buttonTextInterests: {
+        color: "#FFFFFF",
+        fontFamily: "nunito-bold",
+        fontSize: 20,
+        textAlign: "center",
+    },
+    buttonTextDesc: {
+        color: "#7c46fa",
         fontFamily: "nunito-bold",
         fontSize: 20,
         textAlign: "center",
