@@ -22,15 +22,6 @@ const styles = StyleSheet.create({
         top: "64%",
         width: 110,
     },
-    photoButton: {
-        backgroundColor: "#5151C6",
-        borderRadius: 15,
-        left: "54%",
-        paddingHorizontal: 10,
-        paddingVertical: 10,
-        position: "absolute",
-        top: "110%",
-    },
     textContainer: {
         alignItems: "center",
         left: 0,
@@ -57,7 +48,7 @@ const styles = StyleSheet.create({
         gap: 10,
     },
     meetPeopleTitle: {
-        color: "#5151C6",
+        color: "#7c46fa",
         fontFamily: "nunito-bold",
         fontSize: 24,
     },
@@ -76,10 +67,10 @@ const styles = StyleSheet.create({
         padding: 16,
     },
     automatchButton: {
-        backgroundColor: "#5151C6",
+        backgroundColor: "#7c46fa",
     },
     manuallyButton: {
-        borderColor: "#333",
+        borderColor: "#7c46fa",
         borderWidth: 1,
     },
     meetPeopleText: {
@@ -91,7 +82,7 @@ const styles = StyleSheet.create({
         color: "white",
     },
     manuallyText: {
-        color: "#333",
+        color: "#7c46fa",
     },
 });
 

@@ -23,7 +23,7 @@ const Navbar = () => {
             >
                 <Ionicons
                     name={"grid-outline"}
-                    color={currentScreen === "Home" ? "#5151C6" : "#BDBDBD"}
+                    color={currentScreen === "Home" ? "#7c46fa" : "#BDBDBD"}
                     size={25}
                 />
             </TouchableOpacity>
@@ -34,7 +34,7 @@ const Navbar = () => {
             >
                 <Ionicons
                     name={"people-outline"}
-                    color={currentScreen === "Friends" ? "#5151C6" : "#BDBDBD"}
+                    color={currentScreen === "Friends" ? "#7c46fa" : "#BDBDBD"}
                     size={25}
                 />
             </TouchableOpacity>
@@ -45,7 +45,7 @@ const Navbar = () => {
             >
                 <Ionicons
                     name={"search-outline"}
-                    color={currentScreen === "Community" ? "#5151C6" : "#BDBDBD"}
+                    color={currentScreen === "Community" ? "#7c46fa" : "#BDBDBD"}
                     size={25}
                 />
             </TouchableOpacity>
@@ -56,7 +56,7 @@ const Navbar = () => {
             >
                 <Ionicons
                     name={"notifications-outline"}
-                    color={currentScreen === "Notifications" ? "#5151C6" : "#BDBDBD"}
+                    color={currentScreen === "Notifications" ? "#7c46fa" : "#BDBDBD"}
                     size={25}
                 />
             </TouchableOpacity>
@@ -67,7 +67,7 @@ const Navbar = () => {
             >
                 <Ionicons
                     name={"person-outline"}
-                    color={currentScreen === "Profile" ? "#5151C6" : "#BDBDBD"}
+                    color={currentScreen === "Profile" ? "#7c46fa" : "#BDBDBD"}
                     size={25}
                 />
             </TouchableOpacity>
@@ -77,7 +77,7 @@ const Navbar = () => {
 
 const styles = StyleSheet.create({
     navbar: {
-        borderColor: "rgba(81,81,198,0.2)",
+        borderColor: "rgba(124,70,250,0.2)",
         borderTopWidth: 1,
         flexDirection: "row",
         justifyContent: "space-around",

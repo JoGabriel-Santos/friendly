@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
         width: 110,
     },
     photoButton: {
-        backgroundColor: "#5151C6",
+        backgroundColor: "#7c46fa",
         borderRadius: 15,
         left: "54%",
         paddingHorizontal: 10,
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
     },
     saveButton: {
-        backgroundColor: "#5151C6",
+        backgroundColor: "#7c46fa",
         borderRadius: 100,
         marginBottom: 30,
         marginTop: "auto",

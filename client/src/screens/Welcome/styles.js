@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
         paddingTop: 60,
     },
     buttonLogin: {
-        backgroundColor: "#5151C6",
+        backgroundColor: "#7c46fa",
         borderRadius: 10,
         flex: 1,
         paddingVertical: 15,
