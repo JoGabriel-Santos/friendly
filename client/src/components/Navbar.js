@@ -67,7 +67,7 @@ const Navbar = () => {
             >
                 <Ionicons
                     name={"person-outline"}
-                    color={currentScreen === "Profile" || currentScreen === "Topics" ? "#7c46fa" : "#BDBDBD"}
+                    color={currentScreen === "Profile" || currentScreen === "Topics" || currentScreen === "Description" ? "#7c46fa" : "#BDBDBD"}
                     size={25}
                 />
             </TouchableOpacity>

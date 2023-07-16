@@ -7,6 +7,7 @@ import Authentication from "./src/screens/Authentication";
 import Home from "./src/screens/Home";
 import Community from "./src/screens/Community";
 import Profile from "./src/screens/Profile";
+import Description from "./src/components/Description";
 import Topics from "./src/components/Topics";
 import Navbar from "./src/components/Navbar";
 import configFonts from "./src/utils/configFonts";
@@ -24,6 +25,7 @@ function App() {
                 <Stack.Screen name="Home" component={Home}/>
                 <Stack.Screen name="Community" component={Community}/>
                 <Stack.Screen name="Profile" component={Profile}/>
+                <Stack.Screen name="Description" component={Description}/>
                 <Stack.Screen name="Topics" component={Topics}/>
             </Stack.Navigator>
 

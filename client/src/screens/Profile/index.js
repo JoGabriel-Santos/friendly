@@ -71,11 +71,17 @@ const Profile = () => {
                 </View>
 
                 <View style={styles.viewButtons}>
-                    <TouchableOpacity style={styles.buttonInterests} onPress={() => navigation.navigate("Topics")}>
+                    <TouchableOpacity
+                        style={styles.buttonInterests}
+                        onPress={() => navigation.navigate("Topics")}
+                    >
                         <Text style={styles.buttonTextInterests}>Topics of interest</Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={styles.buttonDesc}>
+                    <TouchableOpacity
+                        style={styles.buttonDesc}
+                        onPress={() => navigation.navigate("Description")}
+                    >
                         <Text style={styles.buttonTextDesc}>Description</Text>
                     </TouchableOpacity>
                 </View>
