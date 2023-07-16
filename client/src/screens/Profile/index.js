@@ -41,12 +41,23 @@ const Profile = () => {
                         />
 
                         <TouchableOpacity style={styles.photoButton}>
-                            <Ionicons name={"camera-outline"} color={"white"} size={20}/>
+                            <Ionicons
+                                name={"camera-outline"}
+                                color={"white"}
+                                size={20}
+                            />
                         </TouchableOpacity>
                     </View>
 
-                    <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate("Home")}>
-                        <Ionicons name={"arrow-back-outline"} color={"white"} size={30}/>
+                    <TouchableOpacity
+                        style={styles.backButton}
+                        onPress={() => navigation.navigate("Home")}
+                    >
+                        <Ionicons
+                            name={"arrow-back-outline"}
+                            color={"white"}
+                            size={30}
+                        />
                     </TouchableOpacity>
 
                     <View style={styles.textContainer}>

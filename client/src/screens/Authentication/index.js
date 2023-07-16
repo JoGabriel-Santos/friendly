@@ -75,10 +75,11 @@ const Authentication = () => {
                 </View>
 
                 <View style={styles.inputField}>
-                    {!isLoggingIn &&
+                    {
+                        !isLoggingIn &&
                         <Input placeHolder="Nome" onChangeText={handleNameChange} value={name}/>}
-                    <Input placeHolder="Email" onChangeText={handleEmailChange} value={email}/>
-                    <Input placeHolder="Senha" onChangeText={handlePasswordChange} value={password}/>
+                        <Input placeHolder="Email" onChangeText={handleEmailChange} value={email}/>
+                        <Input placeHolder="Senha" onChangeText={handlePasswordChange} value={password}/>
                 </View>
 
                 {
@@ -110,15 +111,24 @@ const Authentication = () => {
 
                 <View style={styles.loginButtons}>
                     <TouchableOpacity style={styles.loginButton}>
-                        <Ionicons name={"logo-google"} size={22}/>
+                        <Ionicons
+                            name={"logo-google"}
+                            size={22}
+                        />
                     </TouchableOpacity>
 
                     <TouchableOpacity style={styles.loginButton}>
-                        <Ionicons name={"logo-facebook"} size={22}/>
+                        <Ionicons
+                            name={"logo-facebook"}
+                            size={22}
+                        />
                     </TouchableOpacity>
 
                     <TouchableOpacity style={styles.loginButton}>
-                        <Ionicons name={"logo-apple"} size={22}/>
+                        <Ionicons
+                            name={"logo-apple"}
+                            size={22}
+                        />
                     </TouchableOpacity>
                 </View>
             </View>

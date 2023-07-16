@@ -22,16 +22,24 @@ const Community = () => {
             <View style={styles.communityHeader}>
                 <View style={styles.containerLeft}>
                     <TouchableOpacity
-                        onPress={() => navigation.navigate("Home")}>
-
-                        <Ionicons name={"arrow-back-outline"} color={"#333"} size={30}/>
+                        onPress={() => navigation.navigate("Home")}
+                    >
+                        <Ionicons
+                            name={"arrow-back-outline"}
+                            color={"#333"}
+                            size={30}
+                        />
                     </TouchableOpacity>
 
                     <Text style={styles.headerText}>Matches</Text>
                 </View>
 
                 <TouchableOpacity>
-                    <Ionicons name={"options-outline"} color={"#333"} size={30}/>
+                    <Ionicons
+                        name={"options-outline"}
+                        color={"#333"}
+                        size={30}
+                    />
                 </TouchableOpacity>
             </View>
 

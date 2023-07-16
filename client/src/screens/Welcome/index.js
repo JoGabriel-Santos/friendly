@@ -35,7 +35,6 @@ const Welcome = () => {
                         style={styles.buttonLogin}
                         onPress={() => navigation.navigate("Authentication", { authType: "login" })}
                     >
-
                         <Text style={styles.buttonTextLogin}>Login</Text>
                     </TouchableOpacity>
 
@@ -43,7 +42,6 @@ const Welcome = () => {
                         style={styles.buttonRegister}
                         onPress={() => navigation.navigate("Authentication", { authType: "register" })}
                     >
-
                         <Text style={styles.buttonTextRegister}>Register</Text>
                     </TouchableOpacity>
                 </View>

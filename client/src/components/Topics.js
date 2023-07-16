@@ -37,12 +37,14 @@ const Topics = () => {
                             <Ionicons
                                 name={"add-outline"}
                                 color={isTopicSelected ? "#7c46fa" : "#333"}
-                                size={25}/>
+                                size={25}
+                            />
                         ) : (
                             <Ionicons
                                 name={"checkmark-outline"}
                                 color={isTopicSelected ? "#7c46fa" : "#333"}
-                                size={25}/>
+                                size={25}
+                            />
                         )
                     }
                 </View>
@@ -57,8 +59,8 @@ const Topics = () => {
             <View style={styles.topicsHeader}>
                 <View style={styles.containerLeft}>
                     <TouchableOpacity
-                        onPress={() => navigation.navigate("Profile")}>
-
+                        onPress={() => navigation.navigate("Profile")}
+                    >
                         <Ionicons name={"arrow-back-outline"} color={"#333"} size={30}/>
                     </TouchableOpacity>
 

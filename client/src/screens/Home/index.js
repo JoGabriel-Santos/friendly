@@ -47,8 +47,8 @@ const Home = () => {
 
                 <TouchableOpacity
                     style={[styles.meetPeopleButton, styles.manuallyButton]}
-                    onPress={() => navigation.navigate("Community")}>
-
+                    onPress={() => navigation.navigate("Community")}
+                >
                     <Text style={[styles.meetPeopleText, styles.manuallyText]}>
                         Explore manually
                     </Text>
