@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Image, ImageBackground, ScrollView, StatusBar, Text, TouchableOpacity, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
+import Calendar from "../../components/Calendar";
 import Input from "../../components/Input";
 import styles from "./styles";
 
@@ -80,6 +81,8 @@ const Profile = () => {
                         <Input placeHolder="Password" onChangeText={handlePasswordChange} value={password}/>
                     </View>
                 </View>
+
+                <Calendar/>
 
                 <View style={styles.viewButtons}>
                     <TouchableOpacity

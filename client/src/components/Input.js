@@ -49,7 +49,7 @@ const Input = ({ placeHolder, onChangeText, value }) => {
 
     const placeholderColor = animatedPlaceholder.interpolate({
         inputRange: [0, 1],
-        outputRange: ["#555", "#1F41BB"],
+        outputRange: ["#555", "#7c46fa"],
     });
 
     return (

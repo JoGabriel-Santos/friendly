@@ -20,9 +20,12 @@ function App() {
     return !fontsLoader ? null : (
         <NavigationContainer>
             <Stack.Navigator screenOptions={{ headerShown: false }}>
+                <Stack.Screen name="Profile" component={Profile}/>
+
+
                 <Stack.Screen name="Home" component={Home}/>
                 <Stack.Screen name="Community" component={Community}/>
-                <Stack.Screen name="Profile" component={Profile}/>
+
                 <Stack.Screen name="Description" component={Description}/>
                 <Stack.Screen name="Topics" component={Topics}/>
                 <Stack.Screen name="Welcome" component={Welcome}/>
