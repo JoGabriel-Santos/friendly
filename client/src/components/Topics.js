@@ -59,6 +59,7 @@ const Topics = () => {
             <View style={styles.topicsHeader}>
                 <View style={styles.containerLeft}>
                     <TouchableOpacity
+                        style={styles.backButton}
                         onPress={() => navigation.navigate("Profile")}
                     >
                         <Ionicons name={"arrow-back-outline"} color={"#333"} size={30}/>
@@ -93,14 +94,18 @@ const styles = StyleSheet.create({
         borderColor: "rgba(51,51,51,0.2)",
         flexDirection: "row",
         justifyContent: "space-between",
-        paddingBottom: 20,
-        paddingTop: StatusBar.currentHeight + 20,
-        paddingHorizontal: 20,
+        paddingBottom: 10,
+        paddingTop: StatusBar.currentHeight + 10,
+        paddingLeft: 10,
+        paddingRight: 20,
     },
     containerLeft: {
         alignItems: "center",
         flexDirection: "row",
         gap: 20,
+    },
+    backButton: {
+        padding: 10,
     },
     headerText: {
         color: "#333",

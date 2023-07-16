@@ -22,6 +22,7 @@ const Community = () => {
             <View style={styles.communityHeader}>
                 <View style={styles.containerLeft}>
                     <TouchableOpacity
+                        style={styles.backButton}
                         onPress={() => navigation.navigate("Home")}
                     >
                         <Ionicons

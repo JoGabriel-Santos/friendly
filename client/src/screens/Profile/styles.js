@@ -64,9 +64,10 @@ const styles = StyleSheet.create({
         textAlign: "center",
     },
     backButton: {
-        left: 20,
+        left: 10,
+        padding: 10,
         position: "absolute",
-        top: "30%",
+        top: "24%",
     },
     containerEdit: {
         paddingHorizontal: 20,
