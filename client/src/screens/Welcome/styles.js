@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
         fontFamily: "nunito-bold",
         fontSize: 20,
         textAlign: "center",
-    }
+    },
 });
 
 export default styles;

@@ -8,9 +8,9 @@ import styles from "./styles";
 const Profile = () => {
     const navigation = useNavigation();
 
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
     const handleNameChange = (text) => {
         setName(text);
