@@ -5,7 +5,7 @@ import { Ionicons } from "@expo/vector-icons";
 const Input = ({ placeHolder, onChangeText, value }) => {
     const [focused, setFocused] = useState(false);
     const [passwordVisible, setPasswordVisible] = useState(false);
-    const isPassword = placeHolder === "Senha";
+    const isPassword = placeHolder === "Password";
 
     const animatedPlaceholder = useRef(new Animated.Value(value ? 1 : 0)).current;
 
