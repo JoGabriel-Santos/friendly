@@ -13,10 +13,6 @@ const Community = () => {
         { id: 2, picture: require("../../utils/images/profile.png") },
         { id: 3, picture: require("../../utils/images/profile.png") },
         { id: 4, picture: require("../../utils/images/profile.png") },
-        { id: 5, picture: require("../../utils/images/profile.png") },
-        { id: 6, picture: require("../../utils/images/profile.png") },
-        { id: 7, picture: require("../../utils/images/profile.png") },
-        { id: 8, picture: require("../../utils/images/profile.png") },
     ];
 
     return (
