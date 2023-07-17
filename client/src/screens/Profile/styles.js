@@ -77,11 +77,11 @@ const styles = StyleSheet.create({
         marginTop: 70,
     },
     viewButtons: {
-        flexDirection: "row",
+        flex: 1,
         gap: 20,
         justifyContent: "space-between",
         paddingHorizontal: 20,
-        paddingVertical: 30,
+        paddingTop: 40,
     },
     buttonInterests: {
         backgroundColor: "#7c46fa",

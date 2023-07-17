@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
 
 const Gender = () => {
     const [selectedGender, setSelectedGender] = useState(null);
@@ -11,72 +10,29 @@ const Gender = () => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.selectGenderText}>Select your gender</Text>
-
             <View style={styles.checkboxView}>
                 <TouchableOpacity
-                    style={styles.checkbox}
+                    style={[styles.checkbox,
+                        selectedGender === "Male" ?
+                            { backgroundColor: "#7c46fa" } : { backgroundColor: "#333" }]}
                     onPress={() => handleGenderSelection("Male")}
                 >
-                    {
-                        selectedGender === "Male" ? (
-                            <Ionicons
-                                name={"checkbox-outline"}
-                                color={"#7c46fa"}
-                                size={25}
-                            />
-                        ) : (
-                            <Ionicons
-                                name={"square-outline"}
-                                color={"#333"}
-                                size={25}
-                            />
-                        )
-                    }
                     <Text style={styles.genderName}>Male</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
-                    style={styles.checkbox}
+                    style={[styles.checkbox, selectedGender === "Female" ?
+                        { backgroundColor: "#7c46fa" } : { backgroundColor: "#333" }]}
                     onPress={() => handleGenderSelection("Female")}
                 >
-                    {
-                        selectedGender === "Female" ? (
-                            <Ionicons
-                                name={"checkbox-outline"}
-                                color={"#7c46fa"}
-                                size={25}
-                            />
-                        ) : (
-                            <Ionicons
-                                name={"square-outline"}
-                                color={"#333"}
-                                size={25}
-                            />
-                        )
-                    }
                     <Text style={styles.genderName}>Female</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
-                    style={styles.checkbox}
+                    style={[styles.checkbox, selectedGender === "Non binary" ?
+                        { backgroundColor: "#7c46fa" } : { backgroundColor: "#333" }]}
                     onPress={() => handleGenderSelection("Non binary")}
                 >
-                    {
-                        selectedGender === "Non binary" ? (
-                            <Ionicons
-                                name={"checkbox-outline"}
-                                color={"#7c46fa"}
-                                size={25}
-                            />
-                        ) : (
-                            <Ionicons
-                                name={"square-outline"}
-                                color={"#333"}
-                                size={25}
-                            />
-                        )
-                    }
                     <Text style={styles.genderName}>Non binary</Text>
                 </TouchableOpacity>
             </View>
@@ -88,26 +44,23 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         paddingHorizontal: 20,
-    },
-    selectGenderText: {
-        color: "#333",
-        fontFamily: "nunito-regular",
-        fontSize: 20,
-        marginBottom: 20,
+        paddingTop: 40,
     },
     checkboxView: {
         flexDirection: "row",
-        justifyContent: "space-between",
     },
     checkbox: {
         alignItems: "center",
-        flexDirection: "row",
-        gap: 10,
+        borderRadius: 5,
+        borderWidth: 1,
+        flex: 1,
+        height: 40,
+        justifyContent: "center",
+        marginHorizontal: 5,
     },
     genderName: {
-        color: "#333",
-        fontFamily: "nunito-regular",
-        fontSize: 22,
+        color: "#fff",
+        fontSize: 16,
     },
 });
 

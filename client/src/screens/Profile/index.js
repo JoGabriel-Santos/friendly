@@ -78,8 +78,6 @@ const Profile = () => {
                 <View style={styles.containerEdit}>
                     <View style={styles.inputField}>
                         <Input placeHolder="Name" onChangeText={handleNameChange} value={name}/>
-                        <Input placeHolder="Email" onChangeText={handleEmailChange} value={email}/>
-                        <Input placeHolder="Password" onChangeText={handlePasswordChange} value={password}/>
                     </View>
                 </View>
 
