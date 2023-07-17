@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Modal, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { getFormatedDate } from "react-native-modern-datepicker";
 import DatePicker from "react-native-modern-datepicker";
 import { months } from "../utils/months";
 
 const Calendar = () => {
     const [openStartDatePicker, setOpenStartDatePicker] = useState(false);
-    const [selectedDate, setSelectedDate] = useState("");
-    const [startedDate, setStartedDate] = useState("01/01/2000");
+    const [selectedDate, setSelectedDate] = useState("2000/01/01");
     const [userBirthday, setUserBirthday] = useState({});
 
     const handleChangeBirthday = (date) => {
@@ -49,7 +47,7 @@ const Calendar = () => {
                         onPress={handleOnPressStartDate}
                     >
                         <Text style={styles.inputButtonText}>
-                            {months[userBirthday.month - 1] + " " + userBirthday.day + userBirthday.ordinal + " (" + userBirthday.age + ")"}
+                            {months[userBirthday.month - 1] + " " + userBirthday.day + userBirthday.ordinal + " (" + userBirthday.age + " yo)"}
                         </Text>
                     </TouchableOpacity>
                 </View>
@@ -67,7 +65,6 @@ const Calendar = () => {
                             mode="calendar"
                             onDateChanged={handleChangeStartDate}
                             onSelectedChange={(date) => setSelectedDate(date)}
-                            selected={startedDate}
                             options={{
                                 backgroundColor: "#080516",
                                 mainColor: "#FFF",
