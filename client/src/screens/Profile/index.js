@@ -3,6 +3,7 @@ import { Image, ImageBackground, ScrollView, StatusBar, Text, TouchableOpacity, 
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import Calendar from "../../components/Calendar";
+import Gender from "../../components/Gender";
 import Input from "../../components/Input";
 import styles from "./styles";
 
@@ -83,6 +84,7 @@ const Profile = () => {
                 </View>
 
                 <Calendar/>
+                <Gender/>
 
                 <View style={styles.viewButtons}>
                     <TouchableOpacity

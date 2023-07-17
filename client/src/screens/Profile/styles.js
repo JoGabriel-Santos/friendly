@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     },
     inputField: {
         gap: 20,
-        marginTop: 80,
+        marginTop: 70,
     },
     viewButtons: {
         flexDirection: "row",

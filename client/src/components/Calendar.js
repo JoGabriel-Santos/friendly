@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
     },
     viewCalendar: {
         paddingHorizontal: 20,
-        paddingVertical: 40,
+        paddingVertical: 30,
         width: "100%",
     },
     selectDateText: {
