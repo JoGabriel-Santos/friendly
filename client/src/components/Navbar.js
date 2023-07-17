@@ -45,7 +45,7 @@ const Navbar = () => {
             >
                 <Ionicons
                     name={"search-outline"}
-                    color={currentScreen === "Community" ? "#7c46fa" : "#BDBDBD"}
+                    color={currentScreen === "Community" || currentScreen === "User" ? "#7c46fa" : "#BDBDBD"}
                     size={25}
                 />
             </TouchableOpacity>

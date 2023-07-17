@@ -1,11 +1,16 @@
 import React from "react";
-import { FlatList, Image, StyleSheet, Text, View } from "react-native";
+import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import CountryFlag from "react-native-country-flag";
 
 const Matching = ({ userData }) => {
+    const navigation = useNavigation();
 
     const renderCard = ({ item }) => (
-        <View style={styles.card}>
+        <TouchableOpacity
+            style={styles.card}
+            onPress={() => navigation.navigate("User")}
+        >
             <Image
                 style={styles.profilePicture}
                 source={item.picture}
@@ -25,7 +30,7 @@ const Matching = ({ userData }) => {
 
                 <Text style={styles.matchedInfo}>Common interests: 2</Text>
             </View>
-        </View>
+        </TouchableOpacity>
     )
 
     return (
