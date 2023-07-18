@@ -29,7 +29,8 @@ const Navbar = () => {
     }, [navigation]);
 
     return (
-        <View style={styles.navbar}>
+        <View style={[styles.navbar,
+            currentScreen === "Welcome" || currentScreen === "Authentication" ? { display: "none" } : { display: "flex" }]}>
             <NavButton
                 iconName="grid-outline"
                 screenName="Home"

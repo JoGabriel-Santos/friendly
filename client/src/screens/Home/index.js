@@ -1,10 +1,34 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Image, ImageBackground, SafeAreaView, StatusBar, Text, TouchableOpacity, View } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useFocusEffect } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as API from "../../api/index";
 import styles from "./styles";
 
 const Home = () => {
     const navigation = useNavigation();
+
+    const [userInfo, setUserInfo] = useState(null);
+
+    useFocusEffect(() => {
+        const fetchUserInfo = async () => {
+            try {
+                const user = await AsyncStorage.getItem("userInfo");
+                if (user) {
+                    const userInfoJSON = JSON.parse(user);
+                    setUserInfo(userInfoJSON);
+
+                } else {
+                    navigation.navigate("Welcome");
+                }
+
+            } catch (error) {
+                console.log("An error occurred: ", error);
+            }
+        };
+
+        fetchUserInfo();
+    });
 
     return (
         <SafeAreaView style={styles.container}>
@@ -23,7 +47,7 @@ const Home = () => {
                 </View>
 
                 <View style={styles.textContainer}>
-                    <Text style={styles.editText}>Good morning, Gabriel!</Text>
+                    {userInfo && (<Text style={styles.editText}>Hello, {userInfo.name}!</Text>)}
                 </View>
             </ImageBackground>
 

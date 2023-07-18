@@ -102,35 +102,41 @@ const styles = StyleSheet.create({
     },
     viewButtons: {
         flex: 1,
-        gap: 20,
+        gap: 22,
         justifyContent: "space-between",
         paddingHorizontal: 20,
-        paddingTop: 40,
+        paddingVertical: 40,
     },
-    buttonInterests: {
-        backgroundColor: "#7c46fa",
-        borderRadius: 10,
-        flex: 1,
-        paddingVertical: 15,
-    },
-    buttonDesc: {
-        borderColor: "#7c46fa",
+    button: {
         borderRadius: 10,
         borderWidth: 1,
         flex: 1,
         paddingVertical: 15,
     },
-    buttonTextInterests: {
-        color: "#FFFFFF",
+    buttonInterests: {
+        borderWidth: 0,
+        backgroundColor: "#7c46fa",
+        borderRadius: 10,
+    },
+    buttonDesc: {
+        borderColor: "#7c46fa",
+    },
+    buttonLogout: {
+        borderColor: "#fa4646",
+    },
+    buttonText: {
         fontFamily: "nunito-bold",
         fontSize: 20,
         textAlign: "center",
     },
+    buttonTextInterests: {
+        color: "#FFFFFF",
+    },
     buttonTextDesc: {
         color: "#7c46fa",
-        fontFamily: "nunito-bold",
-        fontSize: 20,
-        textAlign: "center",
+    },
+    buttonTextLogout: {
+        color: "#fa4646",
     },
 });
 

@@ -35,7 +35,7 @@ const Community = () => {
                     <Text style={styles.headerText}>Matches</Text>
                 </View>
 
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.navigate("Filters")}>
                     <Ionicons
                         name={"options-outline"}
                         color={"#333"}

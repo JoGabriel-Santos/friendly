@@ -4,7 +4,7 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Input from "../../components/Input";
-// import * as API from "../../api/index";
+import * as API from "../../api/index";
 import styles from "./styles";
 
 const Authentication = () => {
@@ -20,15 +20,17 @@ const Authentication = () => {
     const [isLoggingIn, setIsLoggingIn] = useState(authType === "login");
 
     const handleAuthentication = async () => {
-        const userInfo = { name, email: "jgabriel.personal@gmail.com", password: "pass" };
+        const userInfo = { name, email, password };
 
         if (isLoggingIn) {
-            // const { data } = await API.signin(userInfo);
-            // await AsyncStorage.setItem("userInfo", JSON.stringify(data.result));
+            const { data } = await API.signin(userInfo);
+            await AsyncStorage.setItem("userInfo", JSON.stringify(data.result));
+
+            navigation.navigate("Home");
 
         } else {
-            // const { data } = await API.signup(userInfo);
-            // await AsyncStorage.setItem("userInfo", JSON.stringify(data.result));
+            const { data } = await API.signup(userInfo);
+            await AsyncStorage.setItem("userInfo", JSON.stringify(data.result));
 
             navigation.navigate("Home");
         }

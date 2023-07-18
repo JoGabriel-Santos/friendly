@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Image, ImageBackground, ScrollView, StatusBar, Text, TouchableOpacity, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import Calendar from "../../components/Calendar";
 import Gender from "../../components/Gender";
 import Input from "../../components/Input";
@@ -14,6 +15,16 @@ const Profile = () => {
 
     const handleNameChange = (text) => {
         setName(text);
+    };
+
+    const logout = async () => {
+        try {
+            await AsyncStorage.removeItem("userInfo");
+            navigation.navigate("Welcome")
+
+        } catch (error) {
+            console.log("An error occurred: ", error);
+        }
     };
 
     return (
@@ -92,17 +103,24 @@ const Profile = () => {
 
                 <View style={styles.viewButtons}>
                     <TouchableOpacity
-                        style={styles.buttonInterests}
+                        style={[styles.button, styles.buttonInterests]}
                         onPress={() => navigation.navigate("Topics")}
                     >
-                        <Text style={styles.buttonTextInterests}>Topics of interest</Text>
+                        <Text style={[styles.buttonTextInterests, styles.buttonText]}>Topics of interest</Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity
-                        style={styles.buttonDesc}
+                        style={[styles.button, styles.buttonDesc]}
                         onPress={() => navigation.navigate("Description")}
                     >
-                        <Text style={styles.buttonTextDesc}>Description</Text>
+                        <Text style={[styles.buttonTextDesc, styles.buttonText]}>Description</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                        style={[styles.button, styles.buttonLogout]}
+                        onPress={logout}
+                    >
+                        <Text style={[styles.buttonTextLogout, styles.buttonText]}>Logout</Text>
                     </TouchableOpacity>
                 </View>
             </ScrollView>
