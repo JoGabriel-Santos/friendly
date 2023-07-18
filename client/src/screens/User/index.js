@@ -9,6 +9,8 @@ const User = () => {
 
     const [showFullBio, setShowFullBio] = useState(false);
 
+    const proficiencyLevels = ["Beginner", "Intermediate", "Advanced", "Fluent", "Native"];
+
     const bio = "Lorem ipsum dolor sit amet, consectetur adipiscing elit," +
         " sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." +
         " Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi" +
@@ -165,6 +167,28 @@ const User = () => {
                         <Text style={styles.commonTopic}>Technology</Text>
                         <Text style={styles.uncommonTopic}>Travel</Text>
                         <Text style={styles.uncommonTopic}>Writing</Text>
+                    </View>
+                </View>
+
+                <View style={styles.viewProficiency}>
+                    <Text style={styles.aboutUserText}>Proficiency</Text>
+
+                    <View style={styles.proficiencyIndicator}>
+                        <Text style={styles.indicatorText}>English</Text>
+
+                        <View style={styles.indicatorIcon}>
+                            {
+                                proficiencyLevels.map((level, index) => (
+                                    <Ionicons
+                                        key={index}
+                                        name={index - 1 < proficiencyLevels.indexOf("Advanced")
+                                            ? "radio-button-on-outline" : "radio-button-off-outline"}
+                                        color={"#333"}
+                                        size={15}
+                                    />
+                                ))
+                            }
+                        </View>
                     </View>
                 </View>
             </ScrollView>

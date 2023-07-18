@@ -52,8 +52,8 @@ const styles = StyleSheet.create({
     },
     bio: {
         paddingHorizontal: 20,
-        paddingBottom: 10,
-        paddingTop: 5,
+        paddingBottom: 20,
+        paddingTop: 10,
     },
     bioText: {
         color: "#333",
@@ -76,9 +76,12 @@ const styles = StyleSheet.create({
     },
     viewUserContacts: {
         alignItems: "center",
+        borderColor: "rgba(124,70,250,0.2)",
+        borderTopWidth: 1,
         flexDirection: "row",
         justifyContent: "space-between",
-        padding: 20,
+        paddingVertical: 15,
+        marginHorizontal: 20,
     },
     userContacts: {
         alignItems: "center",
@@ -91,9 +94,11 @@ const styles = StyleSheet.create({
         textAlign: "center",
     },
     viewUserInformation: {
+        borderColor: "rgba(124,70,250,0.2)",
+        borderTopWidth: 1,
         gap: 10,
-        paddingHorizontal: 20,
-        paddingVertical: 10,
+        paddingVertical: 15,
+        marginHorizontal: 20,
     },
     userInformation: {
         alignItems: "center",
@@ -106,13 +111,16 @@ const styles = StyleSheet.create({
         fontSize: 18,
     },
     viewTopics: {
-        padding: 20,
+        borderColor: "rgba(124,70,250,0.2)",
+        borderTopWidth: 1,
+        paddingVertical: 15,
+        marginHorizontal: 20,
     },
     topics: {
         flexDirection: "row",
         flexWrap: "wrap",
         gap: 5,
-        paddingTop: 10,
+        paddingTop: 15,
     },
     commonTopic: {
         backgroundColor: "#7c46fa",
@@ -128,6 +136,24 @@ const styles = StyleSheet.create({
         color: "#333",
         paddingHorizontal: 10,
         paddingVertical: 5,
+    },
+    viewProficiency: {
+        borderColor: "rgba(124,70,250,0.2)",
+        borderTopWidth: 1,
+        paddingVertical: 15,
+        marginHorizontal: 20,
+    },
+    proficiencyIndicator: {
+        paddingTop: 10,
+    },
+    indicatorText: {
+        color: "#333",
+        fontFamily: "nunito-regular",
+        fontSize: 18,
+    },
+    indicatorIcon: {
+        flexDirection: "row",
+        paddingTop: 2,
     },
 });
 
