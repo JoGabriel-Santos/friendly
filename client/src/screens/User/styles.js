@@ -45,15 +45,15 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         paddingTop: 70,
     },
-    aboutUserText:{
+    aboutUserText: {
         color: "#4a4848",
         fontFamily: "nunito-bold",
-        fontSize: 15,
+        fontSize: 16,
     },
     bio: {
         paddingHorizontal: 20,
         paddingBottom: 10,
-        paddingTop: 15,
+        paddingTop: 5,
     },
     bioText: {
         color: "#333",
@@ -84,21 +84,16 @@ const styles = StyleSheet.create({
         alignItems: "center",
         gap: 10,
     },
-    contactIcon: {
-        borderColor: "#7c46fa",
-        borderRadius: 100,
-        borderWidth: 1,
-        padding: 10,
-    },
     contactText: {
-        fontFamily: "nunito-regular",
+        color: "#333",
+        fontFamily: "nunito-semiBold",
         fontSize: 16,
         textAlign: "center",
     },
     viewUserInformation: {
         gap: 10,
         paddingHorizontal: 20,
-        paddingTop: 10,
+        paddingVertical: 10,
     },
     userInformation: {
         alignItems: "center",
@@ -109,7 +104,31 @@ const styles = StyleSheet.create({
         color: "#333",
         fontFamily: "nunito-regular",
         fontSize: 18,
-    }
+    },
+    viewTopics: {
+        padding: 20,
+    },
+    topics: {
+        flexDirection: "row",
+        flexWrap: "wrap",
+        gap: 8,
+        paddingTop: 10,
+    },
+    commonTopic: {
+        backgroundColor: "#7c46fa",
+        borderRadius: 15,
+        color: "#FFFFFF",
+        paddingHorizontal: 10 + 1,
+        paddingVertical: 5 + 1,
+    },
+    uncommonTopic: {
+        backgroundColor: "#FFFFFF",
+        borderRadius: 15,
+        borderWidth: 1,
+        color: "#333",
+        paddingHorizontal: 10,
+        paddingVertical: 5,
+    },
 });
 
 export default styles;

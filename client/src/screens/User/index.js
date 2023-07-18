@@ -6,9 +6,13 @@ import styles from "./styles";
 const User = () => {
     const [showFullBio, setShowFullBio] = useState(false);
 
-    const bio = "If you don't have anything specific in mind, " +
-        "tell me about your day, what you enjoy doing, " +
-        "what makes you happy, or what your dreams are...";
+    const bio = "Lorem ipsum dolor sit amet, consectetur adipiscing elit," +
+        " sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." +
+        " Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi" +
+        " ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit" +
+        " in voluptate velit esse cillum dolore eu fugiat nulla pariatur." +
+        " Excepteur sint occaecat cupidatat non proident, sunt in culpa qui" +
+        " officia deserunt mollit anim id est laborum.";
 
     return (
         <View style={styles.container}>
@@ -39,12 +43,12 @@ const User = () => {
                     </TouchableOpacity>
 
                     <View style={styles.textContainer}>
-                        <Text style={styles.userNameText}>João Gabriel</Text>
+                        <Text style={styles.userNameText}>Cleitin</Text>
                     </View>
                 </ImageBackground>
 
                 <View style={styles.aboutUser}>
-                    <Text style={styles.aboutUserText}>About João Gabriel</Text>
+                    <Text style={styles.aboutUserText}>About Cleitin</Text>
                 </View>
 
                 <View style={styles.bio}>
@@ -64,21 +68,19 @@ const User = () => {
                 <View style={styles.viewUserContacts}>
                     <TouchableOpacity style={styles.userContacts}>
                         <Ionicons
-                            style={styles.contactIcon}
-                            name={"videocam-outline"}
-                            color={"#7c46fa"}
-                            size={30}
+                            name={"person-add-outline"}
+                            color={"#333"}
+                            size={28}
                         />
 
-                        <Text style={styles.contactText}>Video call</Text>
+                        <Text style={styles.contactText}>Add friend</Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity style={styles.userContacts}>
                         <Ionicons
-                            style={styles.contactIcon}
                             name={"call-outline"}
-                            color={"#7c46fa"}
-                            size={30}
+                            color={"#333"}
+                            size={28}
                         />
 
                         <Text style={styles.contactText}>Audio call</Text>
@@ -86,24 +88,22 @@ const User = () => {
 
                     <TouchableOpacity style={styles.userContacts}>
                         <Ionicons
-                            style={styles.contactIcon}
-                            name={"chatbubbles-outline"}
-                            color={"#7c46fa"}
-                            size={30}
+                            name={"videocam-outline"}
+                            color={"#333"}
+                            size={28}
                         />
 
-                        <Text style={styles.contactText}>Message</Text>
+                        <Text style={styles.contactText}>Video call</Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity style={styles.userContacts}>
                         <Ionicons
-                            style={styles.contactIcon}
-                            name={"person-add-outline"}
-                            color={"#7c46fa"}
-                            size={30}
+                            name={"chatbubbles-outline"}
+                            color={"#333"}
+                            size={28}
                         />
 
-                        <Text style={styles.contactText}>Add friend</Text>
+                        <Text style={styles.contactText}>Message</Text>
                     </TouchableOpacity>
                 </View>
 
@@ -146,6 +146,22 @@ const User = () => {
                         />
 
                         <Text style={styles.infoText}>100km</Text>
+                    </View>
+                </View>
+
+                <View style={styles.viewTopics}>
+                    <Text style={styles.aboutUserText}>Topics of interests</Text>
+
+                    <View style={styles.topics}>
+                        <Text style={styles.commonTopic}>Animals</Text>
+                        <Text style={styles.commonTopic}>Books</Text>
+                        <Text style={styles.commonTopic}>Coding</Text>
+                        <Text style={styles.commonTopic}>Gaming</Text>
+                        <Text style={styles.commonTopic}>Music</Text>
+                        <Text style={styles.commonTopic}>Science</Text>
+                        <Text style={styles.commonTopic}>Technology</Text>
+                        <Text style={styles.uncommonTopic}>Travel</Text>
+                        <Text style={styles.uncommonTopic}>Writing</Text>
                     </View>
                 </View>
             </ScrollView>
