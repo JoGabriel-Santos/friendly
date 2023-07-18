@@ -1,9 +1,11 @@
 import React from "react";
 import { SafeAreaView, StatusBar, Text, TouchableOpacity, View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import styles from "./styles";
 
 const Friends = () => {
+    const navigation = useNavigation();
 
     return (
         <SafeAreaView style={styles.container}>
