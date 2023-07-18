@@ -77,7 +77,7 @@ const Navbar = () => {
 
 const styles = StyleSheet.create({
     navbar: {
-        borderColor: "rgba(124,70,250,0.2)",
+        borderColor: "#BDBDBD",
         borderTopWidth: 1,
         flexDirection: "row",
         justifyContent: "space-around",

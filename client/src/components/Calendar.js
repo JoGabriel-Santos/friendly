@@ -5,7 +5,7 @@ import { months } from "../utils/months";
 
 const Calendar = () => {
     const [openStartDatePicker, setOpenStartDatePicker] = useState(false);
-    const [selectedDate, setSelectedDate] = useState("2000/01/01");
+    const [selectedDate, setSelectedDate] = useState("2001/01/01");
     const [userBirthday, setUserBirthday] = useState({});
 
     const handleChangeBirthday = (date) => {

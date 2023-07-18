@@ -52,7 +52,6 @@ const styles = StyleSheet.create({
     checkbox: {
         alignItems: "center",
         borderRadius: 5,
-        borderWidth: 1,
         flex: 1,
         height: 40,
         justifyContent: "center",
