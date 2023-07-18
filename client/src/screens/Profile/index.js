@@ -11,19 +11,9 @@ const Profile = () => {
     const navigation = useNavigation();
 
     const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
 
     const handleNameChange = (text) => {
         setName(text);
-    };
-
-    const handleEmailChange = (text) => {
-        setEmail(text);
-    };
-
-    const handlePasswordChange = (text) => {
-        setPassword(text);
     };
 
     return (
@@ -82,6 +72,22 @@ const Profile = () => {
                 </View>
 
                 <Calendar/>
+
+                <View style={styles.viewProficiency}>
+                    <View>
+                        <Text style={styles.selectProficiency}>Select your English proficiency</Text>
+                        <TouchableOpacity
+                            style={styles.inputButton}
+                            onPress={() => navigation.navigate("Proficiency")}
+                        >
+
+                            <Text style={styles.inputButtonText}>
+                                Beginner
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+
                 <Gender/>
 
                 <View style={styles.viewButtons}>

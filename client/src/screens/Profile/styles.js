@@ -76,6 +76,30 @@ const styles = StyleSheet.create({
         gap: 20,
         marginTop: 70,
     },
+    viewProficiency: {
+        paddingHorizontal: 20,
+        paddingTop: 30,
+        width: "100%",
+    },
+    selectProficiency: {
+        color: "#333",
+        fontFamily: "nunito-regular",
+        fontSize: 20,
+        marginBottom: 10,
+    },
+    inputButton: {
+        borderColor: "#333",
+        borderRadius: 5,
+        borderWidth: 1,
+        height: 60,
+        justifyContent: "center",
+        paddingLeft: 10,
+    },
+    inputButtonText: {
+        color: "#333",
+        fontFamily: "nunito-regular",
+        fontSize: 20,
+    },
     viewButtons: {
         flex: 1,
         gap: 20,
