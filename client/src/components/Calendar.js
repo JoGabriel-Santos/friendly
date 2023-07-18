@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
         color: "#333",
         fontFamily: "nunito-regular",
         fontSize: 20,
-        marginBottom: 20,
+        marginBottom: 10,
     },
     inputButton: {
         borderColor: "#333",
