@@ -5,6 +5,7 @@ import { useFonts } from "expo-font";
 import Welcome from "./src/screens/Welcome";
 import Authentication from "./src/screens/Authentication";
 import Home from "./src/screens/Home";
+import Friends from "./src/screens/Friends";
 import Community from "./src/screens/Community";
 import User from "./src/screens/User";
 import Profile from "./src/screens/Profile";
@@ -23,6 +24,7 @@ function App() {
         <NavigationContainer>
             <Stack.Navigator screenOptions={{ headerShown: false }}>
                 <Stack.Screen name="Home" component={Home}/>
+                <Stack.Screen name="Friends" component={Friends}/>
                 <Stack.Screen name="Community" component={Community}/>
                 <Stack.Screen name="User" component={User}/>
                 <Stack.Screen name="Profile" component={Profile}/>

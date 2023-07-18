@@ -1,0 +1,34 @@
+import React from "react";
+import { SafeAreaView, StatusBar, Text, TouchableOpacity, View } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import styles from "./styles";
+
+const Friends = () => {
+
+    return (
+        <SafeAreaView style={styles.container}>
+            <StatusBar backgroundColor="transparent" barStyle="dark-content" translucent={true}/>
+
+            <View style={styles.friendsHeader}>
+                <View style={styles.containerLeft}>
+                    <TouchableOpacity
+                        style={styles.backButton}
+                        onPress={() => navigation.navigate("Home")}
+                    >
+                        <Ionicons
+                            name={"arrow-back-outline"}
+                            color={"#333"}
+                            size={30}
+                        />
+                    </TouchableOpacity>
+
+                    <Text style={styles.headerText}>Friends</Text>
+                </View>
+            </View>
+
+
+        </SafeAreaView>
+    );
+};
+
+export default Friends;
