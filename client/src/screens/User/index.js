@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { Image, ImageBackground, ScrollView, StatusBar, Text, TouchableOpacity, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 import styles from "./styles";
 
 const User = () => {
+    const navigation = useNavigation();
+
     const [showFullBio, setShowFullBio] = useState(false);
 
     const bio = "Lorem ipsum dolor sit amet, consectetur adipiscing elit," +

@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
     topics: {
         flexDirection: "row",
         flexWrap: "wrap",
-        gap: 8,
+        gap: 5,
         paddingTop: 10,
     },
     commonTopic: {
