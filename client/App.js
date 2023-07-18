@@ -7,6 +7,7 @@ import Authentication from "./src/screens/Authentication";
 import Home from "./src/screens/Home";
 import Friends from "./src/screens/Friends";
 import Community from "./src/screens/Community";
+import Notifications from "./src/screens/Notifications";
 import User from "./src/screens/User";
 import Profile from "./src/screens/Profile";
 import Proficiency from "./src/components/Proficiency";
@@ -26,6 +27,7 @@ function App() {
                 <Stack.Screen name="Home" component={Home}/>
                 <Stack.Screen name="Friends" component={Friends}/>
                 <Stack.Screen name="Community" component={Community}/>
+                <Stack.Screen name="Notifications" component={Notifications}/>
                 <Stack.Screen name="User" component={User}/>
                 <Stack.Screen name="Profile" component={Profile}/>
                 <Stack.Screen name="Proficiency" component={Proficiency}/>
@@ -38,6 +40,6 @@ function App() {
             <Navbar/>
         </NavigationContainer>
     );
-};
+}
 
 export default App;
