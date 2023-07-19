@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Image, ImageBackground, SafeAreaView, StatusBar, Text, TouchableOpacity, View } from "react-native";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -10,8 +10,8 @@ const Home = () => {
 
     const [userInfo, setUserInfo] = useState(null);
 
-    useFocusEffect(() => {
-        const fetchUserInfo = async () => {
+    const fetchUserInfo = useCallback(() => {
+        const getUserInfo = async () => {
             try {
                 const user = await AsyncStorage.getItem("userInfo");
                 if (user) {
@@ -27,8 +27,10 @@ const Home = () => {
             }
         };
 
-        fetchUserInfo();
-    });
+        getUserInfo();
+    }, [navigation]);
+
+    useFocusEffect(fetchUserInfo);
 
     return (
         <SafeAreaView style={styles.container}>
@@ -41,7 +43,7 @@ const Home = () => {
             >
                 <View style={styles.profileImageView}>
                     <Image
-                        source={require("../../utils/images/profile.png")}
+                        source={!userInfo?.photo && require("../../utils/images/userPhoto.png")}
                         style={styles.profileImage}
                     />
                 </View>

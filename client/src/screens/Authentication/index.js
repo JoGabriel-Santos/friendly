@@ -32,7 +32,7 @@ const Authentication = () => {
             const { data } = await API.signup(userInfo);
             await AsyncStorage.setItem("userInfo", JSON.stringify(data.result));
 
-            navigation.navigate("Home");
+            navigation.navigate("Profile");
         }
     }
 

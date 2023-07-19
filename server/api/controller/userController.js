@@ -5,6 +5,18 @@ import User from "../../models/user.js";
 
 const secret = "Y8bD7rK2sF9aZ1";
 
+export const fetchUserData = async (request, response) => {
+    const { email } = request.body;
+
+    try {
+        const userData = await User.findOne({ email });
+        response.status(200).json(userData);
+
+    } catch (error) {
+        response.status(409).json({ message: error });
+    }
+};
+
 export const signin = async (request, response) => {
     const { email, password } = request.body;
 
@@ -27,7 +39,7 @@ export const signin = async (request, response) => {
     } catch (error) {
         response.status(500).json({ message: "Internal server error" });
     }
-}
+};
 
 export const signup = async (request, response) => {
     const { name, email, password } = request.body;
