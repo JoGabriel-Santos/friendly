@@ -10,27 +10,6 @@ const styles = StyleSheet.create({
         justifyContent: "flex-start",
         width: "100%",
     },
-    profileImageView: {
-        alignItems: "center",
-        flex: 1,
-        position: "relative",
-    },
-    profileImage: {
-        borderRadius: 100,
-        height: 110,
-        position: "absolute",
-        top: "64%",
-        width: 110,
-    },
-    photoButton: {
-        backgroundColor: "#7c46fa",
-        borderRadius: 15,
-        left: "54%",
-        paddingHorizontal: 10,
-        paddingVertical: 10,
-        position: "absolute",
-        top: "110%",
-    },
     textContainer: {
         alignItems: "center",
         left: 0,

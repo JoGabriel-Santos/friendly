@@ -3,6 +3,7 @@ import { Image, ImageBackground, ScrollView, StatusBar, Text, TouchableOpacity, 
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import ImagePicker from "../../components/ImagePicker";
 import Calendar from "../../components/Calendar";
 import Gender from "../../components/Gender";
 import Input from "../../components/Input";
@@ -37,20 +38,7 @@ const Profile = () => {
                     style={styles.headerBackground}
                     resizeMode="cover"
                 >
-                    <View style={styles.profileImageView}>
-                        <Image
-                            source={require("../../utils/images/profile.png")}
-                            style={styles.profileImage}
-                        />
-
-                        <TouchableOpacity style={styles.photoButton}>
-                            <Ionicons
-                                name={"camera-outline"}
-                                color={"white"}
-                                size={20}
-                            />
-                        </TouchableOpacity>
-                    </View>
+                    <ImagePicker/>
 
                     <TouchableOpacity
                         style={styles.backButton}
