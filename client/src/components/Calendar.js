@@ -3,7 +3,7 @@ import { Modal, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from "r
 import DatePicker from "react-native-modern-datepicker";
 import { months } from "../utils/months";
 
-const Calendar = () => {
+const Calendar = ({ handleSavingData }) => {
     const [openStartDatePicker, setOpenStartDatePicker] = useState(false);
     const [selectedDate, setSelectedDate] = useState("2001/01/01");
     const [userBirthday, setUserBirthday] = useState({});
@@ -23,6 +23,7 @@ const Calendar = () => {
         const ordinal = ordinals[(day % 100 > 10 && day % 100 < 14) ? 0 : Math.min(day % 10, 3)];
 
         setUserBirthday({ year, month, day, ordinal, age });
+        handleSavingData("birthday", { year, month, day, ordinal, age });
     }
 
     function handleChangeStartDate(propDate) {

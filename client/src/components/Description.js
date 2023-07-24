@@ -3,8 +3,10 @@ import { SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, TextInput, Touch
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 
-const Description = () => {
+const Description = ({ route }) => {
     const navigation = useNavigation();
+
+    const { handleSavingData } = route.params;
 
     const [description, setDescription] = useState("");
 
@@ -24,7 +26,10 @@ const Description = () => {
                     <Text style={styles.headerText}>Description</Text>
                 </View>
 
-                <TouchableOpacity style={styles.saveButton}>
+                <TouchableOpacity
+                    style={styles.saveButton}
+                    onPress={() => handleSavingData("description", description)}
+                >
                     <Text style={styles.saveText}>Save</Text>
                 </TouchableOpacity>
             </View>

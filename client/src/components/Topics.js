@@ -4,8 +4,10 @@ import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import topics from "../utils/topics";
 
-const Topics = () => {
+const Topics = ({ route }) => {
     const navigation = useNavigation();
+
+    const { handleSavingData } = route.params;
 
     const [selectedTopics, setSelectedTopics] = useState([]);
 
@@ -68,7 +70,10 @@ const Topics = () => {
                     <Text style={styles.headerText}>Topics of interest</Text>
                 </View>
 
-                <TouchableOpacity style={styles.saveButton}>
+                <TouchableOpacity
+                    style={styles.saveButton}
+                    onPress={() => handleSavingData("topics", selectedTopics)}
+                >
                     <Text style={styles.saveText}>Save</Text>
                 </TouchableOpacity>
             </View>

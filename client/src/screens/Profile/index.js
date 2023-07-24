@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Image, ImageBackground, ScrollView, StatusBar, Text, TouchableOpacity, View } from "react-native";
+import { ImageBackground, ScrollView, StatusBar, Text, TouchableOpacity, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -12,26 +12,38 @@ import styles from "./styles";
 const Profile = () => {
     const navigation = useNavigation();
 
-    const [name, setName] = useState("");
+    const [userData, setUserData] = useState({
+        name: "",
+        birthday: "",
+        proficiency: "",
+        gender: "",
+        topics: "",
+        description: "",
+    });
 
-    const handleNameChange = (text) => {
-        setName(text);
+    const handleSavingData = (name, value) => {
+        setUserData((prevData) => ({ ...prevData, [name]: value }));
     };
 
     const logout = async () => {
         try {
             await AsyncStorage.removeItem("userInfo");
-            navigation.navigate("Welcome")
-
+            navigation.navigate("Welcome");
         } catch (error) {
             console.log("An error occurred: ", error);
         }
     };
 
+    console.log(userData);
+
     return (
         <View style={styles.container}>
             <ScrollView showsVerticalScrollIndicator={false}>
-                <StatusBar backgroundColor="rgba(0,0,0,0.50)" barStyle="light-content" translucent={true}/>
+                <StatusBar
+                    backgroundColor="rgba(0,0,0,0.50)"
+                    barStyle="light-content"
+                    translucent={true}
+                />
 
                 <ImageBackground
                     source={require("../../utils/images/header-bg.png")}
@@ -44,11 +56,7 @@ const Profile = () => {
                         style={styles.backButton}
                         onPress={() => navigation.navigate("Home")}
                     >
-                        <Ionicons
-                            name={"arrow-back-outline"}
-                            color={"white"}
-                            size={30}
-                        />
+                        <Ionicons name={"arrow-back-outline"} color={"white"} size={30}/>
                     </TouchableOpacity>
 
                     <View style={styles.textContainer}>
@@ -57,49 +65,53 @@ const Profile = () => {
 
                     <View style={styles.viewSaveButton}>
                         <TouchableOpacity style={styles.saveButton}>
-                            <Text style={styles.saveText}>
-                                Save
-                            </Text>
+                            <Text style={styles.saveText}>Save</Text>
                         </TouchableOpacity>
                     </View>
                 </ImageBackground>
 
                 <View style={styles.containerEdit}>
                     <View style={styles.inputField}>
-                        <Input placeHolder="Name" onChangeText={handleNameChange} value={name}/>
+                        <Input
+                            placeHolder="Name"
+                            onChangeText={(text) => handleSavingData("name", text)}
+                            value={userData.name}
+                        />
                     </View>
                 </View>
 
-                <Calendar/>
+                <Calendar handleSavingData={handleSavingData}/>
 
                 <View style={styles.viewProficiency}>
                     <View>
                         <Text style={styles.selectProficiency}>Select your English proficiency</Text>
                         <TouchableOpacity
                             style={styles.inputButton}
-                            onPress={() => navigation.navigate("Proficiency")}
+                            onPress={() => navigation.navigate("Proficiency", { handleSavingData })}
                         >
 
                             <Text style={styles.inputButtonText}>
-                                Beginner
+                                {
+                                    userData.proficiency !== "" ? userData.proficiency : "Beginner"
+                                }
                             </Text>
                         </TouchableOpacity>
                     </View>
                 </View>
 
-                <Gender/>
+                <Gender handleSavingData={handleSavingData}/>
 
                 <View style={styles.viewButtons}>
                     <TouchableOpacity
                         style={[styles.button, styles.buttonInterests]}
-                        onPress={() => navigation.navigate("Topics")}
+                        onPress={() => navigation.navigate("Topics", { handleSavingData })}
                     >
                         <Text style={[styles.buttonTextInterests, styles.buttonText]}>Topics of interest</Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity
                         style={[styles.button, styles.buttonDesc]}
-                        onPress={() => navigation.navigate("Description")}
+                        onPress={() => navigation.navigate("Description", { handleSavingData })}
                     >
                         <Text style={[styles.buttonTextDesc, styles.buttonText]}>Description</Text>
                     </TouchableOpacity>

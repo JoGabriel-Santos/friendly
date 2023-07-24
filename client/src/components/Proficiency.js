@@ -3,8 +3,10 @@ import { SafeAreaView, StatusBar, StyleSheet, Text, TouchableOpacity, View } fro
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 
-const Proficiency = () => {
+const Proficiency = ({ route }) => {
     const navigation = useNavigation();
+
+    const { handleSavingData } = route.params;
 
     const [selectedLevel, setSelectedLevel] = useState("Beginner");
 
@@ -26,7 +28,10 @@ const Proficiency = () => {
                     <Text style={styles.headerText}>Proficiency</Text>
                 </View>
 
-                <TouchableOpacity style={styles.saveButton}>
+                <TouchableOpacity
+                    style={styles.saveButton}
+                    onPress={() => handleSavingData("proficiency", selectedLevel)}
+                >
                     <Text style={styles.saveText}>Save</Text>
                 </TouchableOpacity>
             </View>
