@@ -7,9 +7,9 @@ import topics from "../utils/topics";
 const Topics = ({ route }) => {
     const navigation = useNavigation();
 
-    const { handleSavingData } = route.params;
+    const { handleSavingData, prevSelectedTopics } = route.params;
 
-    const [selectedTopics, setSelectedTopics] = useState([]);
+    const [selectedTopics, setSelectedTopics] = useState(prevSelectedTopics !== "" ? prevSelectedTopics : []);
 
     const handleSelectTopic = (topic) => {
         const isTopicSelected = selectedTopics.find((selectedTopic) => selectedTopic.id === topic.id);

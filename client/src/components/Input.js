@@ -1,13 +1,14 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, forwardRef, useImperativeHandle } from "react";
 import { TextInput, View, StyleSheet, Animated } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
-const Input = ({ placeHolder, onChangeText, value }) => {
+const Input = forwardRef(({ placeHolder, onChangeText, value }, ref) => {
     const [focused, setFocused] = useState(false);
     const [passwordVisible, setPasswordVisible] = useState(false);
     const isPassword = placeHolder === "Password";
 
     const animatedPlaceholder = useRef(new Animated.Value(value ? 1 : 0)).current;
+    const textInputRef = useRef(null);
 
     const handleTextChange = (text) => {
         onChangeText(text);
@@ -52,6 +53,16 @@ const Input = ({ placeHolder, onChangeText, value }) => {
         outputRange: ["#555", "#7c46fa"],
     });
 
+    useImperativeHandle(ref, () => ({
+        focus: () => {
+            textInputRef.current.focus();
+        },
+
+        blur: () => {
+            textInputRef.current.blur();
+        }
+    }));
+
     return (
         <View style={styles.container}>
             <Animated.Text
@@ -68,6 +79,7 @@ const Input = ({ placeHolder, onChangeText, value }) => {
             </Animated.Text>
 
             <TextInput
+                ref={textInputRef}
                 style={styles.textInput}
                 onBlur={handleInputBlur}
                 onFocus={handleInputFocus}
@@ -87,7 +99,7 @@ const Input = ({ placeHolder, onChangeText, value }) => {
             )}
         </View>
     );
-};
+});
 
 const styles = StyleSheet.create({
     container: {

@@ -6,9 +6,9 @@ import { useNavigation } from "@react-navigation/native";
 const Description = ({ route }) => {
     const navigation = useNavigation();
 
-    const { handleSavingData } = route.params;
+    const { handleSavingData, prevDescription } = route.params;
 
-    const [description, setDescription] = useState("");
+    const [description, setDescription] = useState(prevDescription);
 
     return (
         <SafeAreaView style={styles.container}>
@@ -28,7 +28,10 @@ const Description = ({ route }) => {
 
                 <TouchableOpacity
                     style={styles.saveButton}
-                    onPress={() => handleSavingData("description", description)}
+                    onPress={() => {
+                        handleSavingData("description", description);
+                        navigation.navigate("Profile");
+                    }}
                 >
                     <Text style={styles.saveText}>Save</Text>
                 </TouchableOpacity>

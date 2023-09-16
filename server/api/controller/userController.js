@@ -17,6 +17,58 @@ export const fetchUserData = async (request, response) => {
     }
 };
 
+export const changeUserInfo = async (request, response) => {
+    const {
+        email,
+        name,
+        birthday,
+        proficiency,
+        gender,
+        topics,
+        description,
+    } = request.body;
+
+    try {
+        const user = await User.findOne({ email: email });
+        if (!user) {
+            return response.status(404).json({ message: "User not found" });
+        }
+
+        if (name) {
+            user.name = name;
+        }
+
+        if (birthday) {
+            user.birthday = birthday;
+        }
+
+        if (proficiency) {
+            user.proficiency = proficiency;
+        }
+
+        if (gender) {
+            user.gender = gender;
+        }
+
+        if (topics) {
+            user.topics = topics;
+        }
+
+        if (description) {
+            user.description = description;
+        }
+
+        await user.save();
+
+        response.status(200).json();
+
+    } catch (error) {
+        response
+            .status(500)
+            .json({ message: "An error occurred while updating user information" });
+    }
+};
+
 export const signin = async (request, response) => {
     const { email, password } = request.body;
 

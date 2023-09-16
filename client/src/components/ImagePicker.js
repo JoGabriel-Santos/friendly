@@ -1,9 +1,19 @@
-import React, { useState } from "react";
-import { TouchableOpacity, StyleSheet, Image } from "react-native";
+import React, { useEffect, useState } from "react";
+import { TouchableOpacity, StyleSheet, Image, Text } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 
-const ImagePickerComponent = () => {
-    const [imageUri, setImageUri] = useState("https://img.freepik.com/free-icon/user_318-159711.jpg");
+const ImagePickerComponent = ({ handleSavingData, prevSelectedPicture }) => {
+    const [imageUri, setImageUri] = useState("");
+
+    useEffect(() => {
+        if (prevSelectedPicture === "") {
+            setImageUri(require("../utils/images/userPhoto.png"));
+
+        } else {
+            setImageUri(prevSelectedPicture);
+        }
+
+    }, [prevSelectedPicture]);
 
     const selectImageFromGallery = async () => {
         const image = await ImagePicker.launchImageLibraryAsync({
@@ -16,6 +26,8 @@ const ImagePickerComponent = () => {
         if (!image.canceled) {
             setImageUri(image.assets[0].uri);
         }
+
+        handleSavingData("picture", imageUri);
     };
 
     return (

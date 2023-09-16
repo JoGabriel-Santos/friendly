@@ -26,10 +26,6 @@ const Calendar = ({ handleSavingData }) => {
         handleSavingData("birthday", { year, month, day, ordinal, age });
     }
 
-    function handleChangeStartDate(propDate) {
-        setStartedDate(propDate);
-    }
-
     const handleOnPressStartDate = () => {
         setOpenStartDatePicker(!openStartDatePicker);
     };
@@ -64,7 +60,6 @@ const Calendar = ({ handleSavingData }) => {
                         <DatePicker
                             minimumDate={"1950/01/01"}
                             mode="calendar"
-                            onDateChanged={handleChangeStartDate}
                             onSelectedChange={(date) => setSelectedDate(date)}
                             options={{
                                 backgroundColor: "#080516",
