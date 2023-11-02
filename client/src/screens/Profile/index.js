@@ -51,6 +51,10 @@ const Profile = () => {
         setUserData((prevData) => ({ ...prevData, [name]: value }));
     };
 
+    const handleSubmit = async () => {
+        console.log(userData)
+    }
+
     const logout = async () => {
         try {
             await AsyncStorage.removeItem("userInfo");
@@ -87,10 +91,7 @@ const Profile = () => {
                     style={styles.headerBackground}
                     resizeMode="cover"
                 >
-                    <ImagePicker
-                        handleSavingData={handleSavingData}
-                        prevSelectedPicture={userData.picture === "" ? userData.picture : "https://img.freepik.com/free-icon/user_318-159711.jpg"}
-                    />
+                    <ImagePicker handleSavingData={handleSavingData}/>
 
                     <TouchableOpacity
                         style={styles.backButton}
@@ -104,7 +105,10 @@ const Profile = () => {
                     </View>
 
                     <View style={styles.viewSaveButton}>
-                        <TouchableOpacity style={styles.saveButton}>
+                        <TouchableOpacity
+                            style={styles.saveButton}
+                            onPress={handleSubmit}
+                        >
                             <Text style={styles.saveText}>Save</Text>
                         </TouchableOpacity>
                     </View>

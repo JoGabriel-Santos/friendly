@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     viewSaveButton: {
         right: 20,
         position: "absolute",
-        top: "30%",
+        top: "32%",
     },
     saveButton: {
         backgroundColor: "transparent",
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 10,
         paddingHorizontal: 15,
-        paddingVertical: 5,
+        paddingVertical: 3,
     },
     saveText: {
         color: "#FFFFFF",

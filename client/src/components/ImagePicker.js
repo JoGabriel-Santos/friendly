@@ -1,19 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { TouchableOpacity, StyleSheet, Image, Text } from "react-native";
+import { TouchableOpacity, StyleSheet, Image } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 
-const ImagePickerComponent = ({ handleSavingData, prevSelectedPicture }) => {
-    const [imageUri, setImageUri] = useState("");
-
-    useEffect(() => {
-        if (prevSelectedPicture === "") {
-            setImageUri(require("../utils/images/userPhoto.png"));
-
-        } else {
-            setImageUri(prevSelectedPicture);
-        }
-
-    }, [prevSelectedPicture]);
+const ImagePickerComponent = ({ handleSavingData }) => {
+    const [imageUri, setImageUri] = useState();
 
     const selectImageFromGallery = async () => {
         const image = await ImagePicker.launchImageLibraryAsync({
@@ -26,9 +16,13 @@ const ImagePickerComponent = ({ handleSavingData, prevSelectedPicture }) => {
         if (!image.canceled) {
             setImageUri(image.assets[0].uri);
         }
-
-        handleSavingData("picture", imageUri);
     };
+
+    useEffect(() => {
+        if (imageUri) {
+            handleSavingData("picture", imageUri);
+        }
+    }, [imageUri]);
 
     return (
         <TouchableOpacity
@@ -36,7 +30,7 @@ const ImagePickerComponent = ({ handleSavingData, prevSelectedPicture }) => {
             onPress={selectImageFromGallery}
         >
             <Image
-                source={{ uri: imageUri }}
+                source={imageUri ? { uri: imageUri } : require("../utils/images/userPhoto.png")}
                 style={styles.profileImage}
             />
         </TouchableOpacity>
