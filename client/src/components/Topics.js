@@ -72,7 +72,10 @@ const Topics = ({ route }) => {
 
                 <TouchableOpacity
                     style={styles.saveButton}
-                    onPress={() => handleSavingData("topics", selectedTopics)}
+                    onPress={() => {
+                        handleSavingData("topics", selectedTopics);
+                        navigation.navigate("Profile");
+                    }}
                 >
                     <Text style={styles.saveText}>Save</Text>
                 </TouchableOpacity>
