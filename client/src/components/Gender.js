@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 
 const Gender = ({ handleSavingData }) => {
-    const [selectedGender, setSelectedGender] = useState(null);
+    const [selectedGender, setSelectedGender] = useState("Male");
 
     const handleGenderSelection = (gender) => {
         setSelectedGender(gender);
