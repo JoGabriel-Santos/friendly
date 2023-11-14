@@ -7,6 +7,7 @@ import ImagePicker from "../../components/ImagePicker";
 import Calendar from "../../components/Calendar";
 import Gender from "../../components/Gender";
 import Input from "../../components/Input";
+import * as API from "../../api/index";
 import styles from "./styles";
 
 const Profile = () => {
@@ -14,6 +15,7 @@ const Profile = () => {
     const inputRef = useRef(null);
 
     const [userData, setUserData] = useState({
+        email: "",
         name: "",
         picture: "",
         birthday: "",
@@ -31,6 +33,7 @@ const Profile = () => {
                     const userInfoJSON = JSON.parse(user);
                     setUserData(prevData => ({
                         ...prevData,
+                        email: userInfoJSON.email,
                         name: userInfoJSON.name,
                         picture: userInfoJSON.picture
                     }));
@@ -52,7 +55,8 @@ const Profile = () => {
     };
 
     const handleSubmit = async () => {
-        console.log(userData)
+        const { data } = await API.changeUserInfo(userData);
+        await AsyncStorage.setItem("userInfo", JSON.stringify(data.result));
     }
 
     const logout = async () => {

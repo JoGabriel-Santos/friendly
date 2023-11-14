@@ -17,5 +17,6 @@ API.interceptors.request.use((request) => {
 */
 
 export const fetchUserData = (userEmail) => API.get("/user/fetchUserData", userEmail);
+export const changeUserInfo = (newUserInfo) => API.patch("/user/changeUserInfo", newUserInfo);
 export const signin = (userInfo) => API.post("/user/signin", userInfo);
 export const signup = (userInfo) => API.post("/user/signup", userInfo);

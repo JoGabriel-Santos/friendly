@@ -5,6 +5,10 @@ import User from "../../models/user.js";
 
 const secret = "Y8bD7rK2sF9aZ1";
 
+const generateToken = (user) => {
+    return jwt.sign({ email: user.email, id: user._id }, secret, { expiresIn: "1h" });
+};
+
 export const fetchUserData = async (request, response) => {
     const { email } = request.body;
 
@@ -21,6 +25,7 @@ export const changeUserInfo = async (request, response) => {
     const {
         email,
         name,
+        picture,
         birthday,
         proficiency,
         gender,
@@ -36,6 +41,10 @@ export const changeUserInfo = async (request, response) => {
 
         if (name) {
             user.name = name;
+        }
+
+        if (picture) {
+            user.picture = picture;
         }
 
         if (birthday) {
@@ -60,7 +69,9 @@ export const changeUserInfo = async (request, response) => {
 
         await user.save();
 
-        response.status(200).json();
+        const token = generateToken(newUser);
+
+        response.status(201).json({ result: user, token });
 
     } catch (error) {
         response
@@ -83,8 +94,7 @@ export const signin = async (request, response) => {
             return response.status(401).json({ message: "Incorrect password" });
         }
 
-        const token = jwt.sign(
-            { email: existingUser.email, id: existingUser._id }, secret, { expiresIn: "1h" });
+        const token = generateToken(existingUser);
 
         response.status(200).json({ result: existingUser, token });
 
@@ -104,10 +114,9 @@ export const signup = async (request, response) => {
 
         const hashedPassword = await bcrypt.hash(password, 12);
 
-        const newUser = await User.create({ name, email, password: hashedPassword, });
+        const newUser = await User.create({ name, email, password: hashedPassword });
 
-        const token = jwt.sign(
-            { email: newUser.email, id: newUser._id }, secret, { expiresIn: "1h" });
+        const token = generateToken(newUser);
 
         response.status(201).json({ result: newUser, token });
 

@@ -1,10 +1,11 @@
-import { fetchUserData, signin, signup } from "../controller/userController.js";
+import { fetchUserData, changeUserInfo, signin, signup } from "../controller/userController.js";
 import authentication from "../../middleware/authentication.js";
 import express from "express";
 
 const router = express.Router();
 
 router.get("/fetchUserData", fetchUserData);
+router.patch("/changeUserInfo", changeUserInfo);
 router.post("/signin", signin);
 router.post("/signup", signup);
 
