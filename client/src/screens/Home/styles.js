@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     meetPeopleButton: {
         borderRadius: 10,
         marginHorizontal: 20,
-        padding: 16,
+        padding: 15,
     },
     automatchButton: {
         backgroundColor: "#7c46fa",

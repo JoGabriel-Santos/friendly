@@ -49,8 +49,13 @@ const Home = () => {
                 </View>
 
                 <View style={styles.textContainer}>
-                    {userInfo && (<Text style={styles.editText}>Hello, {userInfo.name}!</Text>)}
+                    {
+                        userInfo && (
+                            <Text style={styles.editText}>Hello, {userInfo.name}!</Text>
+                        )
+                    }
                 </View>
+
             </ImageBackground>
 
             <ImageBackground
