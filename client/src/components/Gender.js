@@ -9,33 +9,27 @@ const Gender = ({ handleSavingData }) => {
         handleSavingData("gender", gender);
     };
 
+    const renderGenderButton = (gender) => (
+        <TouchableOpacity
+            style={[
+                styles.checkbox,
+                {
+                    backgroundColor:
+                        selectedGender === gender ? "#7c46fa" : "#333",
+                },
+            ]}
+            onPress={() => handleGenderSelection(gender)}
+        >
+            <Text style={styles.genderName}>{gender}</Text>
+        </TouchableOpacity>
+    );
+
     return (
         <View style={styles.container}>
             <View style={styles.checkboxView}>
-                <TouchableOpacity
-                    style={[styles.checkbox,
-                        selectedGender === "Male" ?
-                            { backgroundColor: "#7c46fa" } : { backgroundColor: "#333" }]}
-                    onPress={() => handleGenderSelection("Male")}
-                >
-                    <Text style={styles.genderName}>Male</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                    style={[styles.checkbox, selectedGender === "Female" ?
-                        { backgroundColor: "#7c46fa" } : { backgroundColor: "#333" }]}
-                    onPress={() => handleGenderSelection("Female")}
-                >
-                    <Text style={styles.genderName}>Female</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                    style={[styles.checkbox, selectedGender === "Non binary" ?
-                        { backgroundColor: "#7c46fa" } : { backgroundColor: "#333" }]}
-                    onPress={() => handleGenderSelection("Non binary")}
-                >
-                    <Text style={styles.genderName}>Non binary</Text>
-                </TouchableOpacity>
+                {renderGenderButton("Male")}
+                {renderGenderButton("Female")}
+                {renderGenderButton("Non binary")}
             </View>
         </View>
     );
@@ -56,7 +50,7 @@ const styles = StyleSheet.create({
         flex: 1,
         height: 40,
         justifyContent: "center",
-        marginHorizontal: 5,
+        marginHorizontal: 2,
     },
     genderName: {
         color: "#fff",
