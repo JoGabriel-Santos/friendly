@@ -21,6 +21,8 @@ const Navbar = () => {
 
     const [currentScreen, setCurrentScreen] = useState("");
 
+    const screensWithoutNavbar = ["Welcome", "Authentication", "CreateAccount"];
+
     useEffect(() => {
         return navigation.addListener("state", () => {
             const updatedScreen = navigation.getCurrentRoute()?.name;
@@ -30,7 +32,7 @@ const Navbar = () => {
 
     return (
         <View style={[styles.navbar,
-            currentScreen === "Welcome" || currentScreen === "Authentication" ? { display: "none" } : { display: "flex" }]}>
+            screensWithoutNavbar.includes(currentScreen) ? { display: "none" } : { display: "flex" }]}>
             <NavButton
                 iconName="grid-outline"
                 screenName="Home"

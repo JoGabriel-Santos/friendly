@@ -4,6 +4,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { useFonts } from "expo-font";
 import Welcome from "./src/screens/Welcome";
 import Authentication from "./src/screens/Authentication";
+import CreateAccount from "./src/components/Create account/CreateAccount";
 import Home from "./src/screens/Home";
 import Friends from "./src/screens/Friends";
 import Community from "./src/screens/Community";
@@ -37,6 +38,7 @@ function App() {
                 <Stack.Screen name="Description" component={Description}/>
                 <Stack.Screen name="Welcome" component={Welcome}/>
                 <Stack.Screen name="Authentication" component={Authentication}/>
+                <Stack.Screen name="CreateAccount" component={CreateAccount}/>
             </Stack.Navigator>
 
             <Navbar/>

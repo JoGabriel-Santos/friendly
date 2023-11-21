@@ -19,7 +19,7 @@ const Authentication = () => {
         const { data } = isLoggingIn ? await API.signin(userInfo) : await API.signup(userInfo);
         await AsyncStorage.setItem("userInfo", JSON.stringify(data.result));
 
-        navigation.navigate(isLoggingIn ? "Home" : "Profile");
+        navigation.navigate(isLoggingIn ? "Home" : "CreateAccount");
     };
 
     const handleChange = (key, text) => {

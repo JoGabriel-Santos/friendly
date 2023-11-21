@@ -30,7 +30,7 @@ const ImagePickerComponent = ({ handleSavingData }) => {
             onPress={selectImageFromGallery}
         >
             <Image
-                source={imageUri ? { uri: imageUri } : require("../utils/images/userPhoto.png")}
+                source={imageUri ? { uri: imageUri } : require("../utils/images/addImage.png")}
                 style={styles.profileImage}
             />
         </TouchableOpacity>
@@ -41,14 +41,17 @@ const styles = StyleSheet.create({
     profileImageView: {
         alignItems: "center",
         flex: 1,
+        marginTop: 50,
         position: "relative",
     },
     profileImage: {
-        borderRadius: 100,
-        height: 110,
+        borderColor: "black",
+        borderRadius: 5,
+        borderWidth: 2,
+        height: 130,
         position: "absolute",
         top: "64%",
-        width: 110,
+        width: 130,
     },
 });
 
