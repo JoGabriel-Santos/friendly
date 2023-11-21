@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Modal, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Modal, SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useNavigation } from "@react-navigation/native";
 
 const SelectProficiency = () => {
@@ -44,16 +44,18 @@ const SelectProficiency = () => {
         "Tiếng Việt (Vietnamese)",
     ]);
 
-    const handleProficiencySelect = (languageName, value) => {
-        const updatedOptions = selectedOptions.map(([language, proficiency]) => {
-            if (language === languageName) {
-                return [language, value];
-            }
+    const handleProficiencySelect = (languageName, selectedLevel) => {
+        /*
+            const updatedOptions = selectedOptionsCopy.map(([language, proficiency]) => {
+                if (language === languageName) {
+                    return [language, value];
+                }
 
-            return [language, proficiency];
-        });
+                return [language, proficiency];
+            });
 
-        setSelectedOptions(updatedOptions);
+            setSelectedOptions(updatedOptions);
+        */
     };
 
     const handleLanguageSelect = (language) => {
@@ -78,6 +80,8 @@ const SelectProficiency = () => {
 
     return (
         <SafeAreaView style={styles.container}>
+            <StatusBar backgroundColor="transparent" barStyle="dark-content" translucent={true}/>
+
             <View style={styles.createAccountView}>
                 <View style={styles.header}>
                     <Text style={styles.authText}>
@@ -118,7 +122,7 @@ const SelectProficiency = () => {
                                             handleLanguageSelect(languageName);
 
                                             setTimeout(() => {
-                                                // navigation.navigate("Proficiency", {  });
+                                                navigation.navigate("Proficiency", { selectedOptions, languageName, handleProficiencySelect });
                                             }, 500);
                                         }}
                                     >
