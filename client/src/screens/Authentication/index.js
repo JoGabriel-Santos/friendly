@@ -70,7 +70,11 @@ const Authentication = () => {
                 }
 
                 <TouchableOpacity style={styles.signinButton} onPress={handleAuthentication}>
-                    <Text style={styles.signinText}>{isLoggingIn ? "Login" : "Create account"}</Text>
+                    <Text style={styles.signinText}>
+                        {
+                            isLoggingIn ? "Login" : "Create account"
+                        }
+                    </Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity style={styles.signupButton} onPress={handleToggleIsLoggingIn}>
