@@ -6,11 +6,10 @@ import { Ionicons } from "@expo/vector-icons";
 const Proficiency = ({ route }) => {
     const navigation = useNavigation();
 
-    const { handleSavingData, prevSelectedProficiency } = route.params;
 
-    const [selectedLevel, setSelectedLevel] = useState(prevSelectedProficiency);
 
     const proficiencyLevels = ["Beginner", "Intermediate", "Advanced", "Fluent", "Native"];
+    const [selectedLevel, setSelectedLevel] = useState("Beginner");
 
     return (
         <SafeAreaView style={styles.container}>
@@ -31,8 +30,8 @@ const Proficiency = ({ route }) => {
                 <TouchableOpacity
                     style={styles.saveButton}
                     onPress={() => {
-                        handleSavingData("proficiency", selectedLevel);
-                        navigation.navigate("Profile");
+
+                        navigation.navigate("SelectProficiency");
                     }}
                 >
                     <Text style={styles.saveText}>Save</Text>
@@ -40,7 +39,7 @@ const Proficiency = ({ route }) => {
             </View>
 
             <View style={styles.viewProficiencyIndicator}>
-                <Text style={styles.textProficiencyIndicator}>English</Text>
+                <Text style={styles.textProficiencyIndicator}>{languageName}</Text>
 
                 <View style={styles.indicator}>
                     {

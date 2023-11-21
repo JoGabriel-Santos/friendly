@@ -21,7 +21,7 @@ const Navbar = () => {
 
     const [currentScreen, setCurrentScreen] = useState("");
 
-    const screensWithoutNavbar = ["Welcome", "Authentication", "CreateAccount"];
+    const screensWithoutNavbar = ["Welcome", "Authentication", "CreateAccount", "SelectProficiency", "Proficiency"];
 
     useEffect(() => {
         return navigation.addListener("state", () => {
