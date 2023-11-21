@@ -18,6 +18,8 @@ import Description from "./src/components/Description";
 import Navbar from "./src/components/Navbar";
 import configFonts from "./src/utils/configFonts";
 
+import SelectProficiency from "./src/components/Create account/SelectProficiency";
+
 const Stack = createStackNavigator();
 
 function App() {
@@ -26,6 +28,9 @@ function App() {
     return !fontsLoader ? null : (
         <NavigationContainer>
             <Stack.Navigator screenOptions={{ headerShown: false }}>
+
+                <Stack.Screen name="SelectProficiency" component={SelectProficiency}/>
+
                 <Stack.Screen name="Home" component={Home}/>
                 <Stack.Screen name="Friends" component={Friends}/>
                 <Stack.Screen name="Community" component={Community}/>

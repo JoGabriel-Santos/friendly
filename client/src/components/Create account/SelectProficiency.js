@@ -59,7 +59,18 @@ const SelectProficiency = () => {
     };
 
     const handleLanguageSelect = (language) => {
-        setSelectedOptions([...selectedOptions, [language, null]]);
+        const languageIndex = selectedOptions.findIndex(([selectedLanguage]) => selectedLanguage === language);
+
+        if (languageIndex !== -1) {
+            const updatedOptions = [...selectedOptions];
+
+            updatedOptions.splice(languageIndex, 1);
+            setSelectedOptions(updatedOptions);
+
+        } else {
+            setSelectedOptions([...selectedOptions, [language, null]]);
+        }
+
         handleToggleModal();
     };
 
@@ -99,16 +110,30 @@ const SelectProficiency = () => {
                                 options.map((languageName) => (
                                     <TouchableOpacity
                                         key={languageName}
-                                        style={styles.optionItem}
+                                        style={[
+                                            styles.optionItem,
+                                            selectedOptions.some(([language]) => language === languageName) && {
+                                                backgroundColor: "#7c46fa",
+                                            },
+                                        ]}
                                         onPress={() => {
                                             handleLanguageSelect(languageName);
 
                                             setTimeout(() => {
-                                                navigation.navigate("Proficiency", { languageName, handleProficiencySelect, selectedOptions });
+                                                // navigation.navigate("Proficiency", {  });
                                             }, 500);
                                         }}
                                     >
-                                        <Text style={styles.optionText}>{languageName}</Text>
+                                        <Text
+                                            style={[
+                                                styles.optionText,
+                                                selectedOptions.some(([language]) => language === languageName) && {
+                                                    color: "white",
+                                                },
+                                            ]}
+                                        >
+                                            {languageName}
+                                        </Text>
                                     </TouchableOpacity>
                                 ))
                             }
@@ -185,12 +210,6 @@ const styles = StyleSheet.create({
     },
     selectedOptionsScrollView: {
         maxHeight: 430,
-    },
-    selectedOptionItem: {
-        backgroundColor: "#f0f0f0",
-        borderRadius: 8,
-        padding: 10,
-        marginVertical: 5,
     },
     modalView: {
         backgroundColor: "white",
