@@ -2,7 +2,7 @@ import React from "react";
 import { Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import ImagePicker from "../ImagePicker";
 
-const UploadPicture_1 = () => {
+const UploadPicture = () => {
 
     return (
         <SafeAreaView style={styles.container}>
@@ -117,4 +117,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default UploadPicture_1;
+export default UploadPicture;

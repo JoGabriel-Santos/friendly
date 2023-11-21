@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import UploadPicture_1 from "./UploadPicture_1";
+import UploadPicture from "./UploadPicture";
 
 const CreateAccount = () => {
     const [progress, setProgress] = useState(1);
@@ -15,12 +15,6 @@ const CreateAccount = () => {
         }
     };
 
-    const handleBack = () => {
-        if (progress > 1) {
-            setProgress(progress - 1);
-        }
-    };
-
     const handleNext = () => {
         if (progress < 5) {
             setProgress(progress + 1);
@@ -28,7 +22,7 @@ const CreateAccount = () => {
     };
 
     const screens = {
-        1: <UploadPicture_1/>
+        1: <UploadPicture/>
     }
 
     return (
