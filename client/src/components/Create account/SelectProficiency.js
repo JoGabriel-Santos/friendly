@@ -113,6 +113,13 @@ const SelectProficiency = () => {
                                 ))
                             }
                         </ScrollView>
+
+                        <TouchableOpacity
+                            style={styles.closeButton}
+                            onPress={handleToggleModal}
+                        >
+                            <Text style={styles.closeButtonText}>Done</Text>
+                        </TouchableOpacity>
                     </View>
                 </Modal>
             </View>
@@ -205,6 +212,18 @@ const styles = StyleSheet.create({
     },
     optionText: {
         color: "#7c46fa",
+        fontFamily: "nunito-bold",
+        fontSize: 16,
+    },
+    closeButton: {
+        alignItems: "center",
+        backgroundColor: "#7c46fa",
+        borderRadius: 8,
+        padding: 15,
+        marginTop: 10,
+    },
+    closeButtonText: {
+        color: "white",
         fontFamily: "nunito-bold",
         fontSize: 16,
     },
