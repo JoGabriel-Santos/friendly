@@ -22,11 +22,15 @@ const Welcome = () => {
 
                 <View style={styles.viewDescription}>
                     <Text style={styles.homeTitle}>
-                        Unlock the power of English conversations
+                        Speak your mind -
+                    </Text>
+
+                    <Text style={styles.homeTitle}>
+                        one letter at a time!
                     </Text>
 
                     <Text style={styles.homeParagraph}>
-                        Join our community of English learners and take your speaking skills to the next level
+                        Connect, share passions, exchange letters and collect global stamps
                     </Text>
                 </View>
 
