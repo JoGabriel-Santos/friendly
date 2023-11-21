@@ -10,7 +10,6 @@ const SelectProficiency = () => {
     const [options, setOptions] = useState([
         "Afrikaans",
         "Azərbaycan dili (Azerbaijani)",
-        "العربية (Arabic)",
         "বাংলা (Bengali)",
         "български (Bulgarian)",
         "Català (Catalan)",
@@ -26,9 +25,9 @@ const SelectProficiency = () => {
         "Magyar (Hungarian)",
         "Bahasa Indonesia (Indonesian)",
         "Italiano (Italian)",
-        "עברית (Hebrew)",
         "日本語 (Japanese)",
         "한국어 (Korean)",
+        "普通话 (Mandarin Chinese)",
         "Kiswahili (Swahili)",
         "Bahasa Melayu (Malay)",
         "Nederlands (Dutch)",
@@ -43,7 +42,6 @@ const SelectProficiency = () => {
         "தமிழ் (Tamil)",
         "Türkçe (Turkish)",
         "Tiếng Việt (Vietnamese)",
-        "Yorùbá (Yoruba)",
     ]);
 
     const handleProficiencySelect = (languageName, value) => {
@@ -149,6 +147,21 @@ const SelectProficiency = () => {
                 </Modal>
             </View>
 
+            <View style={styles.selectedOptionsContainer}>
+                <Text style={styles.selectedOptionsLabel}>Selected Languages:</Text>
+
+                <ScrollView style={styles.selectedOptionsScrollView}>
+                    {
+                        selectedOptions.map(([language, proficiency], index) => (
+                            <View key={index} style={styles.selectedOptionItem}>
+                                <Text style={styles.selectedOptionText}>{language}</Text>
+                                {/* Aqui você pode adicionar a proficiência se necessário */}
+                            </View>
+                        ))
+                    }
+                </ScrollView>
+            </View>
+
             <View style={styles.nextScreenView}>
                 <TouchableOpacity
                     style={styles.nextScreen}
@@ -197,8 +210,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
     },
     selectedOptionsContainer: {
-        marginTop: 10,
-        alignItems: "center",
+        alignItems: "flex-start",
         alignSelf: "flex-start",
         width: "100%",
     },
@@ -210,6 +222,16 @@ const styles = StyleSheet.create({
     },
     selectedOptionsScrollView: {
         maxHeight: 430,
+        width: "100%",
+    },
+    selectedOptionItem: {
+        backgroundColor: "#f0f0f0",
+        borderRadius: 8,
+        padding: 15,
+        marginVertical: 5,
+    },
+    selectedOptionText: {
+        fontSize: 16,
     },
     modalView: {
         backgroundColor: "white",
