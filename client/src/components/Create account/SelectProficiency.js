@@ -8,7 +8,7 @@ const SelectProficiency = () => {
 
     const [isModalVisible, setModalVisible] = useState(false);
     const [selectedLanguages, setSelectedLanguages] = useState([]);
-    const [languages, setLanguages] = useState([
+    const languages = [
         "Afrikaans",
         "Azərbaycan dili (Azerbaijani)",
         "বাংলা (Bengali)",
@@ -43,7 +43,7 @@ const SelectProficiency = () => {
         "தமிழ் (Tamil)",
         "Türkçe (Turkish)",
         "Tiếng Việt (Vietnamese)",
-    ]);
+    ];
 
     const proficiencyLevels = ["Beginner", "Intermediate", "Advanced", "Fluent", "Native"];
 
