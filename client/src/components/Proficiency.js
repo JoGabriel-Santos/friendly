@@ -6,7 +6,7 @@ import { Ionicons } from "@expo/vector-icons";
 const Proficiency = ({ route }) => {
     const navigation = useNavigation();
 
-    const { selectedOptions, languageName, handleProficiencySelect } = route.params;
+    const { languageName, handleLanguageSelect } = route.params;
 
     const proficiencyLevels = ["Beginner", "Intermediate", "Advanced", "Fluent", "Native"];
     const [selectedLevel, setSelectedLevel] = useState("Beginner");
@@ -30,7 +30,7 @@ const Proficiency = ({ route }) => {
                 <TouchableOpacity
                     style={styles.saveButton}
                     onPress={() => {
-                        handleProficiencySelect(languageName, selectedLevel);
+                        handleLanguageSelect(languageName, selectedLevel);
                         navigation.navigate("SelectProficiency");
                     }}
                 >

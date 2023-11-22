@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { Modal, SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useNavigation } from "@react-navigation/native";
+import { Ionicons } from "@expo/vector-icons";
 
 const SelectProficiency = () => {
     const navigation = useNavigation();
 
     const [isModalVisible, setModalVisible] = useState(false);
-    const [selectedOptions, setSelectedOptions] = useState([]);
-    const [options, setOptions] = useState([
+    const [selectedLanguages, setSelectedLanguages] = useState([]);
+    const [languages, setLanguages] = useState([
         "Afrikaans",
         "Azərbaycan dili (Azerbaijani)",
         "বাংলা (Bengali)",
@@ -44,34 +45,13 @@ const SelectProficiency = () => {
         "Tiếng Việt (Vietnamese)",
     ]);
 
-    const handleProficiencySelect = (languageName, selectedLevel) => {
-        /*
-            const updatedOptions = selectedOptionsCopy.map(([language, proficiency]) => {
-                if (language === languageName) {
-                    return [language, value];
-                }
+    const proficiencyLevels = ["Beginner", "Intermediate", "Advanced", "Fluent", "Native"];
 
-                return [language, proficiency];
-            });
+    const handleLanguageSelect = (languageName, selectedLevel) => {
 
-            setSelectedOptions(updatedOptions);
-        */
-    };
-
-    const handleLanguageSelect = (language) => {
-        const languageIndex = selectedOptions.findIndex(([selectedLanguage]) => selectedLanguage === language);
-
-        if (languageIndex !== -1) {
-            const updatedOptions = [...selectedOptions];
-
-            updatedOptions.splice(languageIndex, 1);
-            setSelectedOptions(updatedOptions);
-
-        } else {
-            setSelectedOptions([...selectedOptions, [language, null]]);
-        }
-
-        handleToggleModal();
+        setSelectedLanguages(prevSelectedLanguages => [
+            ...prevSelectedLanguages, [languageName, selectedLevel]
+        ]);
     };
 
     const handleToggleModal = () => {
@@ -109,27 +89,28 @@ const SelectProficiency = () => {
                     <View style={styles.modalView}>
                         <ScrollView style={styles.optionsScrollView}>
                             {
-                                options.map((languageName) => (
+                                languages.map((languageName) => (
                                     <TouchableOpacity
                                         key={languageName}
                                         style={[
                                             styles.optionItem,
-                                            selectedOptions.some(([language]) => language === languageName) && {
+                                            selectedLanguages.some(([language]) => language === languageName) && {
                                                 backgroundColor: "#7c46fa",
                                             },
                                         ]}
                                         onPress={() => {
-                                            handleLanguageSelect(languageName);
+                                            handleToggleModal();
 
                                             setTimeout(() => {
-                                                navigation.navigate("Proficiency", { selectedOptions, languageName, handleProficiencySelect });
+                                                navigation.navigate("Proficiency",
+                                                    { selectedOptions: selectedLanguages, languageName, handleLanguageSelect });
                                             }, 500);
                                         }}
                                     >
                                         <Text
                                             style={[
                                                 styles.optionText,
-                                                selectedOptions.some(([language]) => language === languageName) && {
+                                                selectedLanguages.some(([language]) => language === languageName) && {
                                                     color: "white",
                                                 },
                                             ]}
@@ -156,10 +137,22 @@ const SelectProficiency = () => {
 
                 <ScrollView style={styles.selectedOptionsScrollView}>
                     {
-                        selectedOptions.map(([language, proficiency], index) => (
+                        selectedLanguages.map(([language, proficiency], index) => (
                             <View key={index} style={styles.selectedOptionItem}>
                                 <Text style={styles.selectedOptionText}>{language}</Text>
-                                {/* Aqui você pode adicionar a proficiência se necessário */}
+                                <View style={styles.indicator}>
+                                    {
+                                        proficiencyLevels.map((level, index) => (
+                                            <Ionicons
+                                                key={index}
+                                                name={index - 1 < proficiencyLevels.indexOf(proficiency)
+                                                    ? "radio-button-on-outline" : "radio-button-off-outline"}
+                                                color={"#333"}
+                                                size={12}
+                                            />
+                                        ))
+                                    }
+                                </View>
                             </View>
                         ))
                     }
@@ -231,11 +224,17 @@ const styles = StyleSheet.create({
     selectedOptionItem: {
         backgroundColor: "#f0f0f0",
         borderRadius: 8,
+        flexDirection: "row",
+        justifyContent: "space-between",
         padding: 15,
         marginVertical: 5,
     },
     selectedOptionText: {
         fontSize: 16,
+    },
+    indicator: {
+        flexDirection: "row",
+        marginTop: 5,
     },
     modalView: {
         backgroundColor: "white",
