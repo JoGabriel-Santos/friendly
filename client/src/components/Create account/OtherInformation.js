@@ -1,7 +1,11 @@
 import React from "react";
 import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import Calendar from "../Calendar";
+import Gender from "../Gender";
 
-const SelectBirthday = () => {
+const OtherInformation = () => {
+    const navigation = useNavigation();
 
     return (
         <SafeAreaView style={styles.container}>
@@ -9,16 +13,27 @@ const SelectBirthday = () => {
             <View style={styles.createAccountView}>
                 <View style={styles.header}>
                     <Text style={styles.authText}>
-                        Choose a photo
+                        Almost there...
                     </Text>
 
                     <Text style={styles.sloganText}>
-                        On Friendly, everyone has a profile photo which clearly shows their face
+                        Please provide your date of birth, gender, and topics of interest
                     </Text>
                 </View>
-
-
             </View>
+
+            <Calendar/>
+
+            <Gender/>
+
+            <TouchableOpacity
+                style={[styles.button, styles.buttonInterests]}
+                onPress={() => navigation.navigate("Topics",
+                    {})
+                }
+            >
+                <Text style={[styles.buttonTextInterests, styles.buttonText]}>Topics of interest</Text>
+            </TouchableOpacity>
 
             <View style={styles.nextScreenView}>
                 <TouchableOpacity style={styles.nextScreen}>
@@ -35,7 +50,6 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: "#FFFFFF",
         flex: 1,
-        paddingHorizontal: 20,
     },
     createAccountView: {
         alignItems: "center",
@@ -57,9 +71,29 @@ const styles = StyleSheet.create({
         maxWidth: "85%",
         textAlign: "center",
     },
+    button: {
+        borderRadius: 10,
+        borderWidth: 1,
+        marginHorizontal: 20,
+        paddingVertical: 15,
+    },
+    buttonInterests: {
+        borderWidth: 0,
+        backgroundColor: "#7c46fa",
+        borderRadius: 10,
+    },
+    buttonText: {
+        fontFamily: "nunito-bold",
+        fontSize: 20,
+        textAlign: "center",
+    },
+    buttonTextInterests: {
+        color: "#FFFFFF",
+    },
     nextScreenView: {
         flex: 1,
-        justifyContent: 'flex-end',
+        justifyContent: "flex-end",
+        paddingHorizontal: 20,
     },
     nextScreen: {
         backgroundColor: "#7c46fa",
@@ -76,4 +110,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default SelectBirthday;
+export default OtherInformation;

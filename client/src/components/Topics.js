@@ -4,12 +4,12 @@ import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import topics from "../utils/topics";
 
-const Topics = ({ route }) => {
+const Topics = () => {
     const navigation = useNavigation();
 
-    const { handleSavingData, prevSelectedTopics } = route.params;
+    // const { handleSavingData } = route.params;
 
-    const [selectedTopics, setSelectedTopics] = useState(prevSelectedTopics !== "" ? prevSelectedTopics : []);
+    const [selectedTopics, setSelectedTopics] = useState([]);
 
     const handleSelectTopic = (topic) => {
         const isTopicSelected = selectedTopics.find((selectedTopic) => selectedTopic.id === topic.id);
@@ -62,7 +62,7 @@ const Topics = ({ route }) => {
                 <View style={styles.containerLeft}>
                     <TouchableOpacity
                         style={styles.backButton}
-                        onPress={() => navigation.navigate("Profile")}
+                        onPress={() => navigation.navigate("OtherInformation")}
                     >
                         <Ionicons name={"arrow-back-outline"} color={"#333"} size={30}/>
                     </TouchableOpacity>
@@ -73,8 +73,8 @@ const Topics = ({ route }) => {
                 <TouchableOpacity
                     style={styles.saveButton}
                     onPress={() => {
-                        handleSavingData("topics", selectedTopics);
-                        navigation.navigate("Profile");
+                        // handleSavingData("topics", selectedTopics);
+                        navigation.navigate("OtherInformation");
                     }}
                 >
                     <Text style={styles.saveText}>Save</Text>
@@ -94,7 +94,6 @@ const Topics = ({ route }) => {
 const styles = StyleSheet.create({
     container: {
         backgroundColor: "#FFFFFF",
-        flex: 1,
     },
     topicsHeader: {
         alignItems: "center",

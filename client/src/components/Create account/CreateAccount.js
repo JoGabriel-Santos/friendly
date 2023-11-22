@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import UploadPicture from "./UploadPicture";
 import SelectProficiency from "./SelectProficiency";
-import SelectBirthday from "./SelectBirthday";
+import OtherInformation from "./OtherInformation";
 
 const CreateAccount = () => {
     const [progress, setProgress] = useState(2);
@@ -36,7 +36,7 @@ const CreateAccount = () => {
     const screens = {
         1: <UploadPicture/>,
         2: <SelectProficiency/>,
-        3: <SelectBirthday/>
+        3: <OtherInformation/>
     }
 
     return (

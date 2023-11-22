@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 
-const Gender = ({ handleSavingData }) => {
+const Gender = () => {
     const [selectedGender, setSelectedGender] = useState("Male");
 
     const handleGenderSelection = (gender) => {
         setSelectedGender(gender);
-        handleSavingData("gender", gender);
+        // handleSavingData("gender", gender);
     };
 
     const renderGenderButton = (gender) => (
@@ -37,9 +37,8 @@ const Gender = ({ handleSavingData }) => {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
         paddingHorizontal: 20,
-        paddingTop: 40,
+        paddingVertical: 50,
     },
     checkboxView: {
         flexDirection: "row",

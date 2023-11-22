@@ -18,7 +18,7 @@ import Description from "./src/components/Description";
 import Navbar from "./src/components/Navbar";
 import configFonts from "./src/utils/configFonts";
 
-import SelectBirthday from "./src/components/Create account/SelectBirthday";
+import OtherInformation from "./src/components/Create account/OtherInformation";
 
 const Stack = createStackNavigator();
 
@@ -29,7 +29,7 @@ function App() {
         <NavigationContainer>
             <Stack.Navigator screenOptions={{ headerShown: false }}>
 
-                <Stack.Screen name="SelectBirthday" component={SelectBirthday}/>
+                <Stack.Screen name="OtherInformation" component={OtherInformation}/>
 
                 <Stack.Screen name="Home" component={Home}/>
                 <Stack.Screen name="Friends" component={Friends}/>
