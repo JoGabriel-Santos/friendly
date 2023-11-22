@@ -54,6 +54,11 @@ const SelectProficiency = () => {
         ]);
     };
 
+    const handleRemoveLanguage = (languageName) => {
+        const updatedLanguages = selectedLanguages.filter(([language]) => language !== languageName);
+        setSelectedLanguages(updatedLanguages);
+    };
+
     const handleToggleModal = () => {
         setModalVisible(!isModalVisible);
     };
@@ -99,12 +104,19 @@ const SelectProficiency = () => {
                                             },
                                         ]}
                                         onPress={() => {
-                                            handleToggleModal();
+                                            const isLanguageSelected = selectedLanguages.some(([language]) => language === languageName);
 
-                                            setTimeout(() => {
-                                                navigation.navigate("Proficiency",
-                                                    { selectedOptions: selectedLanguages, languageName, handleLanguageSelect });
-                                            }, 500);
+                                            if (isLanguageSelected) {
+                                                handleRemoveLanguage(languageName);
+
+                                            } else {
+                                                handleToggleModal();
+
+                                                setTimeout(() => {
+                                                    navigation.navigate("Proficiency",
+                                                        { selectedOptions: selectedLanguages, languageName, handleLanguageSelect });
+                                                }, 500);
+                                            }
                                         }}
                                     >
                                         <Text
