@@ -6,6 +6,7 @@ import Welcome from "./src/screens/Welcome";
 import Authentication from "./src/screens/Authentication";
 import CreateAccount from "./src/components/Create account/CreateAccount";
 import SelectProficiency from "./src/components/Create account/SelectProficiency";
+import OtherInformation from "./src/components/Create account/OtherInformation";
 import Home from "./src/screens/Home";
 import Friends from "./src/screens/Friends";
 import Community from "./src/screens/Community";
@@ -41,6 +42,7 @@ function App() {
                 <Stack.Screen name="Authentication" component={Authentication}/>
                 <Stack.Screen name="CreateAccount" component={CreateAccount}/>
                 <Stack.Screen name="SelectProficiency" component={SelectProficiency}/>
+                <Stack.Screen name="OtherInformation" component={OtherInformation}/>
             </Stack.Navigator>
 
             <Navbar/>
