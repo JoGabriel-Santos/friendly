@@ -4,7 +4,7 @@ import SelectProficiency from "./SelectProficiency";
 import OtherInformation from "./OtherInformation";
 
 const CreateAccount = () => {
-    const [progress, setProgress] = useState(2);
+    const [progress, setProgress] = useState(3);
 
     const [picture, setPicture] = useState();
     const [proficiency, setProficiency] = useState();
@@ -14,11 +14,11 @@ const CreateAccount = () => {
 
         switch (type) {
             case "Picture":
-                console.log("Picture saved");
+                console.log(data);
                 break;
 
             case "Proficiency":
-                console.log("Proficiency saved");
+                console.log(data);
                 break;
 
             case "Birthday":
@@ -34,9 +34,9 @@ const CreateAccount = () => {
     };
 
     const screens = {
-        1: <UploadPicture/>,
-        2: <SelectProficiency/>,
-        3: <OtherInformation/>
+        1: <UploadPicture handleSavingData={handleSavingData} handleNext={handleNext}/>,
+        2: <SelectProficiency handleSavingData={handleSavingData} handleNext={handleNext}/>,
+        3: <OtherInformation handleSavingData={handleSavingData} handleNext={handleNext}/>
     }
 
     return (

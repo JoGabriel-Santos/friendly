@@ -4,7 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import Calendar from "../Calendar";
 import Gender from "../Gender";
 
-const OtherInformation = () => {
+const OtherInformation = ({ handleNext }) => {
     const navigation = useNavigation();
 
     return (
@@ -36,7 +36,7 @@ const OtherInformation = () => {
             </TouchableOpacity>
 
             <View style={styles.nextScreenView}>
-                <TouchableOpacity style={styles.nextScreen}>
+                <TouchableOpacity style={styles.nextScreen} onPress={handleNext}>
                     <Text style={styles.nextScreenText}>
                         Continue
                     </Text>

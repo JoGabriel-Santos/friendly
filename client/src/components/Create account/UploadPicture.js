@@ -1,8 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import ImagePicker from "../ImagePicker";
 
-const UploadPicture = () => {
+const UploadPicture = ({ handleSavingData, handleNext }) => {
+    const [userImage, setUserImage] = useState();
+
+    const handleSavingImage = (newUserImage) => {
+
+        setUserImage(newUserImage);
+    };
 
     return (
         <SafeAreaView style={styles.container}>
@@ -18,7 +24,7 @@ const UploadPicture = () => {
                     </Text>
                 </View>
 
-                <ImagePicker/>
+                <ImagePicker handleSavingImage={handleSavingImage}/>
 
                 <Text style={styles.descriptionText}>
                     Not sure what we mean? Here are a few good profile photo examples from our community
@@ -43,7 +49,10 @@ const UploadPicture = () => {
             </View>
 
             <View style={styles.nextScreenView}>
-                <TouchableOpacity style={styles.nextScreen}>
+                <TouchableOpacity style={styles.nextScreen} onPress={() => {
+                    handleSavingData(userImage, "Picture");
+                    handleNext();
+                }}>
                     <Text style={styles.nextScreenText}>
                         Continue
                     </Text>

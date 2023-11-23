@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { TouchableOpacity, StyleSheet, Image } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 
-const ImagePickerComponent = ({ handleSavingData }) => {
+const ImagePickerComponent = ({ handleSavingImage }) => {
     const [imageUri, setImageUri] = useState();
 
     const selectImageFromGallery = async () => {
@@ -20,7 +20,7 @@ const ImagePickerComponent = ({ handleSavingData }) => {
 
     useEffect(() => {
         if (imageUri) {
-            handleSavingData("picture", imageUri);
+            handleSavingImage(imageUri);
         }
     }, [imageUri]);
 

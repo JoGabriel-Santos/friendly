@@ -3,7 +3,7 @@ import { Modal, SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, Touchable
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 
-const SelectProficiency = () => {
+const SelectProficiency = ({ handleSavingData, handleNext }) => {
     const navigation = useNavigation();
 
     const [isModalVisible, setModalVisible] = useState(false);
@@ -114,7 +114,7 @@ const SelectProficiency = () => {
 
                                                 setTimeout(() => {
                                                     navigation.navigate("Proficiency",
-                                                        { selectedOptions: selectedLanguages, languageName, handleLanguageSelect });
+                                                        { languageName, handleLanguageSelect });
                                                 }, 500);
                                             }
                                         }}
@@ -172,9 +172,10 @@ const SelectProficiency = () => {
             </View>
 
             <View style={styles.nextScreenView}>
-                <TouchableOpacity
-                    style={styles.nextScreen}
-                >
+                <TouchableOpacity style={styles.nextScreen} onPress={() => {
+                    handleSavingData(selectedLanguages, "Proficiency");
+                    // handleNext();
+                }}>
                     <Text style={styles.nextScreenText}>
                         Continue
                     </Text>

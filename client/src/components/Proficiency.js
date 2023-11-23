@@ -19,7 +19,7 @@ const Proficiency = ({ route }) => {
                 <View style={styles.containerLeft}>
                     <TouchableOpacity
                         style={styles.backButton}
-                        onPress={() => navigation.navigate("SelectProficiency")}
+                        onPress={() => navigation.navigate("CreateAccount")}
                     >
                         <Ionicons name={"arrow-back-outline"} color={"#333"} size={30}/>
                     </TouchableOpacity>
@@ -31,7 +31,7 @@ const Proficiency = ({ route }) => {
                     style={styles.saveButton}
                     onPress={() => {
                         handleLanguageSelect(languageName, selectedLevel);
-                        navigation.navigate("SelectProficiency");
+                        navigation.navigate("CreateAccount");
                     }}
                 >
                     <Text style={styles.saveText}>Save</Text>

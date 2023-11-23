@@ -5,6 +5,7 @@ import { useFonts } from "expo-font";
 import Welcome from "./src/screens/Welcome";
 import Authentication from "./src/screens/Authentication";
 import CreateAccount from "./src/components/Create account/CreateAccount";
+import SelectProficiency from "./src/components/Create account/SelectProficiency";
 import Home from "./src/screens/Home";
 import Friends from "./src/screens/Friends";
 import Community from "./src/screens/Community";
@@ -18,8 +19,6 @@ import Description from "./src/components/Description";
 import Navbar from "./src/components/Navbar";
 import configFonts from "./src/utils/configFonts";
 
-import OtherInformation from "./src/components/Create account/OtherInformation";
-
 const Stack = createStackNavigator();
 
 function App() {
@@ -28,9 +27,6 @@ function App() {
     return !fontsLoader ? null : (
         <NavigationContainer>
             <Stack.Navigator screenOptions={{ headerShown: false }}>
-
-                <Stack.Screen name="OtherInformation" component={OtherInformation}/>
-
                 <Stack.Screen name="Home" component={Home}/>
                 <Stack.Screen name="Friends" component={Friends}/>
                 <Stack.Screen name="Community" component={Community}/>
@@ -44,6 +40,7 @@ function App() {
                 <Stack.Screen name="Welcome" component={Welcome}/>
                 <Stack.Screen name="Authentication" component={Authentication}/>
                 <Stack.Screen name="CreateAccount" component={CreateAccount}/>
+                <Stack.Screen name="SelectProficiency" component={SelectProficiency}/>
             </Stack.Navigator>
 
             <Navbar/>
