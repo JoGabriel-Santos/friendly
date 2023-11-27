@@ -42,7 +42,7 @@ const Home = () => {
             >
                 <View style={styles.profileImageView}>
                     <Image
-                        source={userInfo.picture ? { uri: userInfo.picture } : require("../../utils/images/userPhoto.png")}
+                        source={userInfo?.picture ? { uri: userInfo.picture } : require("../../utils/images/userPhoto.png")}
                         style={styles.profileImage}
                     />
                 </View>
