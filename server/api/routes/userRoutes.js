@@ -4,7 +4,7 @@ import express from "express";
 
 const router = express.Router();
 
-router.get("/fetchUserData", fetchUserData);
+router.get("/fetchUserData/:userEmail", fetchUserData);
 router.patch("/alterUserData", alterUserData);
 router.post("/signin", signin);
 router.post("/signup", signup);

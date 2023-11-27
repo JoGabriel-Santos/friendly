@@ -10,10 +10,10 @@ const generateToken = (user) => {
 };
 
 export const fetchUserData = async (request, response) => {
-    const { email } = request.body;
+    const { userEmail } = request.params;
 
     try {
-        const userData = await User.findOne({ email });
+        const userData = await User.findOne({ email: userEmail });
         response.status(200).json(userData);
 
     } catch (error) {

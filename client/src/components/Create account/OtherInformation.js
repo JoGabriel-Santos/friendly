@@ -49,6 +49,9 @@ const OtherInformation = () => {
                 }
             });
 
+            const { data } = await API.fetchUserData(userInfo.email);
+
+            await AsyncStorage.setItem("userInfo", JSON.stringify(data));
             navigation.navigate("Home");
 
         } catch (error) {

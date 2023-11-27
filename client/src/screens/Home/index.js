@@ -2,7 +2,6 @@ import React, { useCallback, useState } from "react";
 import { Image, ImageBackground, SafeAreaView, StatusBar, Text, TouchableOpacity, View } from "react-native";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import * as API from "../../api/index";
 import styles from "./styles";
 
 const Home = () => {
@@ -43,7 +42,7 @@ const Home = () => {
             >
                 <View style={styles.profileImageView}>
                     <Image
-                        source={!userInfo?.photo && require("../../utils/images/userPhoto.png")}
+                        source={userInfo.picture ? { uri: userInfo.picture } : require("../../utils/images/userPhoto.png")}
                         style={styles.profileImage}
                     />
                 </View>
