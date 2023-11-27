@@ -21,62 +21,25 @@ export const fetchUserData = async (request, response) => {
     }
 };
 
-export const changeUserInfo = async (request, response) => {
-    const {
-        email,
-        name,
-        picture,
-        birthday,
-        proficiency,
-        gender,
-        topics,
-        description,
-    } = request.body;
+export const alterUserData = async (request, response) => {
+    const { userEmail, updatedData } = request.body;
 
     try {
-        const user = await User.findOne({ email: email });
+        const user = await User.findOne({ email: userEmail });
         if (!user) {
             return response.status(404).json({ message: "User not found" });
         }
 
-        if (name) {
-            user.name = name;
-        }
-
-        if (picture) {
-            user.picture = picture;
-        }
-
-        if (birthday) {
-            user.birthday = birthday;
-        }
-
-        if (proficiency) {
-            user.proficiency = proficiency;
-        }
-
-        if (gender) {
-            user.gender = gender;
-        }
-
-        if (topics) {
-            user.topics = topics;
-        }
-
-        if (description) {
-            user.description = description;
-        }
+        Object.keys(updatedData).forEach((key) => {
+            user[key] = updatedData[key];
+        });
 
         await user.save();
 
-        const token = generateToken(newUser);
-
-        response.status(201).json({ result: user, token });
+        return response.status(200).json({ message: "User data updated successfully" });
 
     } catch (error) {
-        response
-            .status(500)
-            .json({ message: "An error occurred while updating user information" });
+        return response.status(500).json({ message: "Internal server error" });
     }
 };
 

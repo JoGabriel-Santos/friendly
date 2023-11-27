@@ -1,28 +1,51 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import ImagePicker from "../ImagePicker";
+import * as API from "../../api/index";
 
 const UploadUserPicture = ({ handleNext }) => {
+    const [userInfo, setUserInfo] = useState(null);
     const [userImage, setUserImage] = useState();
 
-    const handleSavingImage = (newUserImage) => {
+    const fetchUserInfo = useCallback(() => {
+        const getUserInfo = async () => {
+            try {
+                const user = await AsyncStorage.getItem("userInfo");
+                const userInfoJSON = JSON.parse(user);
+                setUserInfo(userInfoJSON);
 
+            } catch (error) {
+                console.log("An error occurred: ", error);
+            }
+        };
+
+        getUserInfo();
+    }, []);
+
+    useFocusEffect(fetchUserInfo);
+
+    const handleSavingImage = (newUserImage) => {
         setUserImage(newUserImage);
     };
 
-    const handleSubmitUserData = () => {
+    const handleSubmitUserData = async () => {
+        try {
+            await API.alterUserData({ userEmail: userInfo.email, updatedData: { "picture": userImage } });
 
+        } catch (error) {
+            console.log(error.response);
+        }
     };
+
+    const isButtonClickable = !!userImage;
 
     return (
         <SafeAreaView style={styles.container}>
-
             <View style={styles.createAccountView}>
                 <View style={styles.header}>
-                    <Text style={styles.authText}>
-                        Choose a photo
-                    </Text>
-
+                    <Text style={styles.authText}>Choose a photo</Text>
                     <Text style={styles.sloganText}>
                         On Friendly, everyone has a profile photo which clearly shows their face
                     </Text>
@@ -35,34 +58,29 @@ const UploadUserPicture = ({ handleNext }) => {
                 <Text style={styles.descriptionText}>
                     Not sure what we mean? Here are a few good profile photo examples from our community
                 </Text>
-
                 <View style={styles.communityPictures}>
-                    <Image
-                        source={require("../../utils/images/background.png")}
-                        style={styles.picture}
-                    />
-
-                    <Image
-                        source={require("../../utils/images/background.png")}
-                        style={styles.picture}
-                    />
-
-                    <Image
-                        source={require("../../utils/images/background.png")}
-                        style={styles.picture}
-                    />
+                    <Image source={require("../../utils/images/background.png")} style={styles.picture}/>
+                    <Image source={require("../../utils/images/background.png")} style={styles.picture}/>
+                    <Image source={require("../../utils/images/background.png")} style={styles.picture}/>
                 </View>
             </View>
 
             <View style={styles.nextScreenView}>
-                <TouchableOpacity style={styles.nextScreen} onPress={() => {
-                    handleSubmitUserData();
-                    handleNext();
-                }}>
-                    <Text style={styles.nextScreenText}>
-                        Continue
-                    </Text>
-                </TouchableOpacity>
+                {isButtonClickable ? (
+                    <TouchableOpacity
+                        style={styles.nextScreen}
+                        onPress={() => {
+                            handleSubmitUserData();
+                            handleNext();
+                        }}
+                    >
+                        <Text style={styles.nextScreenText}>Continue</Text>
+                    </TouchableOpacity>
+                ) : (
+                    <View style={[styles.nextScreen, { backgroundColor: "#A9A9A9" }]}>
+                        <Text style={styles.nextScreenText}>Continue</Text>
+                    </View>
+                )}
             </View>
         </SafeAreaView>
     );
