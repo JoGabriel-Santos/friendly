@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { TouchableOpacity, StyleSheet, Image } from "react-native";
+import { Image, StyleSheet, TouchableOpacity } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 
 const ImagePickerComponent = ({ handleSavingImage }) => {
@@ -48,10 +48,10 @@ const styles = StyleSheet.create({
         borderColor: "black",
         borderRadius: 5,
         borderWidth: 2,
-        height: 130,
+        height: 180,
         position: "absolute",
-        top: "64%",
-        width: 130,
+        top: "60%",
+        width: 180,
     },
 });
 

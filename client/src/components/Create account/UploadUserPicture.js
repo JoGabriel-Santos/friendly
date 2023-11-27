@@ -2,12 +2,16 @@ import React, { useState } from "react";
 import { Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import ImagePicker from "../ImagePicker";
 
-const UploadPicture = ({ handleSavingData, handleNext }) => {
+const UploadUserPicture = ({ handleNext }) => {
     const [userImage, setUserImage] = useState();
 
     const handleSavingImage = (newUserImage) => {
 
         setUserImage(newUserImage);
+    };
+
+    const handleSubmitUserData = () => {
+
     };
 
     return (
@@ -23,9 +27,11 @@ const UploadPicture = ({ handleSavingData, handleNext }) => {
                         On Friendly, everyone has a profile photo which clearly shows their face
                     </Text>
                 </View>
+            </View>
 
-                <ImagePicker handleSavingImage={handleSavingImage}/>
+            <ImagePicker handleSavingImage={handleSavingImage}/>
 
+            <View style={styles.createAccountPhotos}>
                 <Text style={styles.descriptionText}>
                     Not sure what we mean? Here are a few good profile photo examples from our community
                 </Text>
@@ -50,7 +56,7 @@ const UploadPicture = ({ handleSavingData, handleNext }) => {
 
             <View style={styles.nextScreenView}>
                 <TouchableOpacity style={styles.nextScreen} onPress={() => {
-                    handleSavingData(userImage, "Picture");
+                    handleSubmitUserData();
                     handleNext();
                 }}>
                     <Text style={styles.nextScreenText}>
@@ -70,7 +76,11 @@ const styles = StyleSheet.create({
     },
     createAccountView: {
         alignItems: "center",
-        paddingVertical: 50,
+        height: 100,
+        paddingTop: 50,
+    },
+    createAccountPhotos: {
+        alignItems: "center",
     },
     header: {
         alignItems: "center",
@@ -126,4 +136,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default UploadPicture;
+export default UploadUserPicture;
