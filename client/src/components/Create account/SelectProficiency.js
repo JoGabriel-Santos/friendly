@@ -208,7 +208,7 @@ const SelectProficiency = ({ handleNext }) => {
                         style={styles.nextScreen}
                         onPress={() => {
                             handleSubmitUserData();
-                            // handleNext();
+                            handleNext();
                         }}
                     >
                         <Text style={styles.nextScreenText}>Continue</Text>
