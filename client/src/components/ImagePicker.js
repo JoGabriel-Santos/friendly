@@ -3,7 +3,7 @@ import { Image, StyleSheet, TouchableOpacity } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 
 const ImagePickerComponent = ({ handleSavingImage }) => {
-    const [imageUri, setImageUri] = useState();
+    const [imageBase64, setImageBase64] = useState();
 
     const selectImageFromGallery = async () => {
         const image = await ImagePicker.launchImageLibraryAsync({
@@ -13,16 +13,16 @@ const ImagePickerComponent = ({ handleSavingImage }) => {
             quality: 1,
         });
 
-        if (!image.canceled) {
-            setImageUri(image.assets[0].uri);
+        if (!image.cancelled) {
+            setImageBase64(image.assets[0].base64);
         }
     };
 
     useEffect(() => {
-        if (imageUri) {
-            handleSavingImage(imageUri);
+        if (imageBase64) {
+            handleSavingImage(`data:image/jpeg;base64,${imageBase64}`);
         }
-    }, [imageUri]);
+    }, [imageBase64]);
 
     return (
         <TouchableOpacity
@@ -30,11 +30,15 @@ const ImagePickerComponent = ({ handleSavingImage }) => {
             onPress={selectImageFromGallery}
         >
             <Image
-                source={imageUri ? { uri: imageUri } : require("../utils/images/addImage.png")}
+                source={
+                    imageBase64
+                        ? { uri: `data:image/jpeg;base64,${imageBase64}` }
+                        : require("../utils/images/addImage.png")
+                }
                 style={styles.profileImage}
             />
         </TouchableOpacity>
-    )
+    );
 };
 
 const styles = StyleSheet.create({
