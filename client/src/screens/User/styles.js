@@ -87,6 +87,12 @@ const styles = StyleSheet.create({
         alignItems: "center",
         gap: 10,
     },
+    disabledButton: {
+        opacity: 0.5,
+    },
+    disabledText: {
+        color: "rgba(51, 51, 51, 0.5)",
+    },
     contactText: {
         color: "#333",
         fontFamily: "nunito-semiBold",
@@ -116,10 +122,13 @@ const styles = StyleSheet.create({
         paddingVertical: 15,
         marginHorizontal: 20,
     },
+    proficiencyContainer: {
+
+    },
     topics: {
         flexDirection: "row",
         flexWrap: "wrap",
-        gap: 5,
+        gap: 4,
         paddingTop: 15,
     },
     commonTopic: {

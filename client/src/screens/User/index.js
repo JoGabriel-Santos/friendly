@@ -1,23 +1,50 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Image, ImageBackground, ScrollView, StatusBar, Text, TouchableOpacity, View } from "react-native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import styles from "./styles";
 
-const User = () => {
+const User = ({ userInfo }) => {
     const navigation = useNavigation();
 
+    const [isCurrentUser, setIsCurrentUser] = useState(false);
     const [showFullBio, setShowFullBio] = useState(false);
-
     const proficiencyLevels = ["Beginner", "Intermediate", "Advanced", "Fluent", "Native"];
 
-    const bio = "Lorem ipsum dolor sit amet, consectetur adipiscing elit," +
-        " sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." +
-        " Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi" +
-        " ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit" +
-        " in voluptate velit esse cillum dolore eu fugiat nulla pariatur." +
-        " Excepteur sint occaecat cupidatat non proident, sunt in culpa qui" +
-        " officia deserunt mollit anim id est laborum.";
+    const fetchUserInfo = useCallback(() => {
+        const getUserInfo = async () => {
+            try {
+                const user = await AsyncStorage.getItem("userInfo");
+                if (user) {
+                    const userInfoJSON = JSON.parse(user);
+
+                    if (userInfoJSON.email === userInfo.email) setIsCurrentUser(true);
+                }
+
+            } catch (error) {
+                console.log("An error occurred: ", error);
+            }
+        };
+
+        getUserInfo();
+    }, [navigation]);
+
+    useFocusEffect(fetchUserInfo);
+
+    const formatDateOfBirth = (data) => {
+        const months = [
+            'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+            'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+        ];
+
+        const { day, month, ordinal, age } = data;
+        const monthName = months[month - 1];
+
+        return `${monthName} ${day}${ordinal} (${age})`;
+    };
+
+    console.log(userInfo?.proficiency)
 
     return (
         <View style={styles.container}>
@@ -31,7 +58,7 @@ const User = () => {
                 >
                     <View style={styles.profileImageView}>
                         <Image
-                            source={require("../../utils/images/profile.png")}
+                            source={userInfo?.picture ? { uri: userInfo.picture } : require("../../utils/images/userPhoto.png")}
                             style={styles.profileImage}
                         />
                     </View>
@@ -48,16 +75,16 @@ const User = () => {
                     </TouchableOpacity>
 
                     <View style={styles.textContainer}>
-                        <Text style={styles.userNameText}>Cleitin</Text>
+                        <Text style={styles.userNameText}>{isCurrentUser ? "Your user profile" : userInfo?.name}</Text>
                     </View>
                 </ImageBackground>
 
                 <View style={styles.aboutUser}>
-                    <Text style={styles.aboutUserText}>About Cleitin</Text>
+                    <Text style={styles.aboutUserText}>About {userInfo?.name}</Text>
                 </View>
 
                 <View style={styles.bio}>
-                    <Text style={styles.bioText} numberOfLines={showFullBio ? undefined : 3}>{bio}</Text>
+                    <Text style={styles.bioText} numberOfLines={showFullBio ? undefined : 3}>{userInfo?.description}</Text>
                     {
                         !showFullBio && (
                             <TouchableOpacity
@@ -71,44 +98,92 @@ const User = () => {
                 </View>
 
                 <View style={styles.viewUserContacts}>
-                    <TouchableOpacity style={styles.userContacts}>
+                    <TouchableOpacity
+                        style={[
+                            styles.userContacts,
+                            isCurrentUser && styles.disabledButton
+                        ]}
+                        disabled={isCurrentUser}
+                    >
                         <Ionicons
                             name={"person-add-outline"}
-                            color={"#333"}
+                            color={isCurrentUser ? "rgba(51, 51, 51, 0.5)" : "#333333"}
                             size={28}
                         />
-
-                        <Text style={styles.contactText}>Add friend</Text>
+                        <Text
+                            style={[
+                                styles.contactText,
+                                isCurrentUser && styles.disabledText
+                            ]}
+                        >
+                            Add friend
+                        </Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={styles.userContacts}>
+                    <TouchableOpacity
+                        style={[
+                            styles.userContacts,
+                            isCurrentUser && styles.disabledButton
+                        ]}
+                        disabled={isCurrentUser}
+                    >
                         <Ionicons
                             name={"call-outline"}
-                            color={"#333"}
+                            color={isCurrentUser ? "rgba(51, 51, 51, 0.5)" : "#333"}
                             size={28}
                         />
-
-                        <Text style={styles.contactText}>Audio call</Text>
+                        <Text
+                            style={[
+                                styles.contactText,
+                                isCurrentUser && styles.disabledText
+                            ]}
+                        >
+                            Audio call
+                        </Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={styles.userContacts}>
+                    <TouchableOpacity
+                        style={[
+                            styles.userContacts,
+                            isCurrentUser && styles.disabledButton
+                        ]}
+                        disabled={isCurrentUser}
+                    >
                         <Ionicons
                             name={"videocam-outline"}
-                            color={"#333"}
+                            color={isCurrentUser ? "rgba(51, 51, 51, 0.5)" : "#333"}
                             size={28}
                         />
-
-                        <Text style={styles.contactText}>Video call</Text>
+                        <Text
+                            style={[
+                                styles.contactText,
+                                isCurrentUser && styles.disabledText
+                            ]}
+                        >
+                            Video call
+                        </Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={styles.userContacts}>
+                    <TouchableOpacity
+                        style={[
+                            styles.userContacts,
+                            isCurrentUser && styles.disabledButton
+                        ]}
+                        disabled={isCurrentUser}
+                    >
                         <Ionicons
                             name={"chatbubbles-outline"}
-                            color={"#333"}
+                            color={isCurrentUser ? "rgba(51, 51, 51, 0.5)" : "#333"}
                             size={28}
                         />
-
-                        <Text style={styles.contactText}>Message</Text>
+                        <Text
+                            style={[
+                                styles.contactText,
+                                isCurrentUser && styles.disabledText
+                            ]}
+                        >
+                            Message
+                        </Text>
                     </TouchableOpacity>
                 </View>
 
@@ -120,7 +195,7 @@ const User = () => {
                             size={30}
                         />
 
-                        <Text style={styles.infoText}>Jan 20th (22)</Text>
+                        <Text style={styles.infoText}>{formatDateOfBirth(userInfo?.birthday)}</Text>
                     </View>
 
                     <View style={styles.userInformation}>
@@ -130,7 +205,7 @@ const User = () => {
                             size={30}
                         />
 
-                        <Text style={styles.infoText}>Male</Text>
+                        <Text style={styles.infoText}>{userInfo?.gender}</Text>
                     </View>
 
                     <View style={styles.userInformation}>
@@ -158,37 +233,39 @@ const User = () => {
                     <Text style={styles.aboutUserText}>Topics of interests</Text>
 
                     <View style={styles.topics}>
-                        <Text style={styles.commonTopic}>Animals</Text>
-                        <Text style={styles.commonTopic}>Books</Text>
-                        <Text style={styles.commonTopic}>Coding</Text>
-                        <Text style={styles.commonTopic}>Gaming</Text>
-                        <Text style={styles.commonTopic}>Music</Text>
-                        <Text style={styles.commonTopic}>Science</Text>
-                        <Text style={styles.commonTopic}>Technology</Text>
-                        <Text style={styles.uncommonTopic}>Travel</Text>
-                        <Text style={styles.uncommonTopic}>Writing</Text>
+                        {
+                            userInfo?.topics.map(topic => (
+                                <Text style={styles.commonTopic}>{topic.topicName}</Text>
+                            ))
+                        }
                     </View>
                 </View>
 
                 <View style={styles.viewProficiency}>
                     <Text style={styles.aboutUserText}>Proficiency</Text>
 
-                    <View style={styles.proficiencyIndicator}>
-                        <Text style={styles.indicatorText}>English</Text>
+                    <View style={styles.proficiencyContainer}>
+                        {
+                            userInfo?.proficiency.map((language, index) => (
+                                <View key={index} style={styles.proficiencyIndicator}>
+                                    <Text style={styles.indicatorText}>{language[0].replace(/\([^)]*\)/, '')}</Text>
 
-                        <View style={styles.indicatorIcon}>
-                            {
-                                proficiencyLevels.map((level, index) => (
-                                    <Ionicons
-                                        key={index}
-                                        name={index - 1 < proficiencyLevels.indexOf("Advanced")
-                                            ? "radio-button-on-outline" : "radio-button-off-outline"}
-                                        color={"#333"}
-                                        size={15}
-                                    />
-                                ))
-                            }
-                        </View>
+                                    <View style={styles.indicatorIcon}>
+                                        {
+                                            proficiencyLevels.map((level, index) => (
+                                                <Ionicons
+                                                    key={index}
+                                                    name={index - 1 < proficiencyLevels.indexOf(language[1])
+                                                        ? "radio-button-on-outline" : "radio-button-off-outline"}
+                                                    color={"#333"}
+                                                    size={15}
+                                                />
+                                            ))
+                                        }
+                                    </View>
+                                </View>
+                            ))
+                        }
                     </View>
                 </View>
             </ScrollView>
