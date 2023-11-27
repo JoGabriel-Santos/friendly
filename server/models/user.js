@@ -18,11 +18,11 @@ const userSchema = new mongoose.Schema({
         required: false,
     },
     birthday: {
-        type: String,
+        type: {},
         required: false,
     },
     proficiency: {
-        type: String,
+        type: [],
         required: false,
     },
     gender: {
@@ -30,7 +30,7 @@ const userSchema = new mongoose.Schema({
         required: false,
     },
     topics: {
-        type: [String],
+        type: [],
         required: false,
     },
     description: {

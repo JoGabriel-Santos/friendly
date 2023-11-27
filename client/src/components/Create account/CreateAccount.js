@@ -1,13 +1,15 @@
 import React, { useState } from "react";
+import { useNavigation } from "@react-navigation/native";
 import UploadUserPicture from "./UploadUserPicture";
 import SelectProficiency from "./SelectProficiency";
-import OtherInformation from "./OtherInformation";
 
 const CreateAccount = () => {
+    const navigation = useNavigation();
+
     const [progress, setProgress] = useState(1);
 
     const handleNext = () => {
-        if (progress < 3) {
+        if (progress <= 2) {
             setProgress(progress + 1);
         }
     };
@@ -15,12 +17,15 @@ const CreateAccount = () => {
     const screens = {
         1: <UploadUserPicture handleNext={handleNext}/>,
         2: <SelectProficiency handleNext={handleNext}/>,
-        3: <OtherInformation/>
     }
 
     return (
         <React.Fragment>
             {screens[progress]}
+
+            {
+                progress === 3 ? navigation.navigate("OtherInformation") : null
+            }
         </React.Fragment>
     );
 };

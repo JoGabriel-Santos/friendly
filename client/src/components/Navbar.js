@@ -29,6 +29,8 @@ const Navbar = () => {
         "SelectProficiency",
         "Proficiency",
         "OtherInformation",
+        "Topics",
+        "Description"
     ];
 
     useEffect(() => {

@@ -18,7 +18,7 @@ const Description = ({ route }) => {
                 <View style={styles.containerLeft}>
                     <TouchableOpacity
                         style={styles.backButton}
-                        onPress={() => navigation.navigate("Profile")}
+                        onPress={() => navigation.navigate("OtherInformation")}
                     >
                         <Ionicons name={"arrow-back-outline"} color={"#333"} size={30}/>
                     </TouchableOpacity>
@@ -30,7 +30,7 @@ const Description = ({ route }) => {
                     style={styles.saveButton}
                     onPress={() => {
                         handleSavingData("description", description);
-                        navigation.navigate("Profile");
+                        navigation.navigate("OtherInformation");
                     }}
                 >
                     <Text style={styles.saveText}>Save</Text>

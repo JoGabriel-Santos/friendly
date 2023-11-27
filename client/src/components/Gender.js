@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 
-const Gender = () => {
-    const [selectedGender, setSelectedGender] = useState("Male");
+const Gender = ({ handleSavingData }) => {
+    const [selectedGender, setSelectedGender] = useState("");
 
     const handleGenderSelection = (gender) => {
         setSelectedGender(gender);
-        // handleSavingData("gender", gender);
+        handleSavingData("gender", gender);
     };
 
     const renderGenderButton = (gender) => (

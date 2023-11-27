@@ -1,14 +1,66 @@
-import React from "react";
-import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import React, { useCallback, useState } from "react";
+import { SafeAreaView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import Calendar from "../Calendar";
 import Gender from "../Gender";
+import * as API from "../../api";
 
-const OtherInformation = ({ handleNext }) => {
+const OtherInformation = () => {
     const navigation = useNavigation();
+
+    const [userInfo, setUserInfo] = useState(null);
+    const [userData, setUserData] = useState({
+        birthday: "",
+        gender: "",
+        topics: "",
+        description: "",
+    });
+
+    const fetchUserInfo = useCallback(() => {
+        const getUserInfo = async () => {
+            try {
+                const user = await AsyncStorage.getItem("userInfo");
+                const userInfoJSON = JSON.parse(user);
+                setUserInfo(userInfoJSON);
+
+            } catch (error) {
+                console.log("An error occurred: ", error);
+            }
+        };
+
+        getUserInfo();
+    }, []);
+
+    useFocusEffect(fetchUserInfo);
+
+    const handleSavingInformation = (name, value) => {
+        setUserData((prevData) => ({ ...prevData, [name]: value }));
+    };
+
+    const handleSubmitUserData = async () => {
+        try {
+            await API.alterUserData({
+                userEmail: userInfo.email, updatedData: {
+                    "birthday": userData.birthday,
+                    "gender": userData.gender,
+                    "topics": userData.topics,
+                    "description": userData.description
+                }
+            });
+
+            navigation.navigate("Home");
+
+        } catch (error) {
+            console.log(error.response);
+        }
+    };
+
+    const isButtonClickable = Object.values(userData).every(value => value !== "");
 
     return (
         <SafeAreaView style={styles.container}>
+            <StatusBar backgroundColor="transparent" barStyle="dark-content" translucent={true}/>
 
             <View style={styles.createAccountView}>
                 <View style={styles.header}>
@@ -17,30 +69,48 @@ const OtherInformation = ({ handleNext }) => {
                     </Text>
 
                     <Text style={styles.sloganText}>
-                        Please provide your date of birth, gender, and topics of interest
+                        Please provide this latest information about yourself
                     </Text>
                 </View>
             </View>
 
-            <Calendar/>
+            <Calendar handleSavingData={handleSavingInformation}/>
 
-            <Gender/>
+            <Gender handleSavingData={handleSavingInformation}/>
 
             <TouchableOpacity
                 style={[styles.button, styles.buttonInterests]}
                 onPress={() => navigation.navigate("Topics",
-                    {})
+                    { handleSavingData: handleSavingInformation, userData: userData })
                 }
             >
                 <Text style={[styles.buttonTextInterests, styles.buttonText]}>Topics of interest</Text>
             </TouchableOpacity>
 
+            <TouchableOpacity
+                style={[styles.button, styles.buttonDesc]}
+                onPress={() => navigation.navigate("Description",
+                    { handleSavingData: handleSavingInformation, prevDescription: userData.description })
+                }
+            >
+                <Text style={[styles.buttonTextDesc, styles.buttonText]}>Description</Text>
+            </TouchableOpacity>
+
             <View style={styles.nextScreenView}>
-                <TouchableOpacity style={styles.nextScreen} onPress={handleNext}>
-                    <Text style={styles.nextScreenText}>
-                        Continue
-                    </Text>
-                </TouchableOpacity>
+                {isButtonClickable ? (
+                    <TouchableOpacity
+                        style={styles.nextScreen}
+                        onPress={() => {
+                            handleSubmitUserData();
+                        }}
+                    >
+                        <Text style={styles.nextScreenText}>Continue</Text>
+                    </TouchableOpacity>
+                ) : (
+                    <View style={[styles.nextScreen, { backgroundColor: "#A9A9A9" }]}>
+                        <Text style={styles.nextScreenText}>Continue</Text>
+                    </View>
+                )}
             </View>
         </SafeAreaView>
     );
@@ -81,6 +151,10 @@ const styles = StyleSheet.create({
         borderWidth: 0,
         backgroundColor: "#7c46fa",
         borderRadius: 10,
+        marginBottom: 20,
+    },
+    buttonDesc: {
+        borderColor: "#7c46fa",
     },
     buttonText: {
         fontFamily: "nunito-bold",
@@ -89,6 +163,9 @@ const styles = StyleSheet.create({
     },
     buttonTextInterests: {
         color: "#FFFFFF",
+    },
+    buttonTextDesc: {
+        color: "#7c46fa",
     },
     nextScreenView: {
         flex: 1,
