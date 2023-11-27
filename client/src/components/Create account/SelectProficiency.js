@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Modal, SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as API from "../../api";
 
-const SelectProficiency = ({ handleSavingData, handleNext }) => {
+const SelectProficiency = ({ handleNext }) => {
     const navigation = useNavigation();
 
+    const [userInfo, setUserInfo] = useState(null);
     const [isModalVisible, setModalVisible] = useState(false);
     const [selectedLanguages, setSelectedLanguages] = useState([]);
     const languages = [
@@ -47,6 +50,23 @@ const SelectProficiency = ({ handleSavingData, handleNext }) => {
 
     const proficiencyLevels = ["Beginner", "Intermediate", "Advanced", "Fluent", "Native"];
 
+    const fetchUserInfo = useCallback(() => {
+        const getUserInfo = async () => {
+            try {
+                const user = await AsyncStorage.getItem("userInfo");
+                const userInfoJSON = JSON.parse(user);
+                setUserInfo(userInfoJSON);
+
+            } catch (error) {
+                console.log("An error occurred: ", error);
+            }
+        };
+
+        getUserInfo();
+    }, []);
+
+    useFocusEffect(fetchUserInfo);
+
     const handleLanguageSelect = (languageName, selectedLevel) => {
 
         setSelectedLanguages(prevSelectedLanguages => [
@@ -62,6 +82,17 @@ const SelectProficiency = ({ handleSavingData, handleNext }) => {
     const handleToggleModal = () => {
         setModalVisible(!isModalVisible);
     };
+
+    const handleSubmitUserData = async () => {
+        try {
+            await API.alterUserData({ userEmail: userInfo.email, updatedData: { "proficiency": selectedLanguages } });
+
+        } catch (error) {
+            console.log(error.response);
+        }
+    };
+
+    const isButtonClickable = selectedLanguages && selectedLanguages.length > 0;
 
     return (
         <SafeAreaView style={styles.container}>
@@ -172,14 +203,21 @@ const SelectProficiency = ({ handleSavingData, handleNext }) => {
             </View>
 
             <View style={styles.nextScreenView}>
-                <TouchableOpacity style={styles.nextScreen} onPress={() => {
-                    handleSavingData(selectedLanguages, "Proficiency");
-                    // handleNext();
-                }}>
-                    <Text style={styles.nextScreenText}>
-                        Continue
-                    </Text>
-                </TouchableOpacity>
+                {isButtonClickable ? (
+                    <TouchableOpacity
+                        style={styles.nextScreen}
+                        onPress={() => {
+                            handleSubmitUserData();
+                            // handleNext();
+                        }}
+                    >
+                        <Text style={styles.nextScreenText}>Continue</Text>
+                    </TouchableOpacity>
+                ) : (
+                    <View style={[styles.nextScreen, { backgroundColor: "#A9A9A9" }]}>
+                        <Text style={styles.nextScreenText}>Continue</Text>
+                    </View>
+                )}
             </View>
         </SafeAreaView>
     );
