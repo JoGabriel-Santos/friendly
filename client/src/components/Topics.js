@@ -134,7 +134,8 @@ const styles = StyleSheet.create({
         textAlign: "center",
     },
     listContainer: {
-        paddingVertical: 20,
+        paddingTop: 20,
+        paddingBottom: 50,
     },
     card: {
         borderBottomColor: "rgba(51,51,51,0.2)",
