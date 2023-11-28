@@ -1,7 +1,8 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { SafeAreaView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as Location from "expo-location";
 import Calendar from "../Calendar";
 import Gender from "../Gender";
 import * as API from "../../api";
@@ -16,6 +17,11 @@ const OtherInformation = () => {
         topics: "",
         description: "",
     });
+
+    const [country, setCountry] = useState(null);
+    const [latLong, setLatLong] = useState(null);
+
+    const isButtonClickable = Object.values(userData).every(value => value !== "");
 
     const fetchUserInfo = useCallback(() => {
         const getUserInfo = async () => {
@@ -32,8 +38,6 @@ const OtherInformation = () => {
         getUserInfo();
     }, []);
 
-    useFocusEffect(fetchUserInfo);
-
     const handleSavingInformation = (name, value) => {
         setUserData((prevData) => ({ ...prevData, [name]: value }));
     };
@@ -45,7 +49,9 @@ const OtherInformation = () => {
                     "birthday": userData.birthday,
                     "gender": userData.gender,
                     "topics": userData.topics,
-                    "description": userData.description
+                    "description": userData.description,
+                    "country": country,
+                    "latLong": latLong,
                 }
             });
 
@@ -59,7 +65,34 @@ const OtherInformation = () => {
         }
     };
 
-    const isButtonClickable = Object.values(userData).every(value => value !== "");
+    useEffect(() => {
+        const getLocation = async () => {
+            try {
+                const { status } = await Location.requestForegroundPermissionsAsync();
+
+                if (status !== "granted") {
+
+                    console.error("Permission to access location was denied");
+                    return;
+                }
+
+                const location = await Location.getCurrentPositionAsync({});
+
+                const { latitude, longitude } = location.coords;
+                setLatLong({ latitude, longitude });
+
+                const countryInfo = await Location.reverseGeocodeAsync({ latitude, longitude });
+                setCountry(countryInfo[0]?.country || "Country not found");
+
+            } catch (error) {
+                console.error("Error getting location", error);
+            }
+        };
+
+        getLocation();
+    }, []);
+
+    useFocusEffect(fetchUserInfo);
 
     return (
         <SafeAreaView style={styles.container}>
