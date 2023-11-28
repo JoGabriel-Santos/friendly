@@ -244,10 +244,8 @@ const User = ({ userInfo }) => {
 
                     <View style={styles.proficiencyContainer}>
                         {userInfo?.proficiency.map((language, index) => (
-                            // Renderizar apenas em índices pares para formar pares
                             index % 2 === 0 && (
                                 <View key={index} style={styles.row}>
-                                    {/* View para o item atual */}
                                     <View style={styles.proficiencyIndicator}>
                                         <Text style={styles.indicatorText}>
                                             {language[0].replace(/\([^)]*\)/, '')}
@@ -268,7 +266,6 @@ const User = ({ userInfo }) => {
                                         </View>
                                     </View>
 
-                                    {/* View para o próximo item, se existir */}
                                     {userInfo?.proficiency[index + 1] && (
                                         <View style={styles.proficiencyIndicator}>
                                             <Text style={styles.indicatorText}>
