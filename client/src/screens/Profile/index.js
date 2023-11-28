@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import { Text, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import User from "../User";
@@ -41,6 +41,10 @@ const Profile = () => {
             console.log("An error occurred: ", error);
         }
     };
+
+    if (!userInfo) {
+        return <ActivityIndicator size="large" color="#0000ff" />;
+    }
 
     return (
         <React.Fragment>

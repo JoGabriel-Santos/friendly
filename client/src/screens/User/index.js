@@ -44,8 +44,6 @@ const User = ({ userInfo }) => {
         return `${monthName} ${day}${ordinal} (${age})`;
     };
 
-    console.log(userInfo?.proficiency)
-
     return (
         <View style={styles.container}>
             <ScrollView showsVerticalScrollIndicator={false}>
@@ -234,8 +232,8 @@ const User = ({ userInfo }) => {
 
                     <View style={styles.topics}>
                         {
-                            userInfo?.topics.map(topic => (
-                                <Text style={styles.commonTopic}>{topic.topicName}</Text>
+                            userInfo?.topics.map((topic, index) => (
+                                <Text style={styles.commonTopic} key={index}>{topic.topicName}</Text>
                             ))
                         }
                     </View>
@@ -245,28 +243,59 @@ const User = ({ userInfo }) => {
                     <Text style={styles.aboutUserText}>Proficiency</Text>
 
                     <View style={styles.proficiencyContainer}>
-                        {
-                            userInfo?.proficiency.map((language, index) => (
-                                <View key={index} style={styles.proficiencyIndicator}>
-                                    <Text style={styles.indicatorText}>{language[0].replace(/\([^)]*\)/, '')}</Text>
-
-                                    <View style={styles.indicatorIcon}>
-                                        {
-                                            proficiencyLevels.map((level, index) => (
+                        {userInfo?.proficiency.map((language, index) => (
+                            // Renderizar apenas em índices pares para formar pares
+                            index % 2 === 0 && (
+                                <View key={index} style={styles.row}>
+                                    {/* View para o item atual */}
+                                    <View style={styles.proficiencyIndicator}>
+                                        <Text style={styles.indicatorText}>
+                                            {language[0].replace(/\([^)]*\)/, '')}
+                                        </Text>
+                                        <View style={styles.indicatorIcon}>
+                                            {proficiencyLevels.map((level, levelIndex) => (
                                                 <Ionicons
-                                                    key={index}
-                                                    name={index - 1 < proficiencyLevels.indexOf(language[1])
-                                                        ? "radio-button-on-outline" : "radio-button-off-outline"}
-                                                    color={"#333"}
+                                                    key={levelIndex}
+                                                    name={
+                                                        levelIndex - 1 < proficiencyLevels.indexOf(language[1])
+                                                            ? 'radio-button-on-outline'
+                                                            : 'radio-button-off-outline'
+                                                    }
+                                                    color={'#333'}
                                                     size={15}
                                                 />
-                                            ))
-                                        }
+                                            ))}
+                                        </View>
                                     </View>
+
+                                    {/* View para o próximo item, se existir */}
+                                    {userInfo?.proficiency[index + 1] && (
+                                        <View style={styles.proficiencyIndicator}>
+                                            <Text style={styles.indicatorText}>
+                                                {userInfo.proficiency[index + 1][0].replace(/\([^)]*\)/, '')}
+                                            </Text>
+                                            <View style={styles.indicatorIcon}>
+                                                {proficiencyLevels.map((level, levelIndex) => (
+                                                    <Ionicons
+                                                        key={levelIndex}
+                                                        name={
+                                                            levelIndex - 1 <
+                                                            proficiencyLevels.indexOf(userInfo.proficiency[index + 1][1])
+                                                                ? 'radio-button-on-outline'
+                                                                : 'radio-button-off-outline'
+                                                        }
+                                                        color={'#333'}
+                                                        size={15}
+                                                    />
+                                                ))}
+                                            </View>
+                                        </View>
+                                    )}
                                 </View>
-                            ))
-                        }
+                            )
+                        ))}
                     </View>
+
                 </View>
             </ScrollView>
         </View>

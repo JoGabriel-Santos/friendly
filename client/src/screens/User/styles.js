@@ -122,9 +122,6 @@ const styles = StyleSheet.create({
         paddingVertical: 15,
         marginHorizontal: 20,
     },
-    proficiencyContainer: {
-
-    },
     topics: {
         flexDirection: "row",
         flexWrap: "wrap",
@@ -152,7 +149,14 @@ const styles = StyleSheet.create({
         paddingVertical: 15,
         marginHorizontal: 20,
     },
+    row: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginBottom: 10,
+    },
     proficiencyIndicator: {
+        alignItems: "flex-start",
+        flex: 1,
         paddingTop: 10,
     },
     indicatorText: {
