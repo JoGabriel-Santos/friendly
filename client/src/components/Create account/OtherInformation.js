@@ -5,6 +5,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Location from "expo-location";
 import Calendar from "../Calendar";
 import Gender from "../Gender";
+import { getLocation } from "../../helpers/geolocation";
 import * as API from "../../api";
 
 const OtherInformation = () => {
@@ -66,30 +67,19 @@ const OtherInformation = () => {
     };
 
     useEffect(() => {
-        const getLocation = async () => {
+        const fetchLocation = async () => {
             try {
-                const { status } = await Location.requestForegroundPermissionsAsync();
+                const locationData = await getLocation();
 
-                if (status !== "granted") {
-
-                    console.error("Permission to access location was denied");
-                    return;
-                }
-
-                const location = await Location.getCurrentPositionAsync({});
-
-                const { latitude, longitude } = location.coords;
-                setLatLong({ latitude, longitude });
-
-                const countryInfo = await Location.reverseGeocodeAsync({ latitude, longitude });
-                setCountry(countryInfo[0]?.country || "Country not found");
+                setLatLong({ latitude: locationData.latitude, longitude: locationData.longitude });
+                setCountry(locationData.country);
 
             } catch (error) {
-                console.error("Error getting location", error);
+                console.error("Error fetching location", error);
             }
         };
 
-        getLocation();
+        fetchLocation();
     }, []);
 
     useFocusEffect(fetchUserInfo);
