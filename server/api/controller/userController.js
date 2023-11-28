@@ -21,6 +21,18 @@ export const fetchUserData = async (request, response) => {
     }
 };
 
+export const fetchAllUsers = async (request, response) => {
+    const { userEmail } = request.params;
+
+    try {
+        const allUsers = await User.find({ email: { $ne: userEmail } });
+        response.status(200).json(allUsers);
+
+    } catch (error) {
+        response.status(409).json({ message: error });
+    }
+};
+
 export const alterUserData = async (request, response) => {
     const { userEmail, updatedData } = request.body;
 

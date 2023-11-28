@@ -70,8 +70,6 @@ const User = ({ userInfo }) => {
 
     useFocusEffect(fetchUserInfo);
 
-    console.log(distance)
-
     return (
         <View style={styles.container}>
             <ScrollView showsVerticalScrollIndicator={false}>

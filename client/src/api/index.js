@@ -17,6 +17,7 @@ const API = axios.create({ baseURL: "http://192.168.1.8:5000" });
 */
 
 export const fetchUserData = (userEmail) => API.get(`/user/fetchUserData/${userEmail}`);
+export const fetchAllUsers = (userEmail) => API.get(`/user/fetchAllUsers/${userEmail}`);
 export const alterUserData = (updatedData) => API.patch("/user/alterUserData", updatedData);
 export const signin = (userInfo) => API.post("/user/signin", userInfo);
 export const signup = (userInfo) => API.post("/user/signup", userInfo);
