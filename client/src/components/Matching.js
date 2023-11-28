@@ -1,38 +1,76 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import CountryFlag from "react-native-country-flag";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Matching = ({ userData }) => {
     const navigation = useNavigation();
 
-    const [countryCode, setCountryCode] = useState();
+    const [countryCodes, setCountryCodes] = useState();
+    const [commonInterests, setCommonInterests] = useState(0);
+
+    const fetchCountryCode = async (countryName) => {
+        try {
+            const response = await fetch(`https://restcountries.com/v3.1/name/${countryName}`);
+            const data = await response.json();
+
+            if (data.length > 0) {
+                return data[0].altSpellings[0].toLowerCase();
+
+            } else {
+                return null;
+            }
+
+        } catch (error) {
+            console.error("Error in API request:", error);
+            setCountryCode(null);
+        }
+    };
 
     useEffect(() => {
-        const fetchCountryCode = async (countryName) => {
-            try {
-                const response = await fetch(`https://restcountries.com/v3.1/name/${countryName}`);
-                const data = await response.json();
-
-                if (data.length > 0) {
-                    setCountryCode(data[0].altSpellings[0].toLowerCase());
-
-                } else {
-                    setCountryCode(null);
-                }
-
-            } catch (error) {
-                console.error("Error in API request:", error);
-                setCountryCode(null);
-            }
+        const fetchCountryCodes = async () => {
+            const countryCodes = await Promise.all(userData.map(user => fetchCountryCode(user.country)));
+            setCountryCodes(countryCodes);
         };
 
-        if (userData.length > 0) {
-            fetchCountryCode(userData[0].country);
+        if (userData && userData.length > 0) {
+            fetchCountryCodes();
         }
     }, [userData]);
 
-    const renderCard = ({ item }) => (
+    useEffect(() => {
+        const checkCommonInterests = async () => {
+            try {
+                const user = await AsyncStorage.getItem("userInfo");
+                if (user) {
+                    const userInfoJSON = JSON.parse(user);
+
+                    const commonInterests = await Promise.all(userData.map(async (otherUser) => {
+                        let count = 0;
+
+                        userInfoJSON.topics.forEach((topic) => {
+                            const isCommon = otherUser.topics.some((otherTopic) => otherTopic.id === topic.id);
+
+                            if (isCommon) {
+                                count++;
+                            }
+                        });
+
+                        return count;
+                    }));
+
+                    setCommonInterests(commonInterests);
+                }
+            } catch (error) {
+                console.log("An error occurred: ", error);
+            }
+        };
+
+        checkCommonInterests();
+    }, []);
+
+    const renderCard = ({ item, index }) => (
         <TouchableOpacity
             style={styles.card}
             onPress={() => navigation.navigate("User")}
@@ -42,24 +80,26 @@ const Matching = ({ userData }) => {
                 style={styles.profilePicture}
             />
 
-            {
-                countryCode && <CountryFlag style={styles.countryFlag} isoCode={countryCode} size={22}/>
-            }
+            {countryCodes[index] && (
+                <CountryFlag style={styles.countryFlag} isoCode={countryCodes[index]} size={22}/>
+            )}
 
             <View style={styles.userInfo}>
                 <View>
-                    <Text style={styles.userName} numberOfLines={1} ellipsizeMode="tail">{countryCode}</Text>
-                    <Text style={styles.userDesc} numberOfLines={2} ellipsizeMode="tail">
-                        If you don't have anything specific in mind,
-                        tell me about your day, what you enjoy doing,
-                        what makes you happy, or what your dreams are...
-                    </Text>
+                    <Text style={styles.userName} numberOfLines={1} ellipsizeMode="tail">{item.name}</Text>
+                    <Text style={styles.userDesc} numberOfLines={2} ellipsizeMode="tail">{item.description}</Text>
                 </View>
 
-                <Text style={styles.matchedInfo}>Common interests: 2</Text>
+                {commonInterests[index] && (
+                    <Text style={styles.matchedInfo}>Common interests: {commonInterests[index]}</Text>
+                )}
             </View>
         </TouchableOpacity>
     );
+
+    if (!countryCodes || !commonInterests) {
+        return <ActivityIndicator size="large" color="#0000ff"/>;
+    }
 
     return (
         <FlatList

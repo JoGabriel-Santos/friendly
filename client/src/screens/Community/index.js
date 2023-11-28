@@ -48,15 +48,8 @@ const Community = () => {
         fetchAllUsers();
     }, [fetchAllUsers]);
 
-    const userData = [
-        { id: 1, picture: require("../../utils/images/profile.png") },
-        { id: 2, picture: require("../../utils/images/profile.png") },
-        { id: 3, picture: require("../../utils/images/profile.png") },
-        { id: 4, picture: require("../../utils/images/profile.png") },
-    ];
-
     if (!allUsers) {
-        return <ActivityIndicator size="large" color="#0000ff" />;
+        return <ActivityIndicator size="large" color="#0000ff"/>;
     }
 
     return (
