@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 
 import userRouter from "./routes/userRoutes.js";
+import requestsRoutes from "./routes/requestsRoutes.js";
 
 const app = express();
 
@@ -10,5 +11,6 @@ app.use(express.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
 
 app.use("/user", userRouter);
+app.use("/requests", requestsRoutes);
 
 export default app;

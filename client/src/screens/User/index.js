@@ -5,6 +5,7 @@ import { Ionicons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { calculateDistance } from "../../helpers/distance";
 import { getLocation } from "../../helpers/geolocation";
+import * as API from "../../api/index";
 import styles from "./styles";
 
 const User = ({ route }) => {
@@ -12,29 +13,11 @@ const User = ({ route }) => {
 
     const { userInfo } = route.params;
 
-    const [isCurrentUser, setIsCurrentUser] = useState(false);
     const [showFullBio, setShowFullBio] = useState(false);
     const proficiencyLevels = ["Beginner", "Intermediate", "Advanced", "Fluent", "Native"];
 
     const [distance, setDistance] = useState();
-
-    const fetchUserInfo = useCallback(() => {
-        const getUserInfo = async () => {
-            try {
-                const user = await AsyncStorage.getItem("userInfo");
-                if (user) {
-                    const userInfoJSON = JSON.parse(user);
-
-                    if (userInfoJSON.email === userInfo.email) setIsCurrentUser(true);
-                }
-
-            } catch (error) {
-                console.log("An error occurred: ", error);
-            }
-        };
-
-        getUserInfo();
-    }, [navigation]);
+    const [hasPendingRequests, setHasPendingRequests] = useState(false);
 
     const formatDateOfBirth = (data) => {
         const months = [
@@ -47,6 +30,19 @@ const User = ({ route }) => {
 
         return `${monthName} ${day}${ordinal} (${age})`;
     };
+
+    const createRequest = async () => {
+        const userLogged = await AsyncStorage.getItem("userInfo");
+        const userLoggedJSON = JSON.parse(userLogged);
+
+        try {
+            await API.createRequest({ fromUser: userLoggedJSON._id, toUser: userInfo._id });
+            setHasPendingRequests(true);
+
+        } catch (error) {
+            console.log("An error occurred: ", error);
+        }
+    }
 
     useEffect(() => {
         const fetchLocation = async () => {
@@ -67,13 +63,58 @@ const User = ({ route }) => {
             }
         };
 
-        fetchLocation();
-    }, []);
+        const checkPendingRequests = async () => {
+            const userLogged = await AsyncStorage.getItem("userInfo");
+            const userLoggedJSON = JSON.parse(userLogged);
 
-    useFocusEffect(fetchUserInfo);
+            try {
+                const { data } = await API.getPendingRequests(userInfo.email);
+
+                const hasPendingRequests = data.pendingRequests.some(
+                    request => request.fromUser._id === userLoggedJSON._id
+                );
+
+                setHasPendingRequests(hasPendingRequests);
+
+            } catch (error) {
+                console.log("An error occurred: ", error);
+            }
+        };
+
+        fetchLocation();
+        checkPendingRequests();
+    }, []);
 
     return (
         <View style={styles.container}>
+            <TouchableOpacity
+                style={[
+                    styles.userContacts,
+                    hasPendingRequests ? styles.pendingRequest : null
+                ]}
+                onPress={createRequest}
+                disabled={hasPendingRequests}
+            >
+                {hasPendingRequests ? (
+                    <Ionicons
+                        name={"checkmark-outline"}
+                        color={"#ffffff"}
+                        size={28}
+                    />
+                ) : (
+                    <Ionicons
+                        name={"person-add-outline"}
+                        color={"#ffffff"}
+                        size={28}
+                    />
+                )}
+                <Text
+                    style={styles.contactText}
+                >
+                    {hasPendingRequests ? "Request sent" : "Add friend"}
+                </Text>
+            </TouchableOpacity>
+
             <ScrollView showsVerticalScrollIndicator={false}>
                 <StatusBar backgroundColor="rgba(0,0,0,0.50)" barStyle="light-content" translucent={true}/>
 
@@ -101,7 +142,7 @@ const User = ({ route }) => {
                     </TouchableOpacity>
 
                     <View style={styles.textContainer}>
-                        <Text style={styles.userNameText}>{isCurrentUser ? "Your user profile" : userInfo.name}</Text>
+                        <Text style={styles.userNameText}>{userInfo.name}</Text>
                     </View>
                 </ImageBackground>
 
@@ -121,96 +162,6 @@ const User = ({ route }) => {
                             </TouchableOpacity>
                         )
                     }
-                </View>
-
-                <View style={styles.viewUserContacts}>
-                    <TouchableOpacity
-                        style={[
-                            styles.userContacts,
-                            isCurrentUser && styles.disabledButton
-                        ]}
-                        disabled={isCurrentUser}
-                    >
-                        <Ionicons
-                            name={"person-add-outline"}
-                            color={isCurrentUser ? "rgba(51, 51, 51, 0.5)" : "#333333"}
-                            size={28}
-                        />
-                        <Text
-                            style={[
-                                styles.contactText,
-                                isCurrentUser && styles.disabledText
-                            ]}
-                        >
-                            Add friend
-                        </Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity
-                        style={[
-                            styles.userContacts,
-                            isCurrentUser && styles.disabledButton
-                        ]}
-                        disabled={isCurrentUser}
-                    >
-                        <Ionicons
-                            name={"call-outline"}
-                            color={isCurrentUser ? "rgba(51, 51, 51, 0.5)" : "#333"}
-                            size={28}
-                        />
-                        <Text
-                            style={[
-                                styles.contactText,
-                                isCurrentUser && styles.disabledText
-                            ]}
-                        >
-                            Audio call
-                        </Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity
-                        style={[
-                            styles.userContacts,
-                            isCurrentUser && styles.disabledButton
-                        ]}
-                        disabled={isCurrentUser}
-                    >
-                        <Ionicons
-                            name={"videocam-outline"}
-                            color={isCurrentUser ? "rgba(51, 51, 51, 0.5)" : "#333"}
-                            size={28}
-                        />
-                        <Text
-                            style={[
-                                styles.contactText,
-                                isCurrentUser && styles.disabledText
-                            ]}
-                        >
-                            Video call
-                        </Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity
-                        style={[
-                            styles.userContacts,
-                            isCurrentUser && styles.disabledButton
-                        ]}
-                        disabled={isCurrentUser}
-                    >
-                        <Ionicons
-                            name={"chatbubbles-outline"}
-                            color={isCurrentUser ? "rgba(51, 51, 51, 0.5)" : "#333"}
-                            size={28}
-                        />
-                        <Text
-                            style={[
-                                styles.contactText,
-                                isCurrentUser && styles.disabledText
-                            ]}
-                        >
-                            Message
-                        </Text>
-                    </TouchableOpacity>
                 </View>
 
                 <View style={styles.viewUserInformation}>

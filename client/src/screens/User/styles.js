@@ -4,6 +4,7 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: "#FFFFFF",
         flex: 1,
+        position: "relative"
     },
     headerBackground: {
         height: 165,
@@ -85,19 +86,32 @@ const styles = StyleSheet.create({
     },
     userContacts: {
         alignItems: "center",
-        gap: 10,
+        backgroundColor: "#7c46fa",
+        borderColor: "rgba(0,0,0,0.72)",
+        borderRadius: 25,
+        borderWidth: 2,
+        height: 100,
+        left: "75%",
+        paddingTop: 10,
+        position: "absolute",
+        top: "92%",
+        width: 100,
+        zIndex: 100,
+    },
+    contactText: {
+        color: "#ffffff",
+        fontFamily: "nunito-semiBold",
+        fontSize: 16,
+        textAlign: "center",
+    },
+    pendingRequest: {
+        backgroundColor: "green",
     },
     disabledButton: {
         opacity: 0.5,
     },
     disabledText: {
         color: "rgba(51, 51, 51, 0.5)",
-    },
-    contactText: {
-        color: "#333",
-        fontFamily: "nunito-semiBold",
-        fontSize: 16,
-        textAlign: "center",
     },
     viewUserInformation: {
         borderColor: "rgba(124,70,250,0.2)",
