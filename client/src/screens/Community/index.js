@@ -49,7 +49,7 @@ const Community = () => {
     }, [fetchAllUsers]);
 
     if (!allUsers) {
-        return <ActivityIndicator size="large" color="#0000ff"/>;
+        return <ActivityIndicator size="large" color="#0000ff" style={{ paddingTop: 50 }}/>
     }
 
     return (

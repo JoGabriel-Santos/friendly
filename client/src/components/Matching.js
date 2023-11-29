@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ActivityIndicator, FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, FlatList, Image, StatusBar, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import CountryFlag from "react-native-country-flag";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -100,16 +100,20 @@ const Matching = ({ userData }) => {
     );
 
     if (!countryCodes || !commonInterests) {
-        return <ActivityIndicator size="large" color="#0000ff"/>;
+        return <ActivityIndicator size="large" color="#0000ff" style={{ paddingTop: 20 }}/>
     }
 
     return (
-        <FlatList
-            data={userData}
-            renderItem={renderCard}
-            keyExtractor={(item) => item._id.toString()}
-            contentContainerStyle={styles.listContainer}
-        />
+        <React.Fragment>
+            <StatusBar backgroundColor="transparent" barStyle="dark-content" translucent={true}/>
+
+            <FlatList
+                data={userData}
+                renderItem={renderCard}
+                keyExtractor={(item) => item._id.toString()}
+                contentContainerStyle={styles.listContainer}
+            />
+        </React.Fragment>
     );
 };
 
