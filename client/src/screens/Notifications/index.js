@@ -11,6 +11,19 @@ const Notifications = () => {
 
     const [pendingRequests, setPendingRequests] = useState();
 
+    const handleFriendRequest = async (userInfoID, acceptRequest) => {
+        const userLogged = await AsyncStorage.getItem("userInfo");
+        const userLoggedJSON = JSON.parse(userLogged);
+
+        try {
+            await API.handleFriendRequest({ userId: userLoggedJSON._id, senderId: userInfoID, acceptRequest: acceptRequest });
+            navigation.navigate("Friends");
+
+        } catch (error) {
+            console.log("An error occurred: ", error);
+        }
+    };
+
     useEffect(() => {
         const checkPendingRequests = async () => {
             const userLogged = await AsyncStorage.getItem("userInfo");
@@ -49,11 +62,17 @@ const Notifications = () => {
                 </View>
 
                 <View style={styles.buttonContainer}>
-                    <TouchableOpacity style={styles.acceptButton}>
+                    <TouchableOpacity
+                        style={styles.acceptButton}
+                        onPress={() => handleFriendRequest(item.fromUser._id, true)}
+                    >
                         <Text style={styles.buttonText}>Accept</Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={styles.rejectButton}>
+                    <TouchableOpacity
+                        style={styles.rejectButton}
+                        onPress={() => handleFriendRequest(item.fromUser._id, false)}
+                    >
                         <Text style={styles.buttonText}>Reject</Text>
                     </TouchableOpacity>
                 </View>

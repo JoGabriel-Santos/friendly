@@ -31,14 +31,24 @@ export const fetchAllUsers = async (request, response) => {
             return response.status(404).json({ message: "User not found" });
         }
 
-        const usersWithPendingRequests = await Requests.distinct("fromUser", {
-            toUser: loggedInUser._id,
-            status: "pending",
+        const usersWithPendingOrRejectedRequestsSent = await Requests.distinct("toUser", {
+            fromUser: loggedInUser._id,
+            status: { $in: ["pending", "rejected"] },
         });
+
+        const usersWithPendingOrRejectedRequestsReceived = await Requests.distinct("fromUser", {
+            toUser: loggedInUser._id,
+            status: { $in: ["pending", "rejected"] },
+        });
+
+        const usersWithPendingOrRejectedRequests = [
+            ...usersWithPendingOrRejectedRequestsSent,
+            ...usersWithPendingOrRejectedRequestsReceived,
+        ];
 
         const allUsers = await User.find({
             email: { $ne: userEmail },
-            _id: { $nin: usersWithPendingRequests },
+            _id: { $nin: usersWithPendingOrRejectedRequests },
         });
 
         response.status(200).json(allUsers);

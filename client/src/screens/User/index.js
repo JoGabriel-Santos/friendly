@@ -47,8 +47,16 @@ const User = ({ route }) => {
     };
 
     const acceptRequest = async () => {
+        const userLogged = await AsyncStorage.getItem("userInfo");
+        const userLoggedJSON = JSON.parse(userLogged);
 
-        console.log("Request accepted...");
+        try {
+            await API.handleFriendRequest({ userId: userLoggedJSON._id, senderId: userInfo._id, acceptRequest: true });
+            navigation.navigate("Friends");
+
+        } catch (error) {
+            console.log("An error occurred: ", error);
+        }
     };
 
     useEffect(() => {

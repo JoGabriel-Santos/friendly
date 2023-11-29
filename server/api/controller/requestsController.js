@@ -48,7 +48,12 @@ export const handleFriendRequest = async (request, response) => {
                         { penpal_1: userId, penpal_2: senderId },
                     ],
                 },
-                {},
+                {
+                    $setOnInsert: {
+                        penpal_1: senderId,
+                        penpal_2: userId,
+                    },
+                },
                 { upsert: true }
             );
 
