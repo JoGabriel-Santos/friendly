@@ -74,7 +74,7 @@ const Matching = ({ userData }) => {
         <TouchableOpacity
             style={styles.card}
             onPress={
-                () => navigation.navigate("User", { userInfo: item })
+                () => navigation.navigate("User", { userEmail: item.email })
             }
         >
             <Image

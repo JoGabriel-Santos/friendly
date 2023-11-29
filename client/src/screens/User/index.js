@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Image, ImageBackground, ScrollView, StatusBar, Text, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, Image, ImageBackground, ScrollView, StatusBar, Text, TouchableOpacity, View } from "react-native";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -11,13 +11,14 @@ import styles from "./styles";
 const User = ({ route }) => {
     const navigation = useNavigation();
 
-    const { userInfo } = route.params;
+    const { userEmail } = route.params;
+
+    const [userInfo, setUserInfo] = useState();
+    const [distance, setDistance] = useState();
+    const [hasPendingRequests, setHasPendingRequests] = useState(false);
 
     const [showFullBio, setShowFullBio] = useState(false);
     const proficiencyLevels = ["Beginner", "Intermediate", "Advanced", "Fluent", "Native"];
-
-    const [distance, setDistance] = useState();
-    const [hasPendingRequests, setHasPendingRequests] = useState(false);
 
     const formatDateOfBirth = (data) => {
         const months = [
@@ -45,45 +46,63 @@ const User = ({ route }) => {
     }
 
     useEffect(() => {
-        const fetchLocation = async () => {
+        const fetchData = async () => {
             try {
-                const locationData = await getLocation();
+                const { data } = await API.fetchUserData(userEmail);
+                setUserInfo(data);
 
-                const distance = calculateDistance(
-                    locationData.latitude,
-                    locationData.longitude,
-                    userInfo.latLong.latitude,
-                    userInfo.latLong.longitude
-                );
+                const userLocation = data.latLong;
 
-                setDistance(distance);
-
-            } catch (error) {
-                console.error("Error fetching location", error);
-            }
-        };
-
-        const checkPendingRequests = async () => {
-            const userLogged = await AsyncStorage.getItem("userInfo");
-            const userLoggedJSON = JSON.parse(userLogged);
-
-            try {
-                const { data } = await API.getPendingRequests(userInfo.email);
-
-                const hasPendingRequests = data.pendingRequests.some(
-                    request => request.fromUser._id === userLoggedJSON._id
-                );
-
-                setHasPendingRequests(hasPendingRequests);
+                await fetchLocation(userLocation);
+                await checkPendingRequests(data.email);
 
             } catch (error) {
                 console.log("An error occurred: ", error);
             }
         };
 
-        fetchLocation();
-        checkPendingRequests();
+        fetchData();
     }, []);
+
+    const fetchLocation = async (userLocation) => {
+        try {
+            const locationData = await getLocation();
+
+            const distance = calculateDistance(
+                locationData.latitude,
+                locationData.longitude,
+                userLocation.latitude,
+                userLocation.longitude
+            );
+
+            setDistance(distance);
+
+        } catch (error) {
+            console.error("Error fetching location", error);
+        }
+    };
+
+    const checkPendingRequests = async (userEmail) => {
+        const userLogged = await AsyncStorage.getItem("userInfo");
+        const userLoggedJSON = JSON.parse(userLogged);
+
+        try {
+            const { data } = await API.getPendingRequests(userEmail);
+
+            const hasPendingRequests = data.pendingRequests.some(
+                request => request.fromUser._id === userLoggedJSON._id
+            );
+
+            setHasPendingRequests(hasPendingRequests);
+
+        } catch (error) {
+            console.log("An error occurred: ", error);
+        }
+    };
+
+    if (!userInfo) {
+        return <ActivityIndicator size="large" color="#0000ff" style={{ paddingTop: 50 }}/>
+    }
 
     return (
         <View style={styles.container}>
