@@ -16,6 +16,7 @@ const User = ({ route }) => {
     const [userInfo, setUserInfo] = useState();
     const [distance, setDistance] = useState();
     const [hasPendingRequests, setHasPendingRequests] = useState(false);
+    const [hasSentPendingRequests, setHasSentPendingRequests] = useState(false);
 
     const [showFullBio, setShowFullBio] = useState(false);
     const proficiencyLevels = ["Beginner", "Intermediate", "Advanced", "Fluent", "Native"];
@@ -43,7 +44,12 @@ const User = ({ route }) => {
         } catch (error) {
             console.log("An error occurred: ", error);
         }
-    }
+    };
+
+    const acceptRequest = async () => {
+
+        console.log("Request accepted...");
+    };
 
     useEffect(() => {
         const fetchData = async () => {
@@ -89,11 +95,16 @@ const User = ({ route }) => {
         try {
             const { data } = await API.getPendingRequests(userEmail);
 
-            const hasPendingRequests = data.pendingRequests.some(
+            const hasPendingRequests = data.receivedRequests.some(
                 request => request.fromUser._id === userLoggedJSON._id
             );
 
+            const sentPendingRequests = data.sentRequests.some(
+                request => request.toUser._id === userLoggedJSON._id
+            );
+
             setHasPendingRequests(hasPendingRequests);
+            setHasSentPendingRequests(sentPendingRequests);
 
         } catch (error) {
             console.log("An error occurred: ", error);
@@ -109,28 +120,21 @@ const User = ({ route }) => {
             <TouchableOpacity
                 style={[
                     styles.userContacts,
-                    hasPendingRequests ? styles.pendingRequest : null
+                    hasPendingRequests || hasSentPendingRequests ? styles.requests : null
                 ]}
-                onPress={createRequest}
+                onPress={hasSentPendingRequests ? acceptRequest : createRequest}
                 disabled={hasPendingRequests}
             >
-                {hasPendingRequests ? (
-                    <Ionicons
-                        name={"checkmark-outline"}
-                        color={"#ffffff"}
-                        size={28}
-                    />
-                ) : (
-                    <Ionicons
-                        name={"person-add-outline"}
-                        color={"#ffffff"}
-                        size={28}
-                    />
-                )}
                 <Text
                     style={styles.contactText}
                 >
-                    {hasPendingRequests ? "Request sent" : "Add friend"}
+                    {
+                        hasSentPendingRequests
+                            ? "Accept request"
+                            : hasPendingRequests
+                                ? "Request sent"
+                                : "Add friend"
+                    }
                 </Text>
             </TouchableOpacity>
 

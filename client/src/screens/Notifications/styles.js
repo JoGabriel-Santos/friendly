@@ -50,8 +50,12 @@ const styles = StyleSheet.create({
         width: 50,
     },
     userName: {
-        fontFamily: "nunito-regular",
+        fontFamily: "nunito-semiBold",
         fontSize: 18,
+    },
+    userCountry: {
+        fontFamily: "nunito-regular",
+        fontSize: 14,
     },
     buttonContainer: {
         alignItems: "center",

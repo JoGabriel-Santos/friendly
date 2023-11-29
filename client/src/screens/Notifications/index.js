@@ -18,7 +18,7 @@ const Notifications = () => {
 
             try {
                 const { data } = await API.getPendingRequests(userLoggedJSON.email);
-                setPendingRequests(data.pendingRequests);
+                setPendingRequests(data.receivedRequests);
 
             } catch (error) {
                 console.log("An error occurred: ", error);
@@ -30,12 +30,22 @@ const Notifications = () => {
 
     const renderCard = ({ item }) => {
         return (
-            <TouchableOpacity style={styles.card}>
+            <TouchableOpacity
+                style={styles.card}
+                onPress={
+                    () => navigation.navigate("User", { userEmail: item.fromUser.email })
+                }
+            >
                 <View style={styles.viewUserInfo}>
                     <Image source={{ uri: item.fromUser.picture }} style={styles.userImage}/>
-                    <Text style={styles.userName}>
-                        {item.fromUser.name}
-                    </Text>
+                    <View>
+                        <Text style={styles.userName}>
+                            {item.fromUser.name}
+                        </Text>
+                        <Text style={styles.userCountry}>
+                            {item.fromUser.country}
+                        </Text>
+                    </View>
                 </View>
 
                 <View style={styles.buttonContainer}>

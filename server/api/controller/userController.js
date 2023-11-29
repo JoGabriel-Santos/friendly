@@ -2,6 +2,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 import User from "../../models/user.js";
+import Requests from "../../models/requests.js";
 
 const secret = "Y8bD7rK2sF9aZ1";
 
@@ -25,7 +26,21 @@ export const fetchAllUsers = async (request, response) => {
     const { userEmail } = request.params;
 
     try {
-        const allUsers = await User.find({ email: { $ne: userEmail } });
+        const loggedInUser = await User.findOne({ email: userEmail });
+        if (!loggedInUser) {
+            return response.status(404).json({ message: "User not found" });
+        }
+
+        const usersWithPendingRequests = await Requests.distinct("fromUser", {
+            toUser: loggedInUser._id,
+            status: "pending",
+        });
+
+        const allUsers = await User.find({
+            email: { $ne: userEmail },
+            _id: { $nin: usersWithPendingRequests },
+        });
+
         response.status(200).json(allUsers);
 
     } catch (error) {

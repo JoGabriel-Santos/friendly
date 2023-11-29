@@ -77,17 +77,21 @@ export const getPendingRequests = async (request, response) => {
             return response.status(404).json({ message: "User not found" });
         }
 
-        const pendingRequests = await Requests.find({
+        const receivedRequests = await Requests.find({
             toUser: user._id,
             status: "pending",
-        }).populate("fromUser", "email name picture");
+        }).populate("fromUser", "email name country picture");
 
-        if (pendingRequests.length > 0) {
-            response.status(200).json({ hasPendingRequests: true, pendingRequests: pendingRequests });
+        const sentRequests = await Requests.find({
+            fromUser: user._id,
+            status: "pending",
+        }).populate("toUser", "email name country picture");
 
-        } else {
-            response.status(200).json({ hasPendingRequests: false, pendingRequests: [] });
-        }
+        response.status(200).json({
+            hasPendingRequests: receivedRequests.length > 0 || sentRequests.length > 0,
+            receivedRequests,
+            sentRequests,
+        });
 
     } catch (error) {
         response.status(500).json({ message: "Error fetching pending requests", error });
