@@ -13,7 +13,6 @@ import Community from "./src/screens/Community";
 import Filters from "./src/components/Filters";
 import Notifications from "./src/screens/Notifications";
 import User from "./src/screens/User";
-import Profile from "./src/screens/Profile";
 import Proficiency from "./src/components/Proficiency";
 import Topics from "./src/components/Topics";
 import Description from "./src/components/Description";
@@ -34,7 +33,6 @@ function App() {
                 <Stack.Screen name="Filters" component={Filters}/>
                 <Stack.Screen name="Notifications" component={Notifications}/>
                 <Stack.Screen name="User" component={User}/>
-                <Stack.Screen name="Profile" component={Profile}/>
                 <Stack.Screen name="Proficiency" component={Proficiency}/>
                 <Stack.Screen name="Topics" component={Topics}/>
                 <Stack.Screen name="Description" component={Description}/>

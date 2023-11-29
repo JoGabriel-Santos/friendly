@@ -7,8 +7,10 @@ import { calculateDistance } from "../../helpers/distance";
 import { getLocation } from "../../helpers/geolocation";
 import styles from "./styles";
 
-const User = ({ userInfo }) => {
+const User = ({ route }) => {
     const navigation = useNavigation();
+
+    const { userInfo } = route.params;
 
     const [isCurrentUser, setIsCurrentUser] = useState(false);
     const [showFullBio, setShowFullBio] = useState(false);
@@ -330,7 +332,6 @@ const User = ({ userInfo }) => {
                             )
                         ))}
                     </View>
-
                 </View>
             </ScrollView>
         </View>

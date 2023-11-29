@@ -73,7 +73,9 @@ const Matching = ({ userData }) => {
     const renderCard = ({ item, index }) => (
         <TouchableOpacity
             style={styles.card}
-            onPress={() => navigation.navigate("User")}
+            onPress={
+                () => navigation.navigate("User", { userInfo: item })
+            }
         >
             <Image
                 source={{ uri: item.picture }}

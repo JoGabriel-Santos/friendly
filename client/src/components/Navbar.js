@@ -2,19 +2,28 @@ import React, { useEffect, useState } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const NavButton = ({ iconName, screenName, currentScreen, onPress }) => (
-    <TouchableOpacity
-        style={styles.navbarItem}
-        onPress={onPress}
-    >
-        <Ionicons
-            name={iconName}
-            color={currentScreen === screenName ? "#7c46fa" : "#BDBDBD"}
-            size={25}
-        />
-    </TouchableOpacity>
-);
+const NavButton = ({ iconName, screenName, currentScreen, onPress }) => {
+    let buttonColor = currentScreen === screenName ? "#7c46fa" : "#BDBDBD";
+
+    if (screenName === "Logout") {
+        buttonColor = "#FF0000";
+    }
+
+    return (
+        <TouchableOpacity
+            style={styles.navbarItem}
+            onPress={onPress}
+        >
+            <Ionicons
+                name={iconName}
+                color={buttonColor}
+                size={25}
+            />
+        </TouchableOpacity>
+    );
+};
 
 const Navbar = () => {
     const navigation = useNavigation();
@@ -32,6 +41,16 @@ const Navbar = () => {
         "Topics",
         "Description"
     ];
+
+    const logout = async () => {
+        try {
+            await AsyncStorage.removeItem("userInfo");
+            navigation.navigate("Welcome");
+
+        } catch (error) {
+            console.log("An error occurred: ", error);
+        }
+    };
 
     useEffect(() => {
         return navigation.addListener("state", () => {
@@ -72,10 +91,10 @@ const Navbar = () => {
             />
 
             <NavButton
-                iconName="person-outline"
-                screenName="Profile"
+                iconName="exit-outline"
+                screenName="Logout"
                 currentScreen={currentScreen}
-                onPress={() => navigation.navigate("Profile")}
+                onPress={logout}
             />
         </View>
     );
