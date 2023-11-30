@@ -1,15 +1,94 @@
-import React, { useState } from "react";
-import { SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import React, { useEffect, useState } from "react";
+import { ActivityIndicator, SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Ionicons } from "@expo/vector-icons";
+import { calculateDistance } from "../helpers/distance";
+import * as API from "../api/index";
 
 const Letter = ({ route }) => {
     const navigation = useNavigation();
 
     const { penpalInfo, letterSender, letterContent } = route.params;
 
+    const [userLogged, setUserLogged] = useState();
+
     const [isReadOnly, setIsReadOnly] = useState(letterContent !== "");
     const [letterText, setLetterText] = useState(letterContent !== "" ? letterContent : "");
+
+    const handleSendingLetter = async () => {
+        const timeToArrive = calculateDistance(
+            userLogged.latLong.latitude,
+            userLogged.latLong.longitude,
+            penpalInfo.latLong.latitude,
+            penpalInfo.latLong.longitude
+        );
+
+        const arrivalTime = await calculateArrivalTime(timeToArrive.hours, timeToArrive.minutes);
+
+        const letterInfo = {
+            penpal1Id: userLogged._id,
+            penpal2Id: penpalInfo._id,
+            letter: {
+                content: letterText,
+                sender: userLogged.name,
+                time: arrivalTime
+            }
+        };
+
+        try {
+            await API.sendLetter(letterInfo);
+            navigation.navigate("Letters", { penpalInfo: penpalInfo });
+
+        } catch (error) {
+            console.log("An error occurred: ", error);
+        }
+    };
+
+    async function calculateArrivalTime(hoursToAdd, minutesToAdd) {
+        try {
+            const response = await fetch("https://worldtimeapi.org/api/ip");
+            const data = await response.json();
+            const currentTime = new Date(data.utc_datetime);
+
+            const arrivalTime = new Date(
+                currentTime.getTime() + hoursToAdd * 60 * 60 * 1000 + minutesToAdd * 60 * 1000
+            );
+
+            return arrivalTime.toLocaleString('en-US', {
+                weekday: 'long',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: false,
+            });
+
+        } catch (error) {
+            console.error("Error calculating arrival time: ", error);
+            return null;
+        }
+    }
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const userLogged = await AsyncStorage.getItem("userInfo");
+                const userLoggedJSON = JSON.parse(userLogged);
+
+                setUserLogged(userLoggedJSON);
+
+            } catch (error) {
+                console.error("Error retrieving user data: ", error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+    if (!userLogged) {
+        return <ActivityIndicator size="large" color="#0000ff" style={{ paddingTop: 50 }}/>
+    }
 
     return (
         <SafeAreaView style={styles.container}>
@@ -31,13 +110,13 @@ const Letter = ({ route }) => {
 
                 <TouchableOpacity
                     style={styles.sendLetterButton}
-                    onPress={() => console.log("Letter sent")}
+                    onPress={() => isReadOnly ? "" : handleSendingLetter()}
                 >
                     <Text style={styles.saveText}>{isReadOnly ? "Reply letter" : "Send letter"}</Text>
                 </TouchableOpacity>
             </View>
 
-            <Text style={styles.aboutMeText}>{isReadOnly ? `Letter from ${letterSender}` : "Writing to Jooe"}</Text>
+            <Text style={styles.aboutMeText}>{isReadOnly ? `Letter from ${letterSender}` : `Writing to ${penpalInfo.name}`}</Text>
 
             <ScrollView style={styles.descriptionView}>
                 <TextInput

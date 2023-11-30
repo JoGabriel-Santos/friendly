@@ -4,7 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import styles from "./styles";
 
-const Friends = ({ route }) => {
+const Letters = ({ route }) => {
     const navigation = useNavigation();
 
     const { penpalInfo } = route.params;
@@ -144,4 +144,4 @@ const Friends = ({ route }) => {
     );
 };
 
-export default Friends;
+export default Letters;
