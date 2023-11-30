@@ -11,7 +11,7 @@ import styles from "./styles";
 const User = ({ route }) => {
     const navigation = useNavigation();
 
-    const { userEmail } = route.params;
+    const { userEmail, penpalInfo, fromLetters } = route.params;
 
     const [userInfo, setUserInfo] = useState();
     const [distance, setDistance] = useState();
@@ -128,7 +128,7 @@ const User = ({ route }) => {
             <TouchableOpacity
                 style={[
                     styles.userContacts,
-                    hasPendingRequests || hasSentPendingRequests ? styles.requests : null
+                    fromLetters ? styles.hiddenButton : null,
                 ]}
                 onPress={hasSentPendingRequests ? acceptRequest : createRequest}
                 disabled={hasPendingRequests}
@@ -163,7 +163,14 @@ const User = ({ route }) => {
 
                     <TouchableOpacity
                         style={styles.backButton}
-                        onPress={() => navigation.navigate("Home")}
+                        onPress={() => {
+                            if (fromLetters) {
+                                navigation.navigate("Letters", { penpalInfo: penpalInfo });
+
+                            } else {
+                                navigation.navigate("Home");
+                            }
+                        }}
                     >
                         <Ionicons
                             name={"arrow-back-outline"}

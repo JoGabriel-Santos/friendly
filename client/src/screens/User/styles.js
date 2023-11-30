@@ -115,8 +115,8 @@ const styles = StyleSheet.create({
         textAlign: "center",
         textAlignVertical: "center",
     },
-    requests: {
-        backgroundColor: "#7c46fa",
+    hiddenButton: {
+        display: "none",
     },
     disabledButton: {
         opacity: 0.5,

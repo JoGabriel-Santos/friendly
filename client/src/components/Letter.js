@@ -6,7 +6,7 @@ import { useNavigation } from "@react-navigation/native";
 const Letter = ({ route }) => {
     const navigation = useNavigation();
 
-    const { letterSender, letterContent } = route.params;
+    const { penpalInfo, letterSender, letterContent } = route.params;
 
     const [isReadOnly, setIsReadOnly] = useState(letterContent !== "");
     const [letterText, setLetterText] = useState(letterContent !== "" ? letterContent : "");
@@ -19,7 +19,9 @@ const Letter = ({ route }) => {
                 <View style={styles.containerLeft}>
                     <TouchableOpacity
                         style={styles.backButton}
-                        onPress={() => navigation.navigate("Letters")}
+                        onPress={() => navigation.navigate("Letters",
+                            { penpalInfo: penpalInfo })
+                        }
                     >
                         <Ionicons name={"arrow-back-outline"} color={"#333"} size={30}/>
                     </TouchableOpacity>

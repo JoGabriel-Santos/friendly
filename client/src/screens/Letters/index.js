@@ -52,7 +52,7 @@ const Friends = ({ route }) => {
         <TouchableOpacity
             style={styles.messageCard}
             onPress={() => navigation.navigate("Letter",
-                { letterSender: item.sender, letterContent: item.content })
+                { penpalInfo: penpalInfo, letterSender: item.sender, letterContent: item.content })
             }
         >
             <View style={styles.messageHeader}>
@@ -85,13 +85,12 @@ const Friends = ({ route }) => {
         </TouchableOpacity>
     );
 
-
     return (
         <SafeAreaView style={styles.container}>
             <TouchableOpacity
                 style={styles.writeLetter}
                 onPress={() => navigation.navigate("Letter",
-                    { letterSender: "", letterContent: "" })
+                    { penpalInfo: penpalInfo, letterSender: "", letterContent: "" })
                 }>
                 <Text style={styles.writeLetterText}>
                     Write a letter
@@ -117,7 +116,12 @@ const Friends = ({ route }) => {
                 </View>
             </View>
 
-            <View style={styles.viewUserInfo}>
+            <TouchableOpacity
+                style={styles.viewUserInfo}
+                onPress={() => navigation.navigate("User",
+                    { userEmail: penpalInfo.email, penpalInfo: penpalInfo, fromLetters: true })
+                }
+            >
                 <Image
                     source={{ uri: penpalInfo.picture }}
                     style={styles.userImage}
@@ -127,7 +131,7 @@ const Friends = ({ route }) => {
                         {penpalInfo.name}
                     </Text>
                 </View>
-            </View>
+            </TouchableOpacity>
 
             <FlatList
                 data={messages}
