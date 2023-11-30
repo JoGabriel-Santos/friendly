@@ -3,6 +3,7 @@ import cors from "cors";
 
 import userRouter from "./routes/userRoutes.js";
 import requestsRoutes from "./routes/requestsRoutes.js";
+import penpalRoutes from "./routes/penpalRoutes.js";
 
 const app = express();
 
@@ -12,5 +13,6 @@ app.use(cors());
 
 app.use("/user", userRouter);
 app.use("/requests", requestsRoutes);
+app.use("/penpal", penpalRoutes);
 
 export default app;

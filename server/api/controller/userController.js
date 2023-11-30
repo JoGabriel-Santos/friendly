@@ -33,12 +33,12 @@ export const fetchAllUsers = async (request, response) => {
 
         const usersWithPendingOrRejectedRequestsSent = await Requests.distinct("toUser", {
             fromUser: loggedInUser._id,
-            status: { $in: ["pending", "rejected"] },
+            status: { $in: ["pending", "accepted", "rejected"] },
         });
 
         const usersWithPendingOrRejectedRequestsReceived = await Requests.distinct("fromUser", {
             toUser: loggedInUser._id,
-            status: { $in: ["pending", "rejected"] },
+            status: { $in: ["pending", "accepted", "rejected"] },
         });
 
         const usersWithPendingOrRejectedRequests = [
