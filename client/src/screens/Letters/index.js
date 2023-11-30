@@ -38,6 +38,12 @@ const Friends = () => {
             sender: 'Me',
             time: 'Arrives in 2 hours',
         },
+        {
+            id: '6',
+            content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor...',
+            sender: 'Me',
+            time: 'Arrives in 2 hours',
+        },
     ];
 
     const renderCard = ({ item }) => (
@@ -74,6 +80,12 @@ const Friends = () => {
 
     return (
         <SafeAreaView style={styles.container}>
+            <TouchableOpacity style={styles.writeLetter}>
+                <Text style={styles.writeLetterText}>
+                    Write a letter
+                </Text>
+            </TouchableOpacity>
+
             <StatusBar backgroundColor="transparent" barStyle="dark-content" translucent={true} />
 
             <View style={styles.lettersHeader}>
@@ -110,7 +122,7 @@ const Friends = () => {
                 renderItem={renderCard}
                 keyExtractor={item => item.id}
                 numColumns={2}
-                contentContainerStyle={{ padding: 10 }}
+                contentContainerStyle={{ padding: 10, paddingBottom: 60 }}
             />
         </SafeAreaView>
     );

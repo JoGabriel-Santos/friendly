@@ -88,6 +88,37 @@ const styles = StyleSheet.create({
     userInfoTime: {
         fontSize: 15,
     },
+    writeLetter: {
+        alignItems: "center",
+        backgroundColor: "#7c46fa",
+        borderColor: "white",
+        borderRadius: 10,
+        borderWidth: 2,
+        elevation: 5,
+        height: 50,
+        justifyContent: "center",
+        left: "69%",
+        paddingTop: 10,
+        position: "absolute",
+        shadowColor: "#000",
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        top: "93%",
+        width: 120,
+        zIndex: 100,
+    },
+    writeLetterText: {
+        color: "#fff",
+        fontSize: 16,
+        fontWeight: "bold",
+        marginBottom: 11,
+        textAlign: "center",
+        textAlignVertical: "center",
+    },
 });
 
 export default styles;
