@@ -21,12 +21,17 @@ import configFonts from "./src/utils/configFonts";
 
 const Stack = createStackNavigator();
 
+import Letters from "./src/screens/Letters";
+
 function App() {
     const [fontsLoader] = useFonts(configFonts);
 
     return !fontsLoader ? null : (
         <NavigationContainer>
             <Stack.Navigator screenOptions={{ headerShown: false }}>
+
+                <Stack.Screen name="Letters" component={Letters}/>
+
                 <Stack.Screen name="Home" component={Home}/>
                 <Stack.Screen name="Friends" component={Friends}/>
                 <Stack.Screen name="Community" component={Community}/>
