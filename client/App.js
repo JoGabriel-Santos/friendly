@@ -9,6 +9,7 @@ import SelectProficiency from "./src/components/Create account/SelectProficiency
 import OtherInformation from "./src/components/Create account/OtherInformation";
 import Home from "./src/screens/Home";
 import Friends from "./src/screens/Friends";
+import Letters from "./src/screens/Letters";
 import Community from "./src/screens/Community";
 import Filters from "./src/components/Filters";
 import Notifications from "./src/screens/Notifications";
@@ -16,12 +17,11 @@ import User from "./src/screens/User";
 import Proficiency from "./src/components/Proficiency";
 import Topics from "./src/components/Topics";
 import Description from "./src/components/Description";
+import Letter from "./src/components/Letter";
 import Navbar from "./src/components/Navbar";
 import configFonts from "./src/utils/configFonts";
 
 const Stack = createStackNavigator();
-
-import Letters from "./src/screens/Letters";
 
 function App() {
     const [fontsLoader] = useFonts(configFonts);
@@ -29,11 +29,9 @@ function App() {
     return !fontsLoader ? null : (
         <NavigationContainer>
             <Stack.Navigator screenOptions={{ headerShown: false }}>
-
-                <Stack.Screen name="Letters" component={Letters}/>
-
                 <Stack.Screen name="Home" component={Home}/>
                 <Stack.Screen name="Friends" component={Friends}/>
+                <Stack.Screen name="Letters" component={Letters}/>
                 <Stack.Screen name="Community" component={Community}/>
                 <Stack.Screen name="Filters" component={Filters}/>
                 <Stack.Screen name="Notifications" component={Notifications}/>
@@ -46,6 +44,7 @@ function App() {
                 <Stack.Screen name="CreateAccount" component={CreateAccount}/>
                 <Stack.Screen name="SelectProficiency" component={SelectProficiency}/>
                 <Stack.Screen name="OtherInformation" component={OtherInformation}/>
+                <Stack.Screen name="Letter" component={Letter}/>
             </Stack.Navigator>
 
             <Navbar/>

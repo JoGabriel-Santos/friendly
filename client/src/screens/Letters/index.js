@@ -4,50 +4,57 @@ import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import styles from "./styles";
 
-const Friends = () => {
+const Friends = ({ route }) => {
     const navigation = useNavigation();
+
+    const { penpalInfo } = route.params;
 
     const messages = [
         {
             id: '1',
             content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor...',
-            sender: 'Me',
+            sender: 'Jooe',
             time: 'Arrives in 2 hours',
         },
         {
             id: '2',
             content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor...',
-            sender: 'Me',
+            sender: 'Carlos',
             time: 'Arrives in 2 hours',
         },
         {
             id: '3',
             content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor...',
-            sender: 'Me',
+            sender: 'Gabriel',
             time: 'Arrives in 2 hours',
         },
         {
             id: '4',
             content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor...',
-            sender: 'Me',
+            sender: 'Sarah',
             time: 'Arrives in 2 hours',
         },
         {
             id: '5',
             content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor...',
-            sender: 'Me',
+            sender: 'Luana',
             time: 'Arrives in 2 hours',
         },
         {
             id: '6',
             content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor...',
-            sender: 'Me',
+            sender: 'Frish',
             time: 'Arrives in 2 hours',
         },
     ];
 
     const renderCard = ({ item }) => (
-        <View style={styles.messageCard}>
+        <TouchableOpacity
+            style={styles.messageCard}
+            onPress={() => navigation.navigate("Letter",
+                { letterSender: item.sender, letterContent: item.content })
+            }
+        >
             <View style={styles.messageHeader}>
                 <View style={styles.viewed}>
                     <Ionicons
@@ -57,7 +64,7 @@ const Friends = () => {
                     />
                 </View>
 
-                <View style={{ flex: 1 }} />
+                <View style={{ flex: 1 }}/>
 
                 <Image
                     source={require("../../utils/images/christ-the-redeemer.png")}
@@ -75,18 +82,23 @@ const Friends = () => {
                 <Text style={styles.userInfoSender}>{item.sender}</Text>
                 <Text style={styles.userInfoTime}>{item.time}</Text>
             </View>
-        </View>
+        </TouchableOpacity>
     );
+
 
     return (
         <SafeAreaView style={styles.container}>
-            <TouchableOpacity style={styles.writeLetter}>
+            <TouchableOpacity
+                style={styles.writeLetter}
+                onPress={() => navigation.navigate("Letter",
+                    { letterSender: "", letterContent: "" })
+                }>
                 <Text style={styles.writeLetterText}>
                     Write a letter
                 </Text>
             </TouchableOpacity>
 
-            <StatusBar backgroundColor="transparent" barStyle="dark-content" translucent={true} />
+            <StatusBar backgroundColor="transparent" barStyle="dark-content" translucent={true}/>
 
             <View style={styles.lettersHeader}>
                 <View style={styles.containerLeft}>
@@ -107,12 +119,12 @@ const Friends = () => {
 
             <View style={styles.viewUserInfo}>
                 <Image
-                    source={require("../../utils/images/background.png")}
+                    source={{ uri: penpalInfo.picture }}
                     style={styles.userImage}
                 />
                 <View>
                     <Text style={styles.userName}>
-                        João Gabriel
+                        {penpalInfo.name}
                     </Text>
                 </View>
             </View>

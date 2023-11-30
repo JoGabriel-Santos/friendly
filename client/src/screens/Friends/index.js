@@ -34,8 +34,8 @@ const Friends = () => {
         return (
             <TouchableOpacity
                 style={styles.card}
-                onPress={
-                    () => console.log("Navigate to Letters")
+                onPress={() => navigation.navigate("Letters",
+                    { penpalInfo: item })
                 }
                 disabled={item.status === "pending"}
             >
