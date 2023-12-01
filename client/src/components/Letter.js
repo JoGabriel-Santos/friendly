@@ -109,10 +109,11 @@ const Letter = ({ route }) => {
                 </View>
 
                 <TouchableOpacity
-                    style={styles.sendLetterButton}
-                    onPress={() => isReadOnly ? "" : handleSendingLetter()}
+                    style={[styles.sendLetterButton, isReadOnly && styles.hiddenButton]}
+                    onPress={() => handleSendingLetter()}
+                    disabled={isReadOnly}
                 >
-                    <Text style={styles.saveText}>{isReadOnly ? "Reply letter" : "Send letter"}</Text>
+                    <Text style={styles.saveText}>{"Send letter"}</Text>
                 </TouchableOpacity>
             </View>
 
@@ -193,6 +194,9 @@ const styles = StyleSheet.create({
         fontFamily: "nunito-semiBold",
         fontSize: 22,
         textAlign: "center",
+    },
+    hiddenButton: {
+        display: "none",
     },
 });
 
