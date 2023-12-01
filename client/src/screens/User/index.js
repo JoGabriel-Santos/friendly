@@ -14,6 +14,7 @@ const User = ({ route }) => {
     const { userEmail, penpalInfo, fromLetters } = route.params;
 
     const [userInfo, setUserInfo] = useState();
+    const [userLogged, setUserLogged] = useState();
     const [distance, setDistance] = useState();
     const [hasPendingRequests, setHasPendingRequests] = useState(false);
     const [hasSentPendingRequests, setHasSentPendingRequests] = useState(false);
@@ -34,11 +35,8 @@ const User = ({ route }) => {
     };
 
     const createRequest = async () => {
-        const userLogged = await AsyncStorage.getItem("userInfo");
-        const userLoggedJSON = JSON.parse(userLogged);
-
         try {
-            await API.createRequest({ fromUser: userLoggedJSON._id, toUser: userInfo._id });
+            await API.createRequest({ fromUser: userLogged._id, toUser: userInfo._id });
             setHasPendingRequests(true);
 
         } catch (error) {
@@ -47,11 +45,8 @@ const User = ({ route }) => {
     };
 
     const acceptRequest = async () => {
-        const userLogged = await AsyncStorage.getItem("userInfo");
-        const userLoggedJSON = JSON.parse(userLogged);
-
         try {
-            await API.handleFriendRequest({ userId: userLoggedJSON._id, senderId: userInfo._id, acceptRequest: true });
+            await API.handleFriendRequest({ userId: userLogged._id, senderId: userInfo._id, acceptRequest: true });
             navigation.navigate("Friends");
 
         } catch (error) {
@@ -61,6 +56,11 @@ const User = ({ route }) => {
 
     useEffect(() => {
         const fetchData = async () => {
+            const userLogged = await AsyncStorage.getItem("userInfo");
+            const userLoggedJSON = JSON.parse(userLogged);
+
+            setUserLogged(userLoggedJSON);
+
             try {
                 const { data } = await API.fetchUserData(userEmail);
                 setUserInfo(data);
@@ -168,7 +168,7 @@ const User = ({ route }) => {
                                 navigation.navigate("Letters", { penpalInfo: penpalInfo });
 
                             } else {
-                                navigation.navigate("Home");
+                                navigation.navigate("Community");
                             }
                         }}
                     >
@@ -260,11 +260,31 @@ const User = ({ route }) => {
                     <Text style={styles.aboutUserText}>Topics of interests</Text>
 
                     <View style={styles.topics}>
-                        {
-                            userInfo.topics.map((topic, index) => (
-                                <Text style={styles.commonTopic} key={index}>{topic.topicName}</Text>
-                            ))
-                        }
+                        {userLogged.topics.map((userTopic, index) => {
+                            const isUserTopic = userInfo.topics.some(topic => topic.topicName === userTopic.topicName);
+
+                            if (isUserTopic) {
+                                return (
+                                    <Text style={styles.commonTopic} key={index}>
+                                        {userTopic.topicName}
+                                    </Text>
+                                );
+                            }
+                            return null;
+                        })}
+
+                        {userInfo.topics.map((topic, index) => {
+                            const isCommonTopic = userLogged.topics.some(userTopic => userTopic.topicName === topic.topicName);
+
+                            if (!isCommonTopic) {
+                                return (
+                                    <Text style={styles.uncommonTopic} key={index}>
+                                        {topic.topicName}
+                                    </Text>
+                                );
+                            }
+                            return null;
+                        })}
                     </View>
                 </View>
 
