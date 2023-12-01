@@ -49,6 +49,11 @@ const styles = StyleSheet.create({
         fontSize: 25,
         paddingVertical: 10,
     },
+    userDescription: {
+        fontFamily: "nunito-regular",
+        fontSize: 16,
+        paddingBottom: 10,
+    },
     messageCard: {
         borderColor: "rgba(51,51,51,0.64)",
         borderWidth: .8,

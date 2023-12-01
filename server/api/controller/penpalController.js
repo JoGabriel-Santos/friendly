@@ -15,12 +15,12 @@ export const fetchPenpals = async (request, response) => {
             return penpal.penpal_1._id.equals(userId) ? penpal.penpal_2 : penpal.penpal_1;
         });
 
-        const detailedPenpals = await User.find({ _id: { $in: penpalIds } }, "email name country latLong picture");
+        const detailedPenpals = await User.find({ _id: { $in: penpalIds } }, "email name description country latLong picture");
 
         const sentRequests = await Requests.find({
             fromUser: userId,
             status: "pending",
-        }).populate("toUser", "email name country latLong picture");
+        }).populate("toUser", "email name description country latLong picture");
 
         response.status(200).json({ penpals: detailedPenpals, sentRequests });
 
