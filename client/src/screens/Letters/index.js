@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FlatList, Image, SafeAreaView, StatusBar, Text, TouchableOpacity, View } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import moment from "moment";
@@ -13,6 +13,20 @@ const Letters = ({ route }) => {
     const { penpalInfo } = route.params;
 
     const [allLetters, setAllLetters] = useState();
+    const [fetchDataInterval, setFetchDataInterval] = useState(null);
+
+    const getLettersBetweenPenpals = async () => {
+        const userLogged = await AsyncStorage.getItem("userInfo");
+        const userLoggedJSON = JSON.parse(userLogged);
+
+        try {
+            const { data } = await API.lettersBetweenPenpals({ penpal1Id: userLoggedJSON._id, penpal2Id: penpalInfo._id });
+            setAllLetters(data.letters);
+
+        } catch (error) {
+            console.log("An error occurred: ", error);
+        }
+    };
 
     function checkArrivalDate(dateString) {
         const targetDateMoment = moment(dateString, 'dddd, MMMM DD, HH:mm');
@@ -25,56 +39,55 @@ const Letters = ({ route }) => {
         const currentDateMoment = moment();
         const currentDate = currentDateMoment.subtract(3, 'hours');
 
-        const duration = moment.duration(targetDate.diff(currentDate));
-        const hoursDifference = duration.asHours();
-        const minutesDifference = duration.asMinutes();
-
         const minutesDiff = targetDate.diff(currentDate, 'minutes');
         const hoursDiff = targetDate.diff(currentDate, 'hours');
         const daysDiff = targetDate.diff(currentDate, 'days');
 
-        if (minutesDiff <= 15 && hoursDiff === 0) {
-            return 'Now';
-
-        } else if (minutesDiff < 60 && minutesDiff > 0) {
-            return `Arrives in ${minutesDiff} ${minutesDiff === 1 ? 'minute' : 'minutes'}`;
-
-        } else if (hoursDiff < 0) {
+        if (minutesDiff > 0 && minutesDiff <= 60) {
             return `Arrives in ${Math.abs(minutesDiff)} ${Math.abs(minutesDiff) === 1 ? 'minute' : 'minutes'}`;
 
-        } else if (hoursDiff < 24 && hoursDiff > 0) {
-            return `Arrives in ${hoursDiff} ${hoursDiff === 1 ? 'hour' : 'hours'}`;
+        } else if (hoursDiff > 0 && hoursDiff <= 24) {
+            return `Arrives in ${Math.abs(hoursDiff)} ${Math.abs(hoursDiff) === 1 ? 'hour' : 'hours'}`;
 
         } else if (daysDiff > 0) {
-            return `${daysDiff} ${daysDiff === 1 ? 'day' : 'days'} ago`;
+            return `Arrives in ${Math.abs(daysDiff)} ${Math.abs(daysDiff) === 1 ? 'day' : 'days'}`;
 
-        } else if (minutesDiff <= 0 && hoursDiff < 24) {
-            return `${Math.abs(hoursDiff)} ${hoursDiff === -1 ? 'hour' : 'hours'} ago`;
-
-        } else if (minutesDiff <= 0 && hoursDiff >= 24) {
-            return `${Math.abs(daysDiff)} ${daysDiff === -1 ? 'day' : 'days'} ago`;
-
-        } else {
+        } else if (minutesDiff <= 0 && minutesDiff > -2) {
             return 'Now';
+
+        } else if (minutesDiff <= -2 && minutesDiff > -60) {
+            return `${Math.abs(minutesDiff)} ${Math.abs(minutesDiff) === 1 ? 'minute' : 'minutes'} ago`;
+
+        } else if (hoursDiff <= 0 && hoursDiff > -24) {
+            return `${Math.abs(hoursDiff)} ${Math.abs(hoursDiff) === 1 ? 'hour' : 'hours'} ago`;
+
+        } else if (daysDiff <= 0) {
+            return `${Math.abs(daysDiff)} ${Math.abs(daysDiff) === 1 ? 'day' : 'days'} ago`;
         }
     }
 
     useEffect(() => {
-        const getLettersBetweenPenpals = async () => {
-            const userLogged = await AsyncStorage.getItem("userInfo");
-            const userLoggedJSON = JSON.parse(userLogged);
-
-            try {
-                const { data } = await API.lettersBetweenPenpals({ penpal1Id: userLoggedJSON._id, penpal2Id: penpalInfo._id });
-                setAllLetters(data.letters);
-
-            } catch (error) {
-                console.log("An error occurred: ", error);
-            }
+        const fetchData = async () => {
+            await getLettersBetweenPenpals();
         };
 
-        getLettersBetweenPenpals();
+        fetchData();
+
+        const intervalId = setInterval(fetchData, 30000);
+        setFetchDataInterval(intervalId);
+
+        return () => {
+            if (fetchDataInterval) {
+                clearInterval(fetchDataInterval);
+            }
+        };
     }, []);
+
+    useFocusEffect(
+        React.useCallback(() => {
+            getLettersBetweenPenpals();
+        }, [])
+    );
 
     const renderCard = ({ item }) => (
         <TouchableOpacity
@@ -131,7 +144,7 @@ const Letters = ({ route }) => {
                 <View style={styles.containerLeft}>
                     <TouchableOpacity
                         style={styles.backButton}
-                        onPress={() => navigation.navigate("Home")}
+                        onPress={() => navigation.navigate("Friends")}
                     >
                         <Ionicons
                             name={"arrow-back-outline"}
