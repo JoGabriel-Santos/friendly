@@ -31,16 +31,6 @@ const Home = () => {
 
     useFocusEffect(fetchUserInfo);
 
-    const logout = async () => {
-        try {
-            await AsyncStorage.removeItem("userInfo");
-            navigation.navigate("Welcome");
-
-        } catch (error) {
-            console.log("An error occurred: ", error);
-        }
-    };
-
     return (
         <SafeAreaView style={styles.container}>
             <StatusBar backgroundColor="transparent" barStyle="light-content" translucent={true}/>
@@ -79,7 +69,7 @@ const Home = () => {
             </View>
 
             <View style={styles.meetPeopleButtons}>
-                <TouchableOpacity style={[styles.meetPeopleButton, styles.automatchButton]} onPress={logout}>
+                <TouchableOpacity style={[styles.meetPeopleButton, styles.automatchButton]}>
                     <Text style={[styles.meetPeopleText, styles.automatchText]}>
                         Auto-match
                     </Text>
