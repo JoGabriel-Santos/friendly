@@ -26,6 +26,7 @@ export const getPendingRequests = (userEmail) => API.get(`/requests/getPendingRe
 
 export const fetchPenpals = (userId) => API.get(`/penpal/fetchPenpals/${userId}`);
 export const sendLetter = (letterInfo) => API.post("/penpal/sendLetter", letterInfo);
+export const lettersBetweenPenpals = (penpalsInfo) => API.post("/penpal/lettersBetweenPenpals", penpalsInfo);
 
 export const signin = (userInfo) => API.post("/user/signin", userInfo);
 export const signup = (userInfo) => API.post("/user/signup", userInfo);

@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FlatList, Image, SafeAreaView, StatusBar, Text, TouchableOpacity, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import moment from "moment";
+import * as API from "../../api";
 import styles from "./styles";
 
 const Letters = ({ route }) => {
@@ -9,44 +12,54 @@ const Letters = ({ route }) => {
 
     const { penpalInfo } = route.params;
 
-    const messages = [
-        {
-            id: '1',
-            content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor...',
-            sender: 'Jooe',
-            time: 'Arrives in 2 hours',
-        },
-        {
-            id: '2',
-            content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor...',
-            sender: 'Carlos',
-            time: 'Arrives in 2 hours',
-        },
-        {
-            id: '3',
-            content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor...',
-            sender: 'Gabriel',
-            time: 'Arrives in 2 hours',
-        },
-        {
-            id: '4',
-            content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor...',
-            sender: 'Sarah',
-            time: 'Arrives in 2 hours',
-        },
-        {
-            id: '5',
-            content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor...',
-            sender: 'Luana',
-            time: 'Arrives in 2 hours',
-        },
-        {
-            id: '6',
-            content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor...',
-            sender: 'Frish',
-            time: 'Arrives in 2 hours',
-        },
-    ];
+    const [allLetters, setAllLetters] = useState();
+
+    function checkArrivalDate(dateString) {
+        const targetDate = moment(dateString, 'dddd, MMMM DD, HH:mm');
+
+        if (!targetDate.isValid()) {
+            return "Invalid date";
+        }
+
+        const currentDate = moment();
+
+        const minutesDiff = targetDate.diff(currentDate, 'minutes');
+        const hoursDiff = targetDate.diff(currentDate, 'hours');
+        const daysDiff = targetDate.diff(currentDate, 'days');
+
+        if (minutesDiff < 60 && minutesDiff > 0) {
+            return `Arrives in ${minutesDiff} ${minutesDiff === 1 ? 'minute' : 'minutes'}`;
+
+        } else if (hoursDiff < 24 && hoursDiff > 0) {
+            return `Arrives in ${hoursDiff} ${hoursDiff === 1 ? 'hour' : 'hours'}`;
+
+        } else if (daysDiff > 0) {
+            return `${daysDiff} ${daysDiff === 1 ? 'day' : 'days'} ago`;
+
+        } else if (currentDate.isBefore(targetDate)) {
+            return `${Math.abs(minutesDiff)} ${minutesDiff === 1 ? 'minute' : 'minutes'} ago`;
+
+        } else {
+            return 'Now';
+        }
+    }
+
+    useEffect(() => {
+        const getLettersBetweenPenpals = async () => {
+            const userLogged = await AsyncStorage.getItem("userInfo");
+            const userLoggedJSON = JSON.parse(userLogged);
+
+            try {
+                const { data } = await API.lettersBetweenPenpals({ penpal1Id: userLoggedJSON._id, penpal2Id: penpalInfo._id });
+                setAllLetters(data.letters);
+
+            } catch (error) {
+                console.log("An error occurred: ", error);
+            }
+        };
+
+        getLettersBetweenPenpals();
+    }, []);
 
     const renderCard = ({ item }) => (
         <TouchableOpacity
@@ -80,7 +93,7 @@ const Letters = ({ route }) => {
 
             <View style={styles.messageUserInfo}>
                 <Text style={styles.userInfoSender}>{item.sender}</Text>
-                <Text style={styles.userInfoTime}>{item.time}</Text>
+                <Text style={styles.userInfoTime}>{checkArrivalDate(item.time)}</Text>
             </View>
         </TouchableOpacity>
     );
@@ -134,9 +147,9 @@ const Letters = ({ route }) => {
             </TouchableOpacity>
 
             <FlatList
-                data={messages}
+                data={allLetters}
                 renderItem={renderCard}
-                keyExtractor={item => item.id}
+                keyExtractor={(item, index) => index.toString()}
                 numColumns={2}
                 contentContainerStyle={{ padding: 10, paddingBottom: 60 }}
             />

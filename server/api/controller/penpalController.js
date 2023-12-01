@@ -1,6 +1,7 @@
 import User from "../../models/user.js";
 import Penpal from "../../models/penpal.js";
 import Requests from "../../models/requests.js";
+import axios from "axios";
 
 export const fetchPenpals = async (request, response) => {
     const { userId } = request.params;
@@ -55,5 +56,47 @@ export const sendLetter = async (request, response) => {
 
     } catch (error) {
         response.status(500).json({ message: "Error sending letter", error });
+    }
+};
+
+export const lettersBetweenPenpals = async (request, response) => {
+    const { penpal1Id, penpal2Id } = request.body;
+
+    const TIME_OFFSET = 3 * 60 * 60 * 1000;
+
+    try {
+        const penpal = await Penpal.findOne({
+            $or: [
+                { penpal_1: penpal1Id, penpal_2: penpal2Id },
+                { penpal_1: penpal2Id, penpal_2: penpal1Id },
+            ],
+        });
+
+        if (!penpal) {
+            return response.status(404).json({ message: "Penpal not found" });
+        }
+
+        const letters = penpal.letters;
+
+        const currentTimeResponse = await axios.get("https://worldtimeapi.org/api/ip");
+        const apiDateTime = new Date(currentTimeResponse.data.utc_datetime);
+        const currentTime = new Date(apiDateTime.getTime() - TIME_OFFSET);
+
+        const updateLetterContent = (letter) => {
+            const letterTime = new Date(`${letter.time} GMT-0300`);
+
+            letterTime.setFullYear(2000);
+            currentTime.setFullYear(2000);
+
+            letter.content = letterTime >= currentTime ? "..." : letter.content;
+        };
+
+        letters.forEach(updateLetterContent);
+
+        response.status(200).json({ letters });
+
+    } catch (error) {
+        console.error("Error getting letters", error);
+        response.status(500).json({ message: "Error getting letters", error: error.message });
     }
 };
