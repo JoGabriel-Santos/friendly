@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ActivityIndicator, FlatList, Image, SafeAreaView, StatusBar, Text, TouchableOpacity, View } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as API from "../../api";
@@ -24,22 +24,24 @@ const Notifications = () => {
         }
     };
 
-    useEffect(() => {
-        const checkPendingRequests = async () => {
-            const userLogged = await AsyncStorage.getItem("userInfo");
-            const userLoggedJSON = JSON.parse(userLogged);
+    const checkPendingRequests = async () => {
+        const userLogged = await AsyncStorage.getItem("userInfo");
+        const userLoggedJSON = JSON.parse(userLogged);
 
-            try {
-                const { data } = await API.getPendingRequests(userLoggedJSON.email);
-                setPendingRequests(data.receivedRequests);
+        try {
+            const { data } = await API.getPendingRequests(userLoggedJSON.email);
+            setPendingRequests(data.receivedRequests);
 
-            } catch (error) {
-                console.log("An error occurred: ", error);
-            }
-        };
+        } catch (error) {
+            console.log("An error occurred: ", error);
+        }
+    };
 
-        checkPendingRequests();
-    }, []);
+    useFocusEffect(
+        React.useCallback(() => {
+            checkPendingRequests();
+        }, [])
+    );
 
     const renderCard = ({ item }) => {
         return (
@@ -105,12 +107,18 @@ const Notifications = () => {
                 </View>
             </View>
 
-            <FlatList
-                data={pendingRequests}
-                renderItem={renderCard}
-                keyExtractor={(item) => item.fromUser._id.toString()}
-                contentContainerStyle={styles.listContainer}
-            />
+            {pendingRequests.length > 0 ? (
+                <FlatList
+                    data={pendingRequests}
+                    renderItem={renderCard}
+                    keyExtractor={(item) => item.fromUser._id.toString()}
+                    contentContainerStyle={styles.listContainer}
+                />
+            ) : (
+                <View style={styles.emptySearchContainer}>
+                    <Text style={styles.emptySearchText}>No pending requests...</Text>
+                </View>
+            )}
         </SafeAreaView>
     );
 };

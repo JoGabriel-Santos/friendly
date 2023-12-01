@@ -66,6 +66,14 @@ const styles = StyleSheet.create({
         fontSize: 15,
         fontWeight: "bold",
     },
+    emptySearchContainer: {
+        paddingLeft: 20,
+        paddingTop: 10,
+    },
+    emptySearchText: {
+        fontFamily: "nunito-regular",
+        fontSize: 18,
+    }
 });
 
 export default styles;

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ActivityIndicator, FlatList, Image, SafeAreaView, StatusBar, Text, TouchableOpacity, View } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as API from "../../api";
@@ -11,24 +11,26 @@ const Friends = () => {
 
     const [penpals, setPenpals] = useState();
 
-    useEffect(() => {
-        const fetchPenpals = async () => {
-            const userLogged = await AsyncStorage.getItem("userInfo");
-            const userLoggedJSON = JSON.parse(userLogged);
+    const fetchPenpals = async () => {
+        const userLogged = await AsyncStorage.getItem("userInfo");
+        const userLoggedJSON = JSON.parse(userLogged);
 
-            try {
-                const { data } = await API.fetchPenpals(userLoggedJSON._id);
+        try {
+            const { data } = await API.fetchPenpals(userLoggedJSON._id);
 
-                const combinedPenpals = [...data.sentRequests, ...data.penpals];
-                setPenpals(combinedPenpals);
+            const combinedPenpals = [...data.sentRequests, ...data.penpals];
+            setPenpals(combinedPenpals);
 
-            } catch (error) {
-                console.log("An error occurred: ", error);
-            }
-        };
+        } catch (error) {
+            console.log("An error occurred: ", error);
+        }
+    };
 
-        fetchPenpals();
-    }, []);
+    useFocusEffect(
+        React.useCallback(() => {
+            fetchPenpals();
+        }, [])
+    );
 
     const renderCard = ({ item }) => {
         return (
@@ -92,13 +94,18 @@ const Friends = () => {
                 </View>
             </View>
 
-            <FlatList
-                data={penpals}
-                renderItem={renderCard}
-                keyExtractor={(item) => item._id.toString()}
-                contentContainerStyle={styles.listContainer}
-            />
-
+            {penpals.length > 0 ? (
+                <FlatList
+                    data={penpals}
+                    renderItem={renderCard}
+                    keyExtractor={(item) => item._id.toString()}
+                    contentContainerStyle={styles.listContainer}
+                />
+            ) : (
+                <View style={styles.emptySearchContainer}>
+                    <Text style={styles.emptySearchText}>No friends at the moment...</Text>
+                </View>
+            )}
         </SafeAreaView>
     );
 };
