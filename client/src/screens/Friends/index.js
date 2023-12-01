@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { ActivityIndicator, FlatList, Image, SafeAreaView, StatusBar, Text, TouchableOpacity, View } from "react-native";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
@@ -10,6 +10,7 @@ const Friends = () => {
     const navigation = useNavigation();
 
     const [penpals, setPenpals] = useState();
+    const [reloadScreen, setReloadScreen] = useState(false);
 
     const fetchPenpals = async () => {
         const userLogged = await AsyncStorage.getItem("userInfo");
@@ -26,10 +27,23 @@ const Friends = () => {
         }
     };
 
+    const handleRemoveFriend = async (penpalId) => {
+        const userLogged = await AsyncStorage.getItem("userInfo");
+        const userLoggedJSON = JSON.parse(userLogged);
+
+        try {
+            await API.removePenpalById({ userLoggedId: userLoggedJSON._id, penpalId: penpalId._id });
+            setReloadScreen(!reloadScreen);
+
+        } catch (error) {
+            console.log("An error occurred: ", error);
+        }
+    };
+
     useFocusEffect(
         React.useCallback(() => {
             fetchPenpals();
-        }, [])
+        }, [reloadScreen])
     );
 
     const renderCard = ({ item }) => {
@@ -58,12 +72,22 @@ const Friends = () => {
                 </View>
 
                 {
-                    item.status === "pending" &&
-                    (
-                        <View style={styles.buttonContainer}>
-                            <Text style={styles.buttonText}>Pending</Text>
-                        </View>
-                    )
+                    item.status === "pending" ?
+                        (
+                            <View style={styles.buttonContainer}>
+                                <Text style={styles.buttonText}>Pending</Text>
+                            </View>
+                        )
+                        :
+                        (
+                            <TouchableOpacity onPress={() => handleRemoveFriend(item)}>
+                                <Ionicons
+                                    name={"person-remove-outline"}
+                                    color={"red"}
+                                    size={25}
+                                />
+                            </TouchableOpacity>
+                        )
                 }
             </TouchableOpacity>
         )

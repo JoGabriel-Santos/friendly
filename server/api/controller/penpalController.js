@@ -103,3 +103,25 @@ export const lettersBetweenPenpals = async (request, response) => {
         response.status(500).json({ message: "Error getting letters", error: error.message });
     }
 };
+
+export const removePenpalById = async (request, response) => {
+    const { userLoggedId, penpalId } = request.body;
+
+    try {
+        const penpal = await Penpal.findOneAndDelete({
+            $or: [
+                { penpal_1: userLoggedId, penpal_2: penpalId },
+                { penpal_1: penpalId, penpal_2: userLoggedId },
+            ],
+        });
+
+        if (!penpal) {
+            return response.status(404).json({ message: "Penpal not found" });
+        }
+
+        response.status(200).json({ message: "Penpal removed successfully" });
+
+    } catch (error) {
+        response.status(500).json({ message: "Error removing penpal", error });
+    }
+};
