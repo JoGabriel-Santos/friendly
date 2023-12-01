@@ -62,7 +62,7 @@ export const sendLetter = async (request, response) => {
 export const lettersBetweenPenpals = async (request, response) => {
     const { penpal1Id, penpal2Id } = request.body;
 
-    const TIME_OFFSET = 3 * 60 * 60 * 1000;
+    const TIME_OFFSET = 2 * 60 * 60 * 1000;
 
     try {
         const penpal = await Penpal.findOne({
@@ -76,14 +76,15 @@ export const lettersBetweenPenpals = async (request, response) => {
             return response.status(404).json({ message: "Penpal not found" });
         }
 
-        const letters = penpal.letters;
+        let letters = penpal.letters;
 
         const currentTimeResponse = await axios.get("https://worldtimeapi.org/api/ip");
         const apiDateTime = new Date(currentTimeResponse.data.utc_datetime);
         const currentTime = new Date(apiDateTime.getTime() - TIME_OFFSET);
 
         const updateLetterContent = (letter) => {
-            const letterTime = new Date(`${letter.time} GMT-0300`);
+            const letterTime = new Date(`${letter.time}Z`);
+            letterTime.setHours(letterTime.getHours() - 2);
 
             letterTime.setFullYear(2000);
             currentTime.setFullYear(2000);
@@ -92,6 +93,8 @@ export const lettersBetweenPenpals = async (request, response) => {
         };
 
         letters.forEach(updateLetterContent);
+
+        letters = letters.reverse();
 
         response.status(200).json({ letters });
 

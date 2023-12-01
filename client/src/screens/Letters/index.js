@@ -15,20 +15,32 @@ const Letters = ({ route }) => {
     const [allLetters, setAllLetters] = useState();
 
     function checkArrivalDate(dateString) {
-        const targetDate = moment(dateString, 'dddd, MMMM DD, HH:mm');
+        const targetDateMoment = moment(dateString, 'dddd, MMMM DD, HH:mm');
+        const targetDate = targetDateMoment.subtract(3, 'hours');
 
         if (!targetDate.isValid()) {
             return "Invalid date";
         }
 
-        const currentDate = moment();
+        const currentDateMoment = moment();
+        const currentDate = currentDateMoment.subtract(3, 'hours');
+
+        const duration = moment.duration(targetDate.diff(currentDate));
+        const hoursDifference = duration.asHours();
+        const minutesDifference = duration.asMinutes();
 
         const minutesDiff = targetDate.diff(currentDate, 'minutes');
         const hoursDiff = targetDate.diff(currentDate, 'hours');
         const daysDiff = targetDate.diff(currentDate, 'days');
 
-        if (minutesDiff < 60 && minutesDiff > 0) {
+        if (minutesDiff <= 15 && hoursDiff === 0) {
+            return 'Now';
+
+        } else if (minutesDiff < 60 && minutesDiff > 0) {
             return `Arrives in ${minutesDiff} ${minutesDiff === 1 ? 'minute' : 'minutes'}`;
+
+        } else if (hoursDiff < 0) {
+            return `Arrives in ${Math.abs(minutesDiff)} ${Math.abs(minutesDiff) === 1 ? 'minute' : 'minutes'}`;
 
         } else if (hoursDiff < 24 && hoursDiff > 0) {
             return `Arrives in ${hoursDiff} ${hoursDiff === 1 ? 'hour' : 'hours'}`;
