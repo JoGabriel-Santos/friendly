@@ -36,8 +36,11 @@ const Letters = ({ route }) => {
         } else if (daysDiff > 0) {
             return `${daysDiff} ${daysDiff === 1 ? 'day' : 'days'} ago`;
 
-        } else if (currentDate.isBefore(targetDate)) {
-            return `${Math.abs(minutesDiff)} ${minutesDiff === 1 ? 'minute' : 'minutes'} ago`;
+        } else if (minutesDiff <= 0 && hoursDiff < 24) {
+            return `${Math.abs(hoursDiff)} ${hoursDiff === -1 ? 'hour' : 'hours'} ago`;
+
+        } else if (minutesDiff <= 0 && hoursDiff >= 24) {
+            return `${Math.abs(daysDiff)} ${daysDiff === -1 ? 'day' : 'days'} ago`;
 
         } else {
             return 'Now';
