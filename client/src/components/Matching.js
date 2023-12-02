@@ -93,7 +93,7 @@ const Matching = ({ userData }) => {
                 </View>
 
                 {commonInterests[index] && (
-                    <Text style={styles.matchedInfo}>Common interests: {commonInterests[index]}</Text>
+                    <Text style={styles.matchedInfo}>{commonInterests[index]} common interests</Text>
                 )}
             </View>
         </TouchableOpacity>
