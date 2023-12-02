@@ -53,7 +53,7 @@ const Letters = ({ route }) => {
         const currentDateMoment = moment();
         const currentDate = currentDateMoment.subtract(3, 'hours');
 
-        return letterInfo(currentDate, targetDate);
+        return letterInfo(currentDate, targetDate, dateString);
     }
 
     useEffect(() => {
@@ -63,7 +63,7 @@ const Letters = ({ route }) => {
 
         fetchData();
 
-        const intervalId = setInterval(fetchData, 30000);
+        const intervalId = setInterval(fetchData, 1000);
         setFetchDataInterval(intervalId);
 
         return () => {

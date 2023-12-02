@@ -120,9 +120,6 @@ export const lettersBetweenPenpals = async (request, response) => {
             letterTime.setFullYear(2000);
             currentTime.setFullYear(2000);
 
-            console.log(letterTime)
-            console.log(currentTime)
-
             if (letterTime >= currentTime) {
                 letter.content = "...";
 

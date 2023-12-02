@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
         borderWidth: .8,
         borderRadius: 8,
         margin: 8,
-        height: 250,
+        height: 242,
         width: 180,
     },
     messageHeader: {
