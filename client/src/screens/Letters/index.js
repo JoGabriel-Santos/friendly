@@ -29,6 +29,19 @@ const Letters = ({ route }) => {
         }
     };
 
+    const handleLetterReading = async (letter) => {
+        const userLogged = await AsyncStorage.getItem("userInfo");
+        const userLoggedJSON = JSON.parse(userLogged);
+
+        try {
+            await API.markLetterAsRead({ penpal1Id: userLoggedJSON._id, penpal2Id: penpalInfo._id, letterId: letter._id });
+            navigation.navigate("Letter", { penpalInfo: penpalInfo, letterSender: letter.sender, letterContent: letter.content });
+
+        } catch (error) {
+            console.log("An error occurred: ", error);
+        }
+    };
+
     function checkArrivalDate(dateString) {
         const targetDateMoment = moment(dateString, 'dddd, MMMM DD, HH:mm');
         const targetDate = targetDateMoment.subtract(3, 'hours');
@@ -66,42 +79,55 @@ const Letters = ({ route }) => {
         }, [])
     );
 
-    const renderCard = ({ item }) => (
-        <TouchableOpacity
-            style={styles.messageCard}
-            onPress={() => navigation.navigate("Letter",
-                { penpalInfo: penpalInfo, letterSender: item.sender, letterContent: item.content })
-            }
-        >
-            <View style={styles.messageHeader}>
-                <View style={styles.viewed}>
-                    <Ionicons
-                        name={"checkmark-done-outline"}
-                        color={"#333"}
-                        size={25}
+    const renderCard = ({ item }) => {
+        let iconName;
+
+        if (item.status === "Sending") {
+            iconName = 'paper-plane-outline';
+
+        } else if (item.status === "Received") {
+            iconName = 'checkmark-outline';
+
+        } else if (item.status === "Read") {
+            iconName = 'checkmark-done-outline';
+        }
+
+        return (
+            <TouchableOpacity
+                style={styles.messageCard}
+                onPress={() => handleLetterReading(item)}
+                disabled={item.status === "Sending"}
+            >
+                <View style={styles.messageHeader}>
+                    <View style={styles.viewed}>
+                        <Ionicons
+                            name={iconName}
+                            color={"#333"}
+                            size={25}
+                        />
+                    </View>
+
+                    <View style={{ flex: 1 }}/>
+
+                    <Image
+                        source={require("../../utils/images/christ-the-redeemer.png")}
+                        style={styles.stamp}
                     />
                 </View>
 
-                <View style={{ flex: 1 }}/>
+                <View style={styles.messageContent}>
+                    <Text style={styles.content} numberOfLines={4}>
+                        {item.content}
+                    </Text>
+                </View>
 
-                <Image
-                    source={require("../../utils/images/christ-the-redeemer.png")}
-                    style={styles.stamp}
-                />
-            </View>
-
-            <View style={styles.messageContent}>
-                <Text style={styles.content} numberOfLines={4}>
-                    {item.content}
-                </Text>
-            </View>
-
-            <View style={styles.messageUserInfo}>
-                <Text style={styles.userInfoSender}>{item.sender}</Text>
-                <Text style={styles.userInfoTime}>{checkArrivalDate(item.time)}</Text>
-            </View>
-        </TouchableOpacity>
-    );
+                <View style={styles.messageUserInfo}>
+                    <Text style={styles.userInfoSender}>{item.sender}</Text>
+                    <Text style={styles.userInfoTime}>{checkArrivalDate(item.time)}</Text>
+                </View>
+            </TouchableOpacity>
+        );
+    };
 
     return (
         <SafeAreaView style={styles.container}>

@@ -39,7 +39,6 @@ export const sendLetter = async (request, response) => {
                 { penpal_1: penpal2Id, penpal_2: penpal1Id },
             ],
         });
-
         if (!penpal) {
             return response.status(404).json({ message: "Penpal not found" });
         }
@@ -56,6 +55,39 @@ export const sendLetter = async (request, response) => {
 
     } catch (error) {
         response.status(500).json({ message: "Error sending letter", error });
+    }
+};
+
+export const markLetterAsRead = async (request, response) => {
+    const { penpal1Id, penpal2Id, letterId } = request.body;
+
+    try {
+        const userLogged = await User.findOne({ _id: penpal1Id });
+        const penpal = await Penpal.findOne({
+            $or: [
+                { penpal_1: penpal1Id, penpal_2: penpal2Id },
+                { penpal_1: penpal2Id, penpal_2: penpal1Id },
+            ],
+        });
+        if (!penpal) {
+            return response.status(404).json({ message: "Penpal not found" });
+        }
+
+        const letter = penpal.letters.find((letter) => letter._id.equals(letterId));
+        if (!letter) {
+            return response.status(404).json({ message: "Letter not found" });
+        }
+
+        if (userLogged.name !== letter.sender) {
+            letter.status = "Read";
+        }
+
+        await penpal.save();
+
+        response.status(200).json({ message: "Letter marked as Read successfully" });
+
+    } catch (error) {
+        response.status(500).json({ message: "Error marking letter as Read", error });
     }
 };
 
@@ -82,14 +114,21 @@ export const lettersBetweenPenpals = async (request, response) => {
         const apiDateTime = new Date(currentTimeResponse.data.utc_datetime);
         const currentTime = new Date(apiDateTime.getTime() - TIME_OFFSET);
 
-        const updateLetterContent = (letter) => {
+        const updateLetterContent = async (letter) => {
             const letterTime = new Date(`${letter.time}Z`);
-            letterTime.setHours(letterTime.getHours() - 2);
 
             letterTime.setFullYear(2000);
             currentTime.setFullYear(2000);
 
-            letter.content = letterTime >= currentTime ? "..." : letter.content;
+            console.log(letterTime)
+            console.log(currentTime)
+
+            if (letterTime >= currentTime) {
+                letter.content = "...";
+
+            } else {
+                letter.status = (letter.status === "Read") ? "Read" : "Received";
+            }
         };
 
         letters.forEach(updateLetterContent);
